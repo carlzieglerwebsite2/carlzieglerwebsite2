@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Carl Ziegler, Dunlap Fellow</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="logo">
+
+							<span class="icon fa-wpexplorer"></span>
+
+
+						</div>
+						<div class="content">
+							<div class="inner">
+								<h1>Carl Ziegler</h1>
+								<p><!--[-->Postdoctoral Fellow<!--]--></br>
+								<!--[-->University of Toronto<!--]--></br>
+								<!--[-->Dunlap Institute for Astronomy<!--]--></p>
+							</div>
+
+						</div>
+						<nav>
+							<ul>
+								<li><a href="#about">About</a></li>
+								<li><a href="#research">Research</a></li>
+								<li><a href="#cv">CV</a></li>
+								<li><a href="#contact">Contact</a></li>
+							</ul>
+
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- About -->
+							<article id="about">
+								<h2 class="major">About</h2>
+								<span class="image main"><img src="images/me.jpg" alt="" /></span>
+								<p>I grew up in the river town of Hannibal, MO, before heading to the other side of the state to receive a Bachelor's in Physics and Math at <a href=https://jewell.edu/>William Jewell</a>. I then received a Master's in Applied Physics from <a href=https://siu.edu/>Southern Illinois University</a>, and a PhD in Astronomy from the <a href=https://unc.edu/>University of North Carolina</a>.</p>
+
+								<p>As a graduate student at UNC, I worked with <a href=https://users.physics.unc.edu/~nmlaw/>Nick Law</a> to confirm and characterize planets discovered with the <a href=https://www.nasa.gov/mission_pages/kepler/main/index.html><i>Kepler</i> spacecraft</a> using <a href=https://robo-ao.org>Robo-AO</a>, the first robotic adaptive optics instrument.</p>
+
+								<p>I am currently a Postdoctoral Fellow at the <a href=http://www.dunlap.utoronto.ca/>Dunlap Institute</a> at the University of Toronto. I plan on performing timely high-angular resolution follow ups with robotic instruments to better understand the planets discovered by <a href=https://tess.gsfc.nasa.gov/>TESS</a>.</p>
+							</article>
+
+						<!-- Work -->
+							<article id="research">
+								<h2 class="major">Planets and Binary Stars</h2>
+								<span class="image main"><img src="images/research.jpg" alt="" /></span>
+								<p>The thousands of planetary candidates discovered by <a href=https://www.nasa.gov/mission_pages/kepler/main/index.html>Kepler</a> need follow-up high-resolution observations: with relatively poor spatial resolution, Kepler is vulnerable to nearby stars contaminating the photometry of the planetary host star or astrophysical false positives. Collaborators and I have used Robo-AO to observe every Kepler planetary candidate (see the results <a href=http://roboaokepler.org/>here</a>). More than half of Kepler planetary candidates have only been imaged in high-resolution by Robo-AO. The presence or absence of a nearby star, as determined in the survey, has been integral in the confirmation of over 1500 planets from Kepler and the K2 mission (e.g., <a href=https://arxiv.org/abs/1605.02825>Morton et al. 2016</a>, <a href=https://arxiv.org/abs/1607.05263/>Crossfield et al. 2016</a>) and revised radius estimates for over 600 planets, including ~100 rocky planets. We also use this unprecedented dataset to search for insight into the effect multiple star systems have on planetary formation and evolution.
+</p>
+								<p><a href=https://tess.gsfc.nasa.gov/>TESS</a> is expected to find thousands of nearby exoplanets over the next few years. Robo-AO has proven that it can uniquely observe each of the exoplanet systems in the North. With Robo-AO and the forthcoming <a href=http://roboaokepler.org/>Robo-AO-2</a> on Maunakea, I will focus on the estimated 500 rocky planets that TESS will discover (<a href=http://www.ifa.hawaii.edu/info/press-releases/robo_ao2/>Sullivan et al. 2015</a>). For many TESS planetary candidates, the identity of the host star will be ambiguous. I will resolve the large area of the sky covered by each TESS pixel (~25x larger than for Kepler) to identify the source of the transit signal for dozens of rocky planets.</p>
+								<ul>
+<li><a href=http://www.skyandtelescope.com/astronomy-news/extra-stars-might-downsize-exoplanets-2201201823/>Sky & Telescope: Extra Stars Might Downsize Exoplanets</a></li>
+<li><a href=http://adsabs.harvard.edu/abs/2017AJ....153...66Z>Robo-AO Kepler Planetary Candidate Survey. III. Adaptive Optics Imaging of 1629 Kepler Exoplanet Candidate Host Stars</a></li>
+<li><a href=http://adsabs.harvard.edu/abs/2018AJ....155..161Z>Robo-AO Kepler Survey. IV. The Effect of Nearby Stars on 3857 Planetary Candidate Systems</a></li>								</ul>
+
+								<h2 class="major">Robo-SOAR</h2>
+								<img src="images/robosoar.png" alt="" width="304" height="270"/>
+								<p>I designed and built the testbed for Robo-SOAR, a natural guide star adaptive optics (NGS-AO) analog to Robo-AO for the 4m <a href=http://www.ctio.noao.edu/soar/>SOAR telescope</a>. The largest impediment to NGS-AO systems is sky coverage due to lack of sufficiently bright guide stars. Use of pyramid wavefront sensors improves coverage substantially compared to Shack-Hartmann sensors, however production of the custom optics is prohibitively expensive for most telescopes (sub-8m aperture). A novel reflective design I am developing with Andrei Tokovinin costs orders of magnitude less and delivers similar performance. With this inexpensive design and the proven and highly-adaptable Robo-AO software, a sub-$100k adaptive optics system is possible on a wide-range of telescopes.</p>
+
+								<ul>
+
+<li><a href=http://adsabs.harvard.edu/abs/2016SPIE.9909E..3ZZ>SRAO: optical design and the dual-knife-edge WFS
+</a></li>
+							</ul>
+								<h2 class="major">Space-like photometry<br>from the ground</h2>
+								<img src="images/transit.png" alt="" width="369" height="283"/>
+
+								<p><a href=https://tess.gsfc.nasa.gov/>TESS</a> is targeting transiting planets around bright stars (on average, several magnitudes brighter than Kepler host stars), and follow-up transit observations will be possible for meter-class telescopes. The majority of the sky will be observed by TESS for 27 days, and for many planets only two transits will be detected, lacking the third transit required for confirmation. With small-telescopes, I will work to observe the critical third transit needed to confirm these planets (potentially hundreds if automated). During observations of planetary transits with the SOAR telescope using conjugate plane photometry (<a href=https://arxiv.org/abs/1009.5261>Osborn et al. 2011</a>), I have achieved photometric precision similar to space-based telescopes (lightcurve above) and comparable to the best ground-based photometry performed (e.g., <a href=https://arxiv.org/abs/1710.01790>Stefansson 2013</a>). This precision allows detection of stellar features in the transit, such as sunspots and faculae, indicative of stellar activity which impacts habitability. On this target (V=12, typical of a planetary host star TESS will discover), longer bins would allow detection of Earth-size planet transits.</p>
+
+
+								<a href=http://adsabs.harvard.edu/cgi-bin/nph-abs_connect?db_key=AST&db_key=PRE&qform=AST&arxiv_sel=astro-ph&arxiv_sel=cond-mat&arxiv_sel=cs&arxiv_sel=gr-qc&arxiv_sel=hep-ex&arxiv_sel=hep-lat&arxiv_sel=hep-ph&arxiv_sel=hep-th&arxiv_sel=math&arxiv_sel=math-ph&arxiv_sel=nlin&arxiv_sel=nucl-ex&arxiv_sel=nucl-th&arxiv_sel=physics&arxiv_sel=quant-ph&arxiv_sel=q-bio&aut_logic=OR&obj_logic=OR&author=ziegler%2C+carl&object=&start_mon=&start_year=2014&end_mon=&end_year=&ttl_logic=OR&title=&txt_logic=OR&text=&nr_to_return=200&start_nr=1&jou_pick=ALL&ref_stems=&data_and=ALL&group_and=ALL&start_entry_day=&start_entry_mon=&start_entry_year=&end_entry_day=&end_entry_mon=&end_entry_year=&min_score=&sort=SCORE&data_type=SHORT&aut_syn=YES&ttl_syn=YES&txt_syn=YES&aut_wt=1.0&obj_wt=1.0&ttl_wt=0.3&txt_wt=3.0&aut_wgt=YES&obj_wgt=YES&ttl_wgt=YES&txt_wgt=YES&ttl_sco=YES&txt_sco=YES&version=1>All of my publications</a>, from ADS.</br>
+
+							</article>
+
+						<!-- About -->
+							<article id="cv">
+								<h2 class="major">CV</h2>
+								<h3><a href=carlziegler_CV.pdf>Curriculum Vitae (PDF)</a></h3>
+							</article>
+
+						<!-- Contact -->
+							<article id="contact">
+								<h2 class="major">Contact</h2>
+
+								<ul class="alt">
+									<li><b>Email:</b> carlziegler (around) unc (dot) edu</li>
+									<li><b>Phone:</b> (123) 456-7890</li>
+									<li><b>Office:</b> 123 Fake Building</li>
+								</ul>
+
+								<b>Mailing address:</b></br>
+								</hline>
+								Dr. Carl Ziegler</br>
+								Dunlap Institute for Astronomy</br>
+								50 St. George Street</br>
+								Toronto, ON, Canada M5S 3H4</br>
+
+							</article>
+
+
+						<!-- Elements -->
+							<article id="elements">
+								<h2 class="major">Elements</h2>
+
+								<section>
+									<h3 class="major">Text</h3>
+									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
+									<hr />
+									<h2>Heading Level 2</h2>
+									<h3>Heading Level 3</h3>
+									<h4>Heading Level 4</h4>
+									<h5>Heading Level 5</h5>
+									<h6>Heading Level 6</h6>
+									<hr />
+									<h4>Blockquote</h4>
+									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
+									<h4>Preformatted</h4>
+									<pre><code>i = 0;
+
+while (!deck.isInOrder()) {
+    print 'Iteration ' + i;
+    deck.shuffle();
+    i++;
+}
+
+print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
+								</section>
+
+								<section>
+									<h3 class="major">Lists</h3>
+
+									<h4>Unordered</h4>
+									<ul>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Sagittis adipiscing.</li>
+										<li>Felis enim feugiat.</li>
+									</ul>
+
+									<h4>Alternate</h4>
+									<ul class="alt">
+										<li>Dolor pulvinar etiam.</li>
+										<li>Sagittis adipiscing.</li>
+										<li>Felis enim feugiat.</li>
+									</ul>
+
+									<h4>Ordered</h4>
+									<ol>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Etiam vel felis viverra.</li>
+										<li>Felis enim feugiat.</li>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Etiam vel felis lorem.</li>
+										<li>Felis enim et feugiat.</li>
+									</ol>
+									<h4>Icons</h4>
+									<ul class="icons">
+										<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+									</ul>
+
+									<h4>Actions</h4>
+									<ul class="actions">
+										<li><a href="#" class="button special">Default</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+									<ul class="actions vertical">
+										<li><a href="#" class="button special">Default</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+								</section>
+
+								<section>
+									<h3 class="major">Table</h3>
+									<h4>Default</h4>
+									<div class="table-wrapper">
+										<table>
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Description</th>
+													<th>Price</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Item One</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Two</td>
+													<td>Vis ac commodo adipiscing arcu aliquet.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Three</td>
+													<td> Morbi faucibus arcu accumsan lorem.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Four</td>
+													<td>Vitae integer tempus condimentum.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Five</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="2"></td>
+													<td>100.00</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+
+									<h4>Alternate</h4>
+									<div class="table-wrapper">
+										<table class="alt">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Description</th>
+													<th>Price</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Item One</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Two</td>
+													<td>Vis ac commodo adipiscing arcu aliquet.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Three</td>
+													<td> Morbi faucibus arcu accumsan lorem.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Four</td>
+													<td>Vitae integer tempus condimentum.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Five</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="2"></td>
+													<td>100.00</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</section>
+
+								<section>
+									<h3 class="major">Buttons</h3>
+									<ul class="actions">
+										<li><a href="#" class="button special">Special</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+									<ul class="actions">
+										<li><a href="#" class="button">Default</a></li>
+										<li><a href="#" class="button small">Small</a></li>
+									</ul>
+									<ul class="actions">
+										<li><a href="#" class="button special icon fa-download">Icon</a></li>
+										<li><a href="#" class="button icon fa-download">Icon</a></li>
+									</ul>
+									<ul class="actions">
+										<li><span class="button special disabled">Disabled</span></li>
+										<li><span class="button disabled">Disabled</span></li>
+									</ul>
+								</section>
+
+								<section>
+									<h3 class="major">Form</h3>
+									<form method="post" action="#">
+										<div class="field half first">
+											<label for="demo-name">Name</label>
+											<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
+										</div>
+										<div class="field half">
+											<label for="demo-email">Email</label>
+											<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
+										</div>
+										<div class="field">
+											<label for="demo-category">Category</label>
+											<div class="select-wrapper">
+												<select name="demo-category" id="demo-category">
+													<option value="">-</option>
+													<option value="1">Manufacturing</option>
+													<option value="1">Shipping</option>
+													<option value="1">Administration</option>
+													<option value="1">Human Resources</option>
+												</select>
+											</div>
+										</div>
+										<div class="field half first">
+											<input type="radio" id="demo-priority-low" name="demo-priority" checked>
+											<label for="demo-priority-low">Low</label>
+										</div>
+										<div class="field half">
+											<input type="radio" id="demo-priority-high" name="demo-priority">
+											<label for="demo-priority-high">High</label>
+										</div>
+										<div class="field half first">
+											<input type="checkbox" id="demo-copy" name="demo-copy">
+											<label for="demo-copy">Email me a copy</label>
+										</div>
+										<div class="field half">
+											<input type="checkbox" id="demo-human" name="demo-human" checked>
+											<label for="demo-human">Not a robot</label>
+										</div>
+										<div class="field">
+											<label for="demo-message">Message</label>
+											<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+										</div>
+										<ul class="actions">
+											<li><input type="submit" value="Send Message" class="special" /></li>
+											<li><input type="reset" value="Reset" /></li>
+										</ul>
+									</form>
+								</section>
+
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; Carl Ziegler. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
