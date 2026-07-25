@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="#07111f" name="theme-color"/>
-<meta content="Carl Ziegler is an exoplanet astronomer, Associate Professor of Astronomy, Director of the SFA Observatory, educator, and creator of Gravitas." name="description"/>
+<meta content="Carl Ziegler is an exoplanet astronomer, Associate Professor of Astronomy, Director of the SFA Observatory, educator, creator of Gravitas, and researcher interested in AI-enabled scientific discovery and learning." name="description"/>
 <meta content="Carl Ziegler" name="author"/>
 <meta content="Carl Ziegler | Exoplanet Astronomer" property="og:title"/>
 <meta content="Researching exoplanets, stellar multiplicity, high-resolution imaging, astronomical instrumentation, and science education." property="og:description"/>
@@ -13,6 +13,7 @@
 <meta content="https://carlziegler.space/" property="og:url"/>
 <meta content="https://carlziegler.space/images/IMG_0627.jpg" property="og:image"/>
 <title>Carl Ziegler | Exoplanet Astronomer</title>
+<link href="images/telescope.png" rel="icon" type="image/png"/>
 <style>
     :root {
       --bg: #07111f;
@@ -118,7 +119,7 @@
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 10000;
+      z-index: 10000 !important;
       height: var(--nav-height);
       isolation: isolate;
       border-bottom: 1px solid transparent;
@@ -1042,6 +1043,397 @@
       font-weight: 900;
     }
 
+    .ai-science-section {
+      overflow: hidden;
+      border-block: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 16% 22%, rgba(110,216,255,.11), transparent 30rem),
+        radial-gradient(circle at 84% 74%, rgba(165,139,255,.11), transparent 28rem),
+        linear-gradient(180deg, rgba(7,17,31,.72), rgba(3,8,17,.48));
+    }
+
+    html[data-theme="light"] .ai-science-section {
+      background:
+        radial-gradient(circle at 16% 22%, rgba(0,110,159,.09), transparent 30rem),
+        radial-gradient(circle at 84% 74%, rgba(99,70,203,.08), transparent 28rem),
+        linear-gradient(180deg, rgba(255,255,255,.62), rgba(238,244,248,.7));
+    }
+
+    .ai-bridge-grid {
+      display: grid;
+      grid-template-columns: minmax(330px, .86fr) minmax(0, 1.14fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .ai-vision-card,
+    .ai-capability-card,
+    .ai-future-band {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 18px 52px rgba(0,0,0,.13);
+    }
+
+    .ai-vision-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 570px;
+      overflow: hidden;
+      border-radius: 24px;
+    }
+
+    .ai-system-map {
+      position: relative;
+      min-height: 410px;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        radial-gradient(circle at center, rgba(110,216,255,.13), transparent 27%),
+        radial-gradient(circle at center, rgba(165,139,255,.08), transparent 50%),
+        linear-gradient(180deg, #030914, #071421);
+    }
+
+    .ai-system-map::before,
+    .ai-system-map::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border: 1px solid rgba(132,216,255,.22);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .ai-system-map::before {
+      width: 290px;
+      height: 290px;
+      border-style: dashed;
+      animation: ai-ring-spin 34s linear infinite;
+    }
+
+    .ai-system-map::after {
+      width: 205px;
+      height: 205px;
+      border-color: rgba(165,139,255,.2);
+      animation: ai-ring-spin-reverse 24s linear infinite;
+    }
+
+    .ai-map-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .ai-map-lines path {
+      fill: none;
+      stroke: rgba(124,224,255,.24);
+      stroke-width: 1.3;
+      stroke-dasharray: 6 8;
+      animation: ai-flow 11s linear infinite;
+    }
+
+    .ai-map-core,
+    .ai-map-node {
+      position: absolute;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.15);
+      color: #eff8ff;
+      background: rgba(6,16,29,.88);
+      box-shadow: 0 14px 35px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.05);
+      backdrop-filter: blur(10px);
+    }
+
+    .ai-map-core {
+      left: 50%;
+      top: 50%;
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      border-color: rgba(110,216,255,.42);
+      background:
+        radial-gradient(circle at 38% 30%, rgba(255,255,255,.18), transparent 22%),
+        radial-gradient(circle, rgba(32,112,150,.72), rgba(25,39,82,.92) 58%, #07101d 100%);
+      box-shadow: 0 0 45px rgba(110,216,255,.19), 0 18px 45px rgba(0,0,0,.35);
+      animation: ai-core-pulse 3.8s ease-in-out infinite;
+    }
+
+    .ai-map-core span {
+      display: block;
+      font-size: 2rem;
+      font-weight: 850;
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    .ai-map-core small,
+    .ai-map-node small {
+      display: block;
+      color: #9fb8ca;
+      font-size: .67rem;
+      line-height: 1.25;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .ai-map-node {
+      width: 124px;
+      min-height: 72px;
+      padding: 11px 12px;
+      border-radius: 15px;
+      animation: ai-node-float 4.8s ease-in-out infinite;
+    }
+
+    .ai-map-node span {
+      display: block;
+      margin-bottom: 3px;
+      font-size: .92rem;
+      font-weight: 780;
+    }
+
+    .ai-map-node.research { left: 50%; top: 8%; transform: translateX(-50%); }
+    .ai-map-node.software { right: 4%; top: 50%; transform: translateY(-50%); animation-delay: -.9s; }
+    .ai-map-node.learning { left: 50%; bottom: 6%; transform: translateX(-50%); animation-delay: -1.8s; }
+    .ai-map-node.academia { left: 4%; top: 50%; transform: translateY(-50%); animation-delay: -2.7s; }
+
+    .ai-vision-copy {
+      flex: 1;
+      padding: 26px 28px 29px;
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,.02));
+    }
+
+    .ai-vision-copy p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .ai-vision-copy strong { color: var(--text); }
+
+    .ai-capability-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .ai-capability-card {
+      min-height: 268px;
+      padding: 26px;
+      border-radius: 20px;
+      transition: transform .22s ease, border-color .22s ease;
+    }
+
+    .ai-capability-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(110,216,255,.38);
+    }
+
+    .ai-capability-icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(110,216,255,.28);
+      border-radius: 13px;
+      color: var(--accent);
+      background: rgba(110,216,255,.07);
+      font-weight: 850;
+    }
+
+    .ai-capability-card:nth-child(2) .ai-capability-icon,
+    .ai-capability-card:nth-child(4) .ai-capability-icon {
+      color: var(--accent-2);
+      border-color: rgba(165,139,255,.3);
+      background: rgba(165,139,255,.07);
+    }
+
+    .ai-capability-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.32rem;
+      line-height: 1.16;
+      letter-spacing: -.025em;
+    }
+
+    .ai-capability-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .93rem;
+    }
+
+    .ai-evidence {
+      margin-top: 24px;
+      padding: 30px 32px 32px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(110,216,255,.11), transparent 32%),
+        radial-gradient(circle at 96% 100%, rgba(165,139,255,.10), transparent 34%),
+        var(--surface);
+      box-shadow: 0 18px 52px rgba(0,0,0,.13);
+    }
+
+    .ai-evidence-header {
+      display: grid;
+      grid-template-columns: minmax(240px, .7fr) minmax(0, 1.3fr);
+      gap: 30px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .ai-evidence-header h3 {
+      margin-bottom: 0;
+      font-size: clamp(1.65rem, 3vw, 2.45rem);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+    }
+
+    .ai-evidence-header > p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .ai-paper-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .ai-paper-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 285px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      background: linear-gradient(145deg, var(--surface), var(--surface-soft));
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+
+    .ai-paper-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(110,216,255,.38);
+      box-shadow: 0 15px 38px rgba(0,0,0,.12);
+    }
+
+    .ai-paper-method {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      margin-bottom: 15px;
+      padding: 6px 9px;
+      border: 1px solid rgba(110,216,255,.25);
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(110,216,255,.06);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .ai-paper-card:nth-child(even) .ai-paper-method {
+      color: var(--accent-2);
+      border-color: rgba(165,139,255,.28);
+      background: rgba(165,139,255,.06);
+    }
+
+    .ai-paper-card h4 {
+      margin: 0 0 10px;
+      font-size: 1.22rem;
+      line-height: 1.18;
+      letter-spacing: -.025em;
+    }
+
+    .ai-paper-card p {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: .91rem;
+    }
+
+    .ai-paper-card .text-link {
+      margin-top: auto;
+      font-size: .9rem;
+    }
+
+    .ai-contribution-note {
+      margin: 18px 0 0;
+      padding: 15px 17px;
+      border-left: 3px solid var(--accent-3);
+      border-radius: 0 12px 12px 0;
+      color: var(--muted);
+      background: var(--surface-soft);
+      font-size: .88rem;
+    }
+
+    .ai-contribution-note strong { color: var(--text); }
+
+    .ai-future-band {
+      display: grid;
+      grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr);
+      gap: 32px;
+      align-items: center;
+      margin-top: 22px;
+      padding: 30px 32px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(110,216,255,.12), transparent 34%),
+        radial-gradient(circle at 96% 100%, rgba(165,139,255,.11), transparent 38%),
+        var(--surface);
+    }
+
+    .ai-future-band .card-kicker { margin-bottom: 8px; }
+
+    .ai-future-band h3 {
+      margin-bottom: 0;
+      font-size: clamp(1.55rem, 2.6vw, 2.25rem);
+      line-height: 1.08;
+      letter-spacing: -.035em;
+    }
+
+    .ai-future-copy p {
+      margin-bottom: 18px;
+      color: var(--muted);
+    }
+
+    .ai-topic-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ai-topic-list li {
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text);
+      background: var(--surface-soft);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    @keyframes ai-ring-spin { to { transform: translate(-50%, -50%) rotate(1turn); } }
+    @keyframes ai-ring-spin-reverse { to { transform: translate(-50%, -50%) rotate(-1turn); } }
+    @keyframes ai-flow { to { stroke-dashoffset: -140; } }
+    @keyframes ai-core-pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(.97); box-shadow: 0 0 35px rgba(110,216,255,.14), 0 18px 45px rgba(0,0,0,.35); }
+      50% { transform: translate(-50%, -50%) scale(1.04); box-shadow: 0 0 58px rgba(110,216,255,.25), 0 18px 45px rgba(0,0,0,.35); }
+    }
+    @keyframes ai-node-float {
+      0%, 100% { margin-top: -3px; }
+      50% { margin-top: 4px; }
+    }
+
     .teaching-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1698,6 +2090,12 @@
       .research-card.wide { grid-template-columns: 1fr; }
       .wide .card-image { min-height: 300px; }
       .split, .contact-card { grid-template-columns: 1fr; }
+      .ai-bridge-grid { grid-template-columns: 1fr; }
+      .ai-vision-card { min-height: 0; }
+      .ai-system-map { min-height: 390px; }
+      .ai-evidence-header { grid-template-columns: 1fr; gap: 12px; }
+      .ai-paper-grid { grid-template-columns: 1fr; }
+      .ai-future-band { grid-template-columns: 1fr; gap: 16px; }
       .teaching-grid { grid-template-columns: 1fr; }
       .teaching-evidence,
       .outreach-feature { grid-template-columns: 1fr; }
@@ -1723,6 +2121,21 @@
 
       .metric-grid { grid-template-columns: 1fr 1fr; }
       .metric { min-height: 118px; padding: 18px; }
+      .ai-capability-grid { grid-template-columns: 1fr; }
+      .ai-capability-card { min-height: 0; }
+      .ai-system-map { min-height: 350px; }
+      .ai-map-core { width: 108px; height: 108px; }
+      .ai-map-node { width: 105px; min-height: 64px; padding: 9px; }
+      .ai-map-node span { font-size: .82rem; }
+      .ai-map-node small { font-size: .58rem; }
+      .ai-map-node.research { top: 6%; }
+      .ai-map-node.software { right: 1%; }
+      .ai-map-node.learning { bottom: 4%; }
+      .ai-map-node.academia { left: 1%; }
+      .ai-vision-copy, .ai-capability-card { padding: 22px; }
+      .ai-evidence { padding: 25px 22px 26px; }
+      .ai-paper-card { min-height: 0; padding: 22px; }
+      .ai-future-band { padding: 25px 22px; }
       .metric strong { font-size: 1.85rem; }
 
       .section { padding: 78px 0; }
@@ -1777,7 +2190,10 @@
       "Speckle interferometry",
       "TESS",
       "Kepler",
-      "Astronomy education"
+      "Astronomy education",
+      "AI-enabled scientific discovery",
+      "Human-AI learning",
+      "Research partnerships"
     ],
     "sameAs": [
       "https://scholar.google.com/citations?hl=en&user=T_8uWaMAAAAJ",
@@ -1799,6 +2215,7 @@
 <a href="#about">About</a>
 <a href="#research">Research</a>
 <a href="#gravitas">Gravitas</a>
+<a href="#ai-science">AI &amp; Science</a>
 <a href="#teaching">Teaching</a>
 <a href="#outreach">Outreach</a>
 <a href="#publications">Publications</a>
@@ -1836,7 +2253,7 @@
               Explore my research
               <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg>
 </a>
-<a class="button" download="Carl_Ziegler_Condensed_CV.pdf" href="CV_condensed.pdf">Condensed CV</a><a class="button" href="carlziegler_CV.pdf" rel="noopener" target="_blank">Full Academic CV</a>
+<a class="button" href="CV_condensed.pdf" rel="noopener" target="_blank">Condensed CV</a><a class="button" href="carlziegler_CV.pdf" rel="noopener" target="_blank">Full Academic CV</a>
 <a class="button" href="http://gravitas-sim.online/" rel="noopener" target="_blank">Launch Gravitas</a>
 </div>
 </div>
@@ -1888,7 +2305,7 @@
 <div class="button-row">
 <a class="button compact" href="https://facultyshowcase.sfasu.edu/en/persons/carl-ziegler/" rel="noopener" target="_blank">SFA profile</a>
 <a class="button compact" href="https://scholar.google.com/citations?hl=en&amp;user=T_8uWaMAAAAJ" rel="noopener" target="_blank">Google Scholar</a>
-<a class="button compact" download="Carl_Ziegler_Condensed_CV.pdf" href="CV_condensed.pdf">Condensed CV</a><a class="button compact" href="carlziegler_CV.pdf" rel="noopener" target="_blank">Full Academic CV</a>
+<a class="button compact" href="CV_condensed.pdf" rel="noopener" target="_blank">Condensed CV</a><a class="button compact" href="carlziegler_CV.pdf" rel="noopener" target="_blank">Full Academic CV</a>
 <a class="button compact" href="carlziegler_thesis_small.pdf">Ph.D. thesis</a>
 </div>
 </div>
@@ -2067,6 +2484,65 @@
 </div>
 </div>
 </section>
+<section class="section ai-science-section" id="ai-science">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<p class="eyebrow">AI and scientific discovery</p>
+<h2>Using intelligent tools to make difficult science more tractable.</h2>
+</div>
+<p>
+            My interest in artificial intelligence is grounded in research practice. Modern astronomy depends on finding weak signals in enormous, noisy data sets, separating astrophysical effects from instrumental and stellar variability, and validating conclusions against independent observations. Several studies I have coauthored show how machine learning and probabilistic modeling can strengthen that process, while my own survey work emphasizes the careful measurements and bias corrections needed to keep computational results scientifically trustworthy.
+          </p>
+</div>
+<div class="ai-evidence reveal">
+<div class="ai-evidence-header">
+<div>
+<p class="card-kicker">Selected research</p>
+<h3>Machine learning and probabilistic methods in published exoplanet studies.</h3>
+</div>
+<p>
+              These collaborations illustrate practical uses of AI-adjacent methods in astronomy: identifying transient stellar activity, modeling correlated noise, separating activity from planetary signals, and building the validated observational context needed for reliable inference.
+            </p>
+</div>
+<div class="ai-paper-grid">
+<article class="ai-paper-card">
+<span class="ai-paper-method">Convolutional neural network</span>
+<h4>Identifying stellar flares in TESS observations</h4>
+<p>
+                In the THYME X study, our collaboration used <em>stella</em>, a convolutional neural network trained on TESS short-cadence data, to identify flare-contaminated measurements before analyzing the young two-planet TOI-1224 system. The work demonstrates how learned classifiers can improve the reliability of difficult time-series measurements.
+              </p>
+<a class="text-link" href="https://ui.adsabs.harvard.edu/abs/2024AJ....168...41T/abstract" rel="noopener" target="_blank">Read THYME X <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</article>
+<article class="ai-paper-card">
+<span class="ai-paper-method">Gaussian process</span>
+<h4>Recovering transits around a highly variable young star</h4>
+<p>
+                THYME II modeled TESS photometry with a periodic Gaussian process alongside the planetary transit model. Representing the star's correlated variability made it possible to characterize HIP 67522 b, then the youngest known transiting hot Jupiter.
+              </p>
+<a class="text-link" href="https://ui.adsabs.harvard.edu/abs/2020AJ....160...33R/abstract" rel="noopener" target="_blank">Read THYME II <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</article>
+<article class="ai-paper-card">
+<span class="ai-paper-method">Multiwavelength probabilistic modeling</span>
+<h4>Separating stellar activity from planetary motion</h4>
+<p>
+                The TOI-560 study applied Gaussian-process modeling to TESS light curves and used that information in a wavelength-dependent radial-velocity analysis. The combined approach helped distinguish stellar activity from the signals of two planets orbiting a young K dwarf.
+              </p>
+<a class="text-link" href="https://ui.adsabs.harvard.edu/abs/2023AJ....165...10E/abstract" rel="noopener" target="_blank">Read the TOI-560 study <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</article>
+<article class="ai-paper-card">
+<span class="ai-paper-method">Ground truth and bias correction</span>
+<h4>Building the evidence trustworthy models require</h4>
+<p>
+                The SOAR TESS Survey provides a complementary foundation for data-driven science: independently validated observations, false-positive screening, sensitivity limits, and selection-effect corrections. The survey found that detected planets are suppressed by nearly a factor of seven in close solar-type binaries and that neglecting this effect can bias occurrence-rate estimates by about a factor of two.
+              </p>
+<a class="text-link" href="https://ui.adsabs.harvard.edu/abs/2021AJ....162..192Z/abstract" rel="noopener" target="_blank">Read SOAR TESS Survey II <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</article>
+</div>
+<p class="ai-contribution-note"><strong>The common thread:</strong> computational methods are most useful when they are paired with domain knowledge, interpretable uncertainty, independent observations, and careful validation. That combination is central to how I think about the future of AI-enabled science.</p>
+</div>
+</div>
+</section>
 <section class="section" id="teaching">
 <div class="container">
 <div class="section-header reveal">
@@ -2225,7 +2701,7 @@
 <div class="publication-footer reveal">
 <a class="button compact" href="https://ui.adsabs.harvard.edu/search/q=author%3A%22Ziegler%2C%20Carl%22&amp;sort=date%20desc%2C%20bibcode%20desc&amp;p_=0" rel="noopener" target="_blank">All publications on ADS</a>
 <a class="button compact" href="https://scholar.google.com/citations?hl=en&amp;user=T_8uWaMAAAAJ" rel="noopener" target="_blank">Google Scholar</a>
-<a class="button compact" download="Carl_Ziegler_Condensed_CV.pdf" href="CV_condensed.pdf">Condensed CV</a>
+<a class="button compact" href="CV_condensed.pdf" rel="noopener" target="_blank">Condensed CV</a>
 <a class="button compact" href="carlziegler_CV.pdf" rel="noopener" target="_blank">Full Academic CV</a>
 </div>
 </div>
@@ -2288,7 +2764,7 @@
 <div class="container footer-inner">
 <div>© <span id="year"></span> Carl Ziegler. Built for clarity, accessibility, and fast loading.</div>
 <div class="footer-links">
-<a download="Carl_Ziegler_Condensed_CV.pdf" href="CV_condensed.pdf">Condensed CV</a>
+<a href="CV_condensed.pdf" rel="noopener" target="_blank">Condensed CV</a>
 <a href="carlziegler_CV.pdf" rel="noopener" target="_blank">Full Academic CV</a>
 <a href="http://gravitas-sim.online/" rel="noopener" target="_blank">Gravitas</a>
 <a href="https://github.com/gravitas-sim/gravitas-sim.github.io" rel="noopener" target="_blank">GitHub</a>
