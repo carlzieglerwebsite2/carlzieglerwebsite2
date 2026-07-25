@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html data-theme="dark" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -2258,20 +2258,27 @@
       const menuButton = document.getElementById('menu-button');
       const navLinks = document.getElementById('nav-links');
       const themeToggle = document.getElementById('theme-toggle');
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]');
       let storedTheme = null;
       try {
         storedTheme = localStorage.getItem('cz-theme');
       } catch (error) {
         storedTheme = null;
       }
-      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
-      root.dataset.theme = storedTheme || (prefersLight ? 'light' : 'dark');
+      // Dark is the default for first-time visitors. A theme explicitly chosen
+      // with the toggle is remembered for future visits.
+      root.dataset.theme = storedTheme === 'light' || storedTheme === 'dark'
+        ? storedTheme
+        : 'dark';
 
       const setThemeLabel = () => {
         const isLight = root.dataset.theme === 'light';
         themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
         themeToggle.setAttribute('title', isLight ? 'Switch to dark theme' : 'Switch to light theme');
+        if (themeColorMeta) {
+          themeColorMeta.setAttribute('content', isLight ? '#eef4f8' : '#07111f');
+        }
       };
 
       setThemeLabel();
