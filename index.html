@@ -11,7 +11,7 @@
 <meta content="Researching exoplanets, stellar multiplicity, high-resolution imaging, astronomical instrumentation, and science education." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://carlziegler.space/" property="og:url"/>
-<meta content="https://carlziegler.space/images/IMG_0627.jpg" property="og:image"/>
+<meta content="https://carlziegler.space/images/carl-ziegler-headshot.webp" property="og:image"/>
 <title>Carl Ziegler | Exoplanet Astronomer</title>
 <link href="images/telescope.png" rel="icon" type="image/png"/>
 <style>
@@ -110,6 +110,18 @@
     }
 
     .skip-link:focus { transform: translateY(0); }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
 
     .container {
       width: min(calc(100% - 40px), var(--max));
@@ -385,28 +397,6 @@
       inset: 0;
       background: linear-gradient(to top, rgba(2,8,16,.56), transparent 47%);
       pointer-events: none;
-    }
-
-    .orbit-label {
-      position: absolute;
-      right: -22px;
-      bottom: 10%;
-      z-index: 2;
-      max-width: 210px;
-      padding: 13px 15px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--surface);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      font-size: .88rem;
-      color: var(--muted);
-    }
-
-    .orbit-label strong {
-      display: block;
-      color: var(--text);
-      font-size: .94rem;
     }
 
     @keyframes slow-spin { to { transform: rotate(1turn); } }
@@ -899,8 +889,35 @@
     }
 
     .panel-badge.one { top: 24px; left: 24px; }
-    .panel-badge.two { right: 24px; top: 26px; }
     .panel-badge.three { left: 24px; bottom: 126px; }
+
+    .gravitas-reset {
+      position: absolute;
+      z-index: 12;
+      top: 24px;
+      right: 24px;
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid rgba(110,216,255,.34);
+      border-radius: 12px;
+      color: #e9f7ff;
+      background: rgba(5, 12, 22, .76);
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      font: inherit;
+      font-size: .78rem;
+      font-weight: 760;
+      letter-spacing: .02em;
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+
+    .gravitas-reset:hover,
+    .gravitas-reset:focus-visible {
+      border-color: rgba(110,216,255,.72);
+      background: rgba(13, 37, 57, .9);
+      transform: translateY(-1px);
+    }
 
     @keyframes bh-inspiral-a {
       0% { opacity: 1; transform: translate(-50%, -50%) translate(118.0px, 0.0px) scale(1.020); }
@@ -1550,7 +1567,7 @@
 
     @keyframes planet-cross {
       0%, 8% { transform: translateX(0); }
-      50% { transform: translateX(282px); }
+      50% { transform: translateX(315px); }
       92%, 100% { transform: translateX(0); }
     }
 
@@ -1564,6 +1581,797 @@
     @keyframes companion-pulse {
       0%, 100% { opacity: .68; }
       50% { opacity: 1; }
+    }
+
+    /* Interactive observing-methods laboratory */
+    .methods-section {
+      overflow: hidden;
+    }
+
+    .methods-section::before {
+      content: "";
+      position: absolute;
+      width: 560px;
+      height: 560px;
+      right: -250px;
+      top: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(110,216,255,.12), transparent 68%);
+      pointer-events: none;
+    }
+
+    .method-lab {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .method-lab + .method-lab { margin-top: 28px; }
+
+    .transit-lab {
+      display: grid;
+      grid-template-columns: minmax(300px, .72fr) minmax(0, 1.28fr);
+    }
+
+    .lab-controls {
+      position: relative;
+      z-index: 2;
+      padding: clamp(28px, 4vw, 48px);
+      border-right: 1px solid var(--line);
+      background:
+        linear-gradient(150deg, rgba(110,216,255,.055), transparent 44%),
+        var(--surface);
+    }
+
+    .lab-number {
+      display: inline-grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(110,216,255,.38);
+      border-radius: 50%;
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 820;
+      letter-spacing: .08em;
+    }
+
+    .lab-controls h3,
+    .speckle-copy h3 {
+      margin: 0 0 10px;
+      font-size: clamp(1.75rem, 3vw, 2.55rem);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+    }
+
+    .lab-intro {
+      margin: 0 0 30px;
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    .control-group + .control-group { margin-top: 27px; }
+
+    .control-label {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 10px;
+      font-weight: 720;
+    }
+
+    .control-label output {
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      font-weight: 820;
+    }
+
+    .control-note {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    .method-range {
+      width: 100%;
+      height: 26px;
+      margin: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      background: transparent;
+    }
+
+    .method-range::-webkit-slider-runnable-track {
+      height: 5px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent) 0 var(--range-fill, 50%), rgba(110,216,255,.18) var(--range-fill, 50%) 100%);
+    }
+
+    .method-range::-moz-range-track {
+      height: 5px;
+      border-radius: 99px;
+      background: rgba(110,216,255,.18);
+    }
+
+    .method-range::-moz-range-progress {
+      height: 5px;
+      border-radius: 99px;
+      background: var(--accent);
+    }
+
+    .method-range::-webkit-slider-thumb {
+      width: 21px;
+      height: 21px;
+      margin-top: -8px;
+      appearance: none;
+      -webkit-appearance: none;
+      border: 3px solid #07111f;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(110,216,255,.38);
+    }
+
+    .method-range::-moz-range-thumb {
+      width: 17px;
+      height: 17px;
+      border: 3px solid #07111f;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(110,216,255,.38);
+    }
+
+    .companion-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 25px;
+      padding: 14px 0 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .switch-control {
+      position: relative;
+      width: 52px;
+      height: 29px;
+      flex: none;
+    }
+
+    .switch-control input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: rgba(255,255,255,.08);
+      cursor: pointer;
+      transition: background .2s ease, border-color .2s ease;
+    }
+
+    .switch-track::after {
+      content: "";
+      position: absolute;
+      width: 21px;
+      height: 21px;
+      top: 3px;
+      left: 4px;
+      border-radius: 50%;
+      background: var(--muted);
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .switch-control input:checked + .switch-track {
+      border-color: rgba(110,216,255,.55);
+      background: rgba(110,216,255,.18);
+    }
+
+    .switch-control input:checked + .switch-track::after {
+      transform: translateX(22px);
+      background: var(--accent);
+    }
+
+    .switch-control input:focus-visible + .switch-track {
+      outline: 3px solid rgba(110,216,255,.55);
+      outline-offset: 3px;
+    }
+
+    .assumption-note {
+      margin: 25px 0 0;
+      padding: 13px 14px;
+      border-left: 2px solid var(--accent-2);
+      color: var(--muted);
+      background: var(--surface-soft);
+      font-size: .78rem;
+      line-height: 1.55;
+    }
+
+    .transit-workspace {
+      min-width: 0;
+      padding: clamp(24px, 3.5vw, 42px);
+      color: #f4f7fb;
+      background:
+        linear-gradient(rgba(110,216,255,.038) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110,216,255,.038) 1px, transparent 1px),
+        radial-gradient(circle at 40% 18%, rgba(110,216,255,.11), transparent 34%),
+        #050c15;
+      background-size: 45px 45px, 45px 45px, auto, auto;
+    }
+
+    .system-visual {
+      position: relative;
+      min-height: 325px;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .system-label {
+      position: absolute;
+      z-index: 4;
+      color: #91a2b5;
+      font-size: .7rem;
+      font-weight: 750;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .system-label.host-label { left: 40%; top: 84%; transform: translateX(-50%); }
+    .system-label.companion-label { right: 3%; top: 15%; text-align: right; }
+
+    .host-star {
+      position: absolute;
+      left: 40%;
+      top: 46%;
+      width: 174px;
+      height: 174px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background:
+        radial-gradient(circle at 34% 29%, #fff 0 3%, #fff4b5 10%, #ffc466 45%, #f28b38 74%, #b6532d 100%);
+      box-shadow: 0 0 28px rgba(255,193,95,.38), 0 0 90px rgba(255,169,74,.18);
+    }
+
+    .host-star::before,
+    .host-star::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      opacity: .18;
+      background: #fff3b5;
+    }
+
+    .host-star::before { width: 38px; height: 22px; top: 24%; left: 17%; transform: rotate(-18deg); }
+    .host-star::after { width: 26px; height: 15px; right: 17%; bottom: 24%; transform: rotate(15deg); }
+
+    .companion-star {
+      position: absolute;
+      z-index: 2;
+      right: 12%;
+      top: 33%;
+      width: var(--companion-size, 54px);
+      height: var(--companion-size, 54px);
+      border-radius: 50%;
+      transform: translate(50%, -50%);
+      opacity: 1;
+      background: var(--companion-gradient, radial-gradient(circle at 35% 30%, #fff 0 4%, #ffd594 22%, #d97245 100%));
+      box-shadow: 0 0 18px var(--companion-glow, rgba(244,162,97,.38)), 0 0 42px var(--companion-glow, rgba(244,162,97,.16));
+      transition: width .25s ease, height .25s ease, opacity .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+
+    .companion-star.hidden { opacity: 0; }
+
+    .planet-track {
+      position: absolute;
+      z-index: 3;
+      left: 7%;
+      right: 31%;
+      top: 45%;
+      height: var(--planet-size, 26px);
+      pointer-events: none;
+    }
+
+    .planet-world {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: var(--planet-size, 26px);
+      height: var(--planet-size, 26px);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.34);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 2px 10px rgba(0,0,0,.72), inset -7px -4px 10px rgba(0,0,0,.42);
+      animation: interactive-transit 8s ease-in-out infinite;
+      transition: width .25s ease, height .25s ease, background .25s ease;
+    }
+
+    .planet-world::before,
+    .planet-world::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .planet-world.rocky {
+      background:
+        radial-gradient(circle at 30% 33%, rgba(244,200,153,.5) 0 7%, transparent 8%),
+        radial-gradient(circle at 62% 65%, rgba(73,44,35,.45) 0 9%, transparent 10%),
+        radial-gradient(circle at 40% 35%, #b8734c, #774436 62%, #392a2a 100%);
+    }
+
+    .planet-world.neptune {
+      background:
+        linear-gradient(172deg, transparent 0 23%, rgba(191,244,255,.4) 24% 29%, transparent 30% 55%, rgba(7,71,158,.48) 56% 67%, transparent 68%),
+        radial-gradient(circle at 35% 28%, #89e9ff, #2488d1 48%, #173b84 100%);
+    }
+
+    .planet-world.jupiter {
+      background:
+        linear-gradient(178deg, #f5d79f 0 12%, #bb6f47 13% 22%, #efd0a0 23% 39%, #9e553e 40% 48%, #f4d596 49% 65%, #bc7652 66% 75%, #efd7ac 76% 100%);
+    }
+
+    .planet-world.jupiter::after {
+      width: 28%;
+      height: 15%;
+      right: 12%;
+      top: 58%;
+      border-radius: 50%;
+      background: rgba(159,62,45,.88);
+      box-shadow: inset 2px 0 3px rgba(255,220,174,.32);
+    }
+
+    @keyframes interactive-transit {
+      0%, 8% { left: 0; }
+      48%, 52% { left: calc(100% - var(--planet-size, 26px)); }
+      92%, 100% { left: 0; }
+    }
+
+    .planet-readout {
+      position: absolute;
+      z-index: 5;
+      left: 3%;
+      bottom: 7%;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px;
+      color: #aebed0;
+      background: rgba(3,8,17,.72);
+      font-size: .75rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .planet-readout strong { color: #f4f7fb; }
+
+    .curve-panel {
+      padding: 24px 0 4px;
+    }
+
+    .curve-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+      color: #91a2b5;
+      font-size: .7rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .curve-legend { display: flex; gap: 14px; flex-wrap: wrap; }
+    .curve-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .curve-legend i { width: 18px; height: 2px; background: #6ed8ff; }
+    .curve-legend .true i { background: #a58bff; }
+
+    .lab-lightcurve {
+      display: block;
+      width: 100%;
+      height: 105px;
+      overflow: visible;
+    }
+
+    .lab-lightcurve .axis { stroke: rgba(255,255,255,.14); stroke-width: 1; }
+    .lab-lightcurve .true-curve { fill: none; stroke: #a58bff; stroke-width: 2; stroke-dasharray: 5 5; }
+    .lab-lightcurve .observed-curve { fill: none; stroke: #6ed8ff; stroke-width: 3; }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .result-card {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 13px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .result-card span {
+      display: block;
+      margin-bottom: 3px;
+      color: #91a2b5;
+      font-size: .67rem;
+      line-height: 1.35;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .result-card strong {
+      display: block;
+      color: #f4f7fb;
+      font-size: clamp(1.12rem, 2vw, 1.55rem);
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .formula-note {
+      margin: 14px 0 0;
+      color: #91a2b5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .72rem;
+      line-height: 1.6;
+    }
+
+    .speckle-lab {
+      padding: clamp(28px, 4vw, 48px);
+      background:
+        radial-gradient(circle at 4% 4%, rgba(165,139,255,.11), transparent 30%),
+        var(--surface);
+    }
+
+    .speckle-topline {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+      gap: clamp(30px, 5vw, 66px);
+      align-items: end;
+      margin-bottom: 32px;
+    }
+
+    .speckle-topline .lab-intro { margin: 0; }
+
+    .speckle-sequence {
+      --resolved-dx: 58px;
+      --resolved-dy: -17px;
+      --line-distance: 60px;
+      --line-angle: -16deg;
+      --seeing-dx: 28px;
+      --seeing-dy: -8px;
+      --seeing-secondary-size: 53px;
+      --secondary-size: 16px;
+      --secondary-opacity: .78;
+      --secondary-gradient: radial-gradient(circle at 35% 30%, #fff 0 8%, #ffd092 30%, #d96c4d 100%);
+      --fourier-dx: 42px;
+      --fourier-dy: -12px;
+      --fourier-dx-neg: -42px;
+      --fourier-dy-neg: 12px;
+      --fourier-peak-size: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      color: #f4f7fb;
+      background: #050b13;
+      transition: opacity .24s ease, filter .24s ease;
+    }
+
+    .speckle-sequence.target-changing {
+      opacity: .48;
+      filter: saturate(.7) brightness(.86);
+    }
+
+    .speckle-stage {
+      position: relative;
+      min-width: 0;
+      min-height: 330px;
+      padding: 20px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(110,216,255,.05), transparent 50%),
+        #050b13;
+    }
+
+    .speckle-stage + .speckle-stage { border-left: 1px solid rgba(255,255,255,.12); }
+
+    .stage-index {
+      color: #6ed8ff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .7rem;
+      letter-spacing: .08em;
+    }
+
+    .speckle-stage h4 {
+      margin: 6px 0 0;
+      font-size: 1rem;
+      letter-spacing: -.01em;
+    }
+
+    .stage-caption {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 17px;
+      margin: 0;
+      color: #91a2b5;
+      font-size: .72rem;
+      line-height: 1.45;
+    }
+
+    .seeing-field,
+    .analysis-field,
+    .resolved-field {
+      position: absolute;
+      inset: 72px 18px 52px;
+    }
+
+    .seeing-component {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border-radius: 50%;
+      animation: seeing-pulse 2.6s ease-in-out infinite alternate;
+      transition: width .24s ease, height .24s ease, transform .24s ease, opacity .24s ease, background .24s ease;
+    }
+
+    .seeing-component.primary {
+      width: 78px;
+      height: 78px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255,255,255,.98) 0 8%, rgba(206,241,255,.66) 18%, rgba(110,216,255,.18) 51%, transparent 72%);
+      box-shadow: 0 0 46px rgba(110,216,255,.32);
+    }
+
+    .seeing-component.secondary {
+      width: var(--seeing-secondary-size);
+      height: var(--seeing-secondary-size);
+      transform: translate(calc(-50% + var(--seeing-dx)), calc(-50% + var(--seeing-dy)));
+      opacity: var(--secondary-opacity);
+      background: var(--secondary-gradient);
+      box-shadow: 0 0 38px rgba(255,159,100,.23);
+      animation-delay: -1.1s;
+    }
+
+    .seeing-halo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 166px;
+      height: 132px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse, rgba(110,216,255,.12), transparent 68%);
+      filter: blur(8px);
+      animation: seeing-halo-pulse 2.6s ease-in-out infinite;
+    }
+
+    .seeing-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 176px;
+      height: 132px;
+      transform: translate(-50%, -50%);
+      border: 1px dashed rgba(110,216,255,.18);
+      border-radius: 50%;
+    }
+
+    @keyframes seeing-pulse {
+      from { filter: blur(13px) brightness(.76); }
+      to { filter: blur(9px) brightness(1.2); }
+    }
+
+    @keyframes seeing-halo-pulse {
+      0%, 100% { opacity: .48; transform: translate(-50%, -50%) scale(.94); }
+      50% { opacity: .92; transform: translate(-49%, -51%) scale(1.08); }
+    }
+
+    .speckle-cloud span {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      width: var(--s);
+      height: var(--s);
+      border-radius: 50%;
+      background: #effcff;
+      filter: blur(2px);
+      box-shadow: 0 0 12px rgba(110,216,255,.58);
+      opacity: var(--o);
+      animation: speckle-flicker 1.9s ease-in-out infinite alternate;
+      animation-delay: var(--d);
+    }
+
+    @keyframes speckle-flicker { to { opacity: .24; transform: translate(2px, -3px) scale(.72); } }
+
+    .fourier-rings {
+      position: absolute;
+      inset: 6% 4%;
+      border-radius: 50%;
+      opacity: .62;
+      background: repeating-radial-gradient(circle, transparent 0 13px, rgba(110,216,255,.28) 14px 16px, transparent 17px 25px);
+      animation: rings-breathe 3.5s ease-in-out infinite;
+    }
+
+    .fourier-rings::before,
+    .fourier-rings::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--fourier-peak-size);
+      height: var(--fourier-peak-size);
+      border-radius: 50%;
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 0 14px rgba(110,216,255,.5);
+      opacity: var(--secondary-opacity);
+      transition: width .24s ease, height .24s ease, transform .24s ease, opacity .24s ease;
+    }
+
+    .fourier-rings::before { transform: translate(calc(-50% + var(--fourier-dx)), calc(-50% + var(--fourier-dy))); }
+    .fourier-rings::after { transform: translate(calc(-50% + var(--fourier-dx-neg)), calc(-50% + var(--fourier-dy-neg))); }
+
+    .fourier-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 18px #6ed8ff;
+      animation: fourier-core-pulse 1.9s ease-in-out infinite alternate;
+    }
+
+    @keyframes rings-breathe { 50% { transform: scale(1.035); opacity: .82; } }
+    @keyframes fourier-core-pulse { to { filter: brightness(1.45); box-shadow: 0 0 28px #6ed8ff; } }
+
+    .resolved-star {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width .24s ease, height .24s ease, transform .24s ease, opacity .24s ease, background .24s ease;
+    }
+
+    .resolved-star.primary {
+      width: 30px;
+      height: 30px;
+      background: #fffef1;
+      box-shadow: 0 0 16px rgba(255,255,255,.9), 0 0 36px rgba(110,216,255,.52);
+    }
+
+    .resolved-star.secondary {
+      width: var(--secondary-size);
+      height: var(--secondary-size);
+      transform: translate(calc(-50% + var(--resolved-dx)), calc(-50% + var(--resolved-dy)));
+      opacity: var(--secondary-opacity);
+      background: var(--secondary-gradient);
+      box-shadow: 0 0 11px rgba(255,184,121,.7), 0 0 24px rgba(255,133,88,.26);
+    }
+
+    .separation-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--line-distance);
+      border-top: 1px dashed rgba(255,190,96,.75);
+      transform: translateY(-50%) rotate(var(--line-angle));
+      transform-origin: left center;
+      transition: width .24s ease, transform .24s ease;
+    }
+
+    .separation-line::before,
+    .separation-line::after {
+      content: "";
+      position: absolute;
+      top: -3px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ffc46b;
+    }
+
+    .separation-line::before { left: -2px; }
+    .separation-line::after { right: -2px; }
+
+    .binary-compass {
+      position: absolute;
+      right: 4px;
+      top: 5px;
+      width: 36px;
+      height: 36px;
+      color: #71869a;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .62rem;
+    }
+
+    .binary-compass::before,
+    .binary-compass::after {
+      content: "";
+      position: absolute;
+      background: rgba(113,134,154,.42);
+    }
+
+    .binary-compass::before { left: 17px; top: 7px; width: 1px; height: 25px; }
+    .binary-compass::after { left: 5px; top: 19px; width: 25px; height: 1px; }
+    .binary-compass .north { position: absolute; left: 14px; top: -5px; }
+    .binary-compass .east { position: absolute; right: -1px; top: 14px; }
+
+    .speckle-cycle-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 13px;
+      color: var(--muted);
+      font-size: .72rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .speckle-cycle-status strong { color: var(--accent); font-weight: 760; }
+
+    .measurement-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface-soft);
+    }
+
+    .measurement {
+      padding: 18px 20px;
+    }
+
+    .measurement + .measurement { border-left: 1px solid var(--line); }
+
+    .measurement span {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: .67rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .measurement strong {
+      display: block;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .speckle-caveat {
+      margin: 15px 0 0;
+      padding-left: 14px;
+      border-left: 2px solid #ffc46b;
+      color: var(--muted);
+      font-size: .79rem;
     }
 
     .teaching-evidence {
@@ -1938,6 +2746,52 @@
       gap: 12px;
     }
 
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(250px, .55fr) minmax(0, 1.45fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .contact-portrait {
+      position: relative;
+      min-height: 100%;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-portrait img {
+      width: 100%;
+      height: 100%;
+      min-height: 470px;
+      object-fit: cover;
+      object-position: center 58%;
+      transform: scale(1.16);
+    }
+
+    .contact-portrait::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(3,8,17,.7), transparent 46%);
+      pointer-events: none;
+    }
+
+    .contact-portrait figcaption {
+      position: absolute;
+      z-index: 2;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      color: #eef8ff;
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+
     .contact-card {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
@@ -2080,16 +2934,26 @@
 
       .hero { min-height: auto; }
       .hero-grid { grid-template-columns: 1fr; }
-      .hero-copy { order: 1; }
-      .portrait-wrap { width: min(78vw, 410px); }
-      .orbit-label { right: -8px; }
+      .hero-copy { order: 0; }
+      .portrait-wrap { order: 1; width: min(78vw, 410px); }
 
       .metric-grid { grid-template-columns: repeat(2, 1fr); }
       .section-header { grid-template-columns: 1fr; gap: 18px; }
       .research-card { grid-column: span 12; }
       .research-card.wide { grid-template-columns: 1fr; }
       .wide .card-image { min-height: 300px; }
-      .split, .contact-card { grid-template-columns: 1fr; }
+      .split, .contact-card, .contact-layout { grid-template-columns: 1fr; }
+      .contact-portrait { min-height: 540px; }
+      .transit-lab { grid-template-columns: 1fr; }
+      .lab-controls { border-right: 0; border-bottom: 1px solid var(--line); }
+      .speckle-topline { grid-template-columns: 1fr; gap: 16px; }
+      .speckle-sequence { grid-template-columns: 1fr; }
+      .speckle-stage { min-height: 300px; }
+      .speckle-stage + .speckle-stage { border-left: 0; border-top: 1px solid rgba(255,255,255,.12); }
+      .measurement-strip { grid-template-columns: repeat(2, 1fr); }
+      .measurement + .measurement { border-left: 0; }
+      .measurement:nth-child(even) { border-left: 1px solid var(--line); }
+      .measurement:nth-child(n+3) { border-top: 1px solid var(--line); }
       .ai-bridge-grid { grid-template-columns: 1fr; }
       .ai-vision-card { min-height: 0; }
       .ai-system-map { min-height: 390px; }
@@ -2117,7 +2981,6 @@
       h1 { font-size: clamp(3.15rem, 17vw, 4.6rem); }
       .hero-lead { font-size: 1.12rem; }
       .portrait-wrap { width: min(84vw, 360px); }
-      .orbit-label { position: relative; right: auto; bottom: auto; margin: -28px 12px 0 auto; }
 
       .metric-grid { grid-template-columns: 1fr 1fr; }
       .metric { min-height: 118px; padding: 18px; }
@@ -2146,6 +3009,23 @@
       .about-photo,
       .about-photo img { min-height: 390px; }
       .transit-card-image { min-height: 360px; padding: 14px; }
+      .transit-workspace { padding: 19px 16px 22px; }
+      .system-visual { min-height: 300px; }
+      .host-star { width: 142px; height: 142px; left: 41%; }
+      .planet-track { left: 2%; right: 25%; }
+      .system-label.host-label { left: 41%; }
+      .system-label.companion-label { right: 0; top: 9%; max-width: 120px; }
+      .result-grid { grid-template-columns: 1fr; }
+      .result-card { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+      .result-card span { margin-bottom: 0; }
+      .speckle-lab { padding: 25px 18px; }
+      .speckle-cycle-status { align-items: flex-start; flex-direction: column; gap: 3px; }
+      .measurement { padding: 15px; }
+      .measurement strong { font-size: 1rem; }
+      .gravitas-reset { top: 18px; right: 18px; min-height: 36px; padding-inline: 11px; font-size: .72rem; }
+      .panel-badge.one { top: 18px; left: 18px; }
+      .contact-portrait,
+      .contact-portrait img { min-height: 430px; }
       .check-grid,
       .course-grid,
       .innovation-list { grid-template-columns: 1fr; }
@@ -2177,7 +3057,7 @@
     "@type": "Person",
     "name": "Carl Andrew Ziegler",
     "url": "https://carlziegler.space/",
-    "image": "https://carlziegler.space/images/me.jpg",
+    "image": "https://carlziegler.space/images/carl-ziegler-headshot.webp",
     "jobTitle": "Associate Professor of Astronomy and Director of the SFA Observatory",
     "affiliation": {
       "@type": "CollegeOrUniversity",
@@ -2214,6 +3094,7 @@
 <nav aria-label="Primary navigation" class="nav-links" id="nav-links">
 <a href="#about">About</a>
 <a href="#research">Research</a>
+<a href="#methods">Methods</a>
 <a href="#gravitas">Gravitas</a>
 <a href="#ai-science">AI &amp; Science</a>
 <a href="#teaching">Teaching</a>
@@ -2259,12 +3140,8 @@
 </div>
 <div class="portrait-wrap reveal">
 <div class="portrait-frame">
-<img alt="Carl Ziegler at the SFA Observatory" fetchpriority="high" height="1072" loading="eager" src="images/IMG_0627.jpg" width="804"/>
+<img alt="Carl Ziegler" fetchpriority="high" height="1402" loading="eager" src="images/carl-ziegler-headshot.webp" width="1122"/>
 </div>
-<div class="orbit-label">
-<strong>Stephen F. Austin State University</strong>
-            Nacogdoches, Texas
-          </div>
 </div>
 </div>
 </section>
@@ -2325,45 +3202,48 @@
 </div>
 <div class="research-grid">
 <article class="research-card wide reveal">
-<div class="card-image transit-card-image"><figure aria-label="Animated exoplanet crossing one star in a binary system while a diluted transit light curve is traced below" class="transit-visual" role="img">
-<svg aria-hidden="true" viewbox="0 0 440 330">
+<div class="card-image transit-card-image"><figure aria-label="Animated exoplanet crossing the planet-hosting star in an unresolved binary while true and blended transit light curves are traced below" class="transit-visual" role="img">
+<svg aria-hidden="true" viewbox="0 0 500 350">
 <defs>
-<radialgradient cx="35%" cy="30%" id="primaryStar">
+<radialgradient cx="34%" cy="30%" id="primaryStar">
 <stop offset="0%" stop-color="#ffffff"></stop>
 <stop offset="24%" stop-color="#fff4b5"></stop>
 <stop offset="72%" stop-color="#ffb35f"></stop>
 <stop offset="100%" stop-color="#ad4d25"></stop>
 </radialgradient>
 <radialgradient cx="35%" cy="30%" id="secondaryStar">
-<stop offset="0%" stop-color="#ffffff"></stop>
-<stop offset="30%" stop-color="#d8efff"></stop>
-<stop offset="100%" stop-color="#5f87b9"></stop>
+<stop offset="0%" stop-color="#fffaf0"></stop>
+<stop offset="35%" stop-color="#ffd28a"></stop>
+<stop offset="100%" stop-color="#bd6435"></stop>
 </radialgradient>
 <filter id="starGlow">
 <fegaussianblur result="blur" stddeviation="7"></fegaussianblur>
 <femerge><femergenode in="blur"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
 </filter>
 </defs>
-<text fill="#aebed0" font-family="system-ui, sans-serif" font-size="12" x="22" y="24">BINARY STAR SYSTEM</text>
-<ellipse cx="190" cy="105" fill="none" opacity=".65" rx="155" ry="54" stroke="#5e7389" stroke-dasharray="6 8" stroke-width="1.2"></ellipse>
-<circle cx="170" cy="106" fill="url(#primaryStar)" filter="url(#starGlow)" r="52"></circle>
-<circle class="companion-glow" cx="315" cy="72" fill="url(#secondaryStar)" filter="url(#starGlow)" r="27"></circle>
-<text fill="#dceaf5" font-family="system-ui, sans-serif" font-size="12" x="140" y="172">planet host</text>
-<text fill="#aebed0" font-family="system-ui, sans-serif" font-size="11" x="286" y="119">companion star</text>
+<text fill="#aebed0" font-family="system-ui, sans-serif" font-size="12" letter-spacing="1.2" x="24" y="25">UNRESOLVED BINARY</text>
+<ellipse cx="245" cy="108" fill="none" opacity=".58" rx="205" ry="62" stroke="#5e7389" stroke-dasharray="6 8" stroke-width="1.2"></ellipse>
+<circle cx="205" cy="108" fill="url(#primaryStar)" filter="url(#starGlow)" r="55"></circle>
+<circle class="companion-glow" cx="386" cy="76" fill="url(#secondaryStar)" filter="url(#starGlow)" r="25"></circle>
+<text fill="#dceaf5" font-family="system-ui, sans-serif" font-size="11" x="169" y="181">planet host</text>
+<text fill="#aebed0" font-family="system-ui, sans-serif" font-size="11" x="349" y="121">extra flux</text>
 <g class="planet-dot">
-<circle cx="28" cy="106" fill="#09111a" r="10" stroke="#80e6ff" stroke-width="2"></circle>
-<circle cx="25" cy="103" fill="#d3f7ff" opacity=".8" r="2.4"></circle>
+<circle cx="50" cy="108" fill="#0b1722" r="10" stroke="#80e6ff" stroke-width="2"></circle>
+<circle cx="47" cy="105" fill="#d3f7ff" opacity=".8" r="2.3"></circle>
 </g>
-<line stroke="#466077" stroke-width="1" x1="42" x2="414" y1="210" y2="210"></line>
-<line stroke="#466077" stroke-width="1" x1="42" x2="42" y1="210" y2="305"></line>
-<text fill="#aebed0" font-family="system-ui, sans-serif" font-size="11" x="48" y="228">combined brightness</text>
-<text fill="#aebed0" font-family="system-ui, sans-serif" font-size="11" x="357" y="322">time</text>
-<path d="M48 252 C92 250, 122 251, 151 252 C171 253, 176 276, 196 278 C216 279, 223 254, 245 252 C289 250, 337 252, 408 251" fill="none" opacity=".48" stroke="#243746" stroke-linecap="round" stroke-width="7"></path>
-<path class="lightcurve-trace" d="M48 252 C92 250, 122 251, 151 252 C171 253, 176 276, 196 278 C216 279, 223 254, 245 252 C289 250, 337 252, 408 251" fill="none" stroke="#6ed8ff" stroke-linecap="round" stroke-width="3.2"></path>
-<path d="M157 253 C174 256, 178 272, 196 273 C214 273, 221 256, 238 253" fill="none" stroke="#a58bff" stroke-dasharray="4 5" stroke-width="1.6"></path>
-<text fill="#a58bff" font-family="system-ui, sans-serif" font-size="11" x="245" y="286">diluted transit</text>
+<line stroke="#466077" stroke-width="1" x1="50" x2="470" y1="218" y2="218"></line>
+<line stroke="#466077" stroke-width="1" x1="50" x2="50" y1="218" y2="326"></line>
+<text fill="#aebed0" font-family="system-ui, sans-serif" font-size="11" x="56" y="235">relative brightness</text>
+<text fill="#aebed0" font-family="system-ui, sans-serif" font-size="11" x="438" y="343">time</text>
+<path d="M57 270 C112 269, 148 269, 178 270 C195 270, 200 313, 225 314 C250 313, 255 271, 273 270 C325 269, 386 269, 463 270" fill="none" stroke="#a58bff" stroke-dasharray="5 5" stroke-linecap="round" stroke-width="2"></path>
+<path d="M57 270 C112 269, 148 269, 178 270 C195 270, 200 294, 225 295 C250 294, 255 271, 273 270 C325 269, 386 269, 463 270" fill="none" opacity=".42" stroke="#243746" stroke-linecap="round" stroke-width="8"></path>
+<path class="lightcurve-trace" d="M57 270 C112 269, 148 269, 178 270 C195 270, 200 294, 225 295 C250 294, 255 271, 273 270 C325 269, 386 269, 463 270" fill="none" stroke="#6ed8ff" stroke-linecap="round" stroke-width="3.2"></path>
+<line stroke="#a58bff" stroke-dasharray="3 3" x1="291" x2="315" y1="314" y2="314"></line>
+<text fill="#a58bff" font-family="system-ui, sans-serif" font-size="10.5" x="320" y="318">true host-only depth</text>
+<line stroke="#6ed8ff" x1="291" x2="315" y1="294" y2="294"></line>
+<text fill="#6ed8ff" font-family="system-ui, sans-serif" font-size="10.5" x="320" y="298">observed blended depth</text>
 </svg>
-<figcaption>The companion contributes extra light, making the planet’s transit appear shallower than it truly is.</figcaption>
+<figcaption>The unresolved companion adds constant light, so the measured transit is shallower than the planet’s true host-only signal.</figcaption>
 </figure></div>
 <div class="card-body">
 <p class="card-kicker">Flagship survey</p>
@@ -2426,11 +3306,139 @@
 </div>
 </div>
 </section>
+<section class="section alt methods-section" id="methods">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<p class="eyebrow">Observational methods</p>
+<h2>Resolve the star. Recover the planet.</h2>
+</div>
+<p>
+            A nearby star can change both the measured transit and the inferred planet. These interactive demonstrations connect high-resolution imaging to the physical corrections used in exoplanet surveys.
+          </p>
+</div>
+<article class="method-lab transit-lab reveal" id="transit-lab">
+<div class="lab-controls">
+<span class="lab-number">01</span>
+<h3>Transit dilution</h3>
+<p class="lab-intro">Change the planet and the unresolved stellar companion. The scene, light curve, and inferred radius update together.</p>
+<div class="control-group">
+<label class="control-label" for="planet-radius">
+<span>Planet radius</span>
+<output id="planet-radius-output" for="planet-radius">4.0 R⊕</output>
+</label>
+<input aria-describedby="planet-radius-note" class="method-range" id="planet-radius" max="16" min="0.7" step="0.1" type="range" value="4"/>
+<div class="control-note" id="planet-radius-note"><span>0.7 R⊕ · rocky</span><span>16 R⊕ · gas giant</span></div>
+</div>
+<div class="control-group">
+<label class="control-label" for="companion-contrast">
+<span>Companion contrast, Δmag</span>
+<output id="companion-contrast-output" for="companion-contrast">2.3 mag</output>
+</label>
+<input aria-describedby="companion-contrast-note" class="method-range" id="companion-contrast" max="6" min="0" step="0.1" type="range" value="2.3"/>
+<div class="control-note" id="companion-contrast-note"><span>equal brightness</span><span>faint companion</span></div>
+</div>
+<div class="companion-toggle">
+<span>Unresolved companion present</span>
+<label class="switch-control">
+<input checked id="companion-present" type="checkbox"/>
+<span aria-hidden="true" class="switch-track"></span>
+<span class="sr-only">Toggle unresolved companion</span>
+</label>
+</div>
+<p class="assumption-note">Illustrative Sun-like primary (1 R☉). Companion mass and color use a main-sequence luminosity approximation; the dilution calculation itself uses the exact flux ratio implied by Δmag. Planet size is perceptually scaled so small rocky worlds remain visible.</p>
+</div>
+<div class="transit-workspace">
+<div class="system-visual" aria-live="polite" role="img">
+<div aria-hidden="true" class="host-star"></div>
+<div aria-hidden="true" class="companion-star" id="companion-star"></div>
+<div aria-hidden="true" class="planet-track" id="planet-track">
+<div class="planet-world neptune" id="planet-world"></div>
+</div>
+<span class="system-label host-label">Sun-like planet host</span>
+<span class="system-label companion-label" id="companion-label">K dwarf · ≈0.59 M☉</span>
+<div class="planet-readout"><span>Planet class</span><strong id="planet-type-text">Neptune-like</strong></div>
+</div>
+<div class="curve-panel">
+<div class="curve-header">
+<span>Transit light curve</span>
+<div class="curve-legend"><span class="true"><i></i>True host-only</span><span><i></i>Observed blend</span></div>
+</div>
+<svg aria-label="Comparison of the true host-only transit and shallower unresolved blended transit" class="lab-lightcurve" preserveaspectratio="none" role="img" viewbox="0 0 500 100">
+<line class="axis" x1="4" x2="496" y1="30" y2="30"></line>
+<line class="axis" x1="4" x2="4" y1="8" y2="91"></line>
+<path class="true-curve" id="true-curve" d="M8 30 H170 C185 30 190 71 208 71 H292 C310 71 315 30 330 30 H492"></path>
+<path class="observed-curve" id="observed-curve" d="M8 30 H170 C185 30 190 67 208 67 H292 C310 67 315 30 330 30 H492"></path>
+</svg>
+<div class="result-grid">
+<div class="result-card"><span>True depth</span><strong id="true-depth">0.135%</strong></div>
+<div class="result-card"><span>Observed depth</span><strong id="observed-depth">0.121%</strong></div>
+<div class="result-card"><span>Radius correction</span><strong id="radius-correction">×1.058</strong></div>
+</div>
+<p class="formula-note">f = 10<sup>−0.4Δm</sup> · δ<sub>obs</sub> = δ<sub>true</sub> / (1 + f) · R<sub>p,true</sub> = R<sub>p,obs</sub> √(1 + f)</p>
+</div>
+</div>
+</article>
+<article class="method-lab speckle-lab reveal">
+<div class="speckle-topline">
+<div class="speckle-copy">
+<span class="lab-number">02</span>
+<h3>From atmospheric blur to a measured companion</h3>
+</div>
+<p class="lab-intro">A conventional exposure blends the pair into one fuzzy source. Millisecond exposures preserve diffraction-limited information; Fourier analysis then reconstructs the binary and makes its properties measurable.</p>
+</div>
+<div class="speckle-sequence" role="img" aria-label="Three-stage speckle-imaging demonstration: an unresolved seeing-limited source, Fourier analysis of short-exposure speckles, and a reconstructed binary star">
+<section class="speckle-stage">
+<span class="stage-index">01</span>
+<h4>Seeing-limited image</h4>
+<div aria-hidden="true" class="seeing-field">
+<div class="seeing-ring"></div>
+<div class="seeing-halo"></div>
+<span class="seeing-component primary"></span>
+<span class="seeing-component secondary"></span>
+</div>
+<p class="stage-caption">Atmospheric turbulence makes two close stars look like one fuzzy source.</p>
+</section>
+<section class="speckle-stage">
+<span class="stage-index">02</span>
+<h4>Speckles + Fourier power</h4>
+<div aria-hidden="true" class="analysis-field">
+<div class="speckle-cloud">
+<span style="--x:16%;--y:22%;--s:12px;--o:.88;--d:-.4s"></span><span style="--x:32%;--y:34%;--s:8px;--o:.65;--d:-1.2s"></span><span style="--x:54%;--y:17%;--s:14px;--o:.9;--d:-.8s"></span><span style="--x:71%;--y:38%;--s:9px;--o:.72;--d:-1.6s"></span><span style="--x:24%;--y:65%;--s:9px;--o:.62;--d:-.1s"></span><span style="--x:61%;--y:69%;--s:12px;--o:.78;--d:-1s"></span><span style="--x:78%;--y:58%;--s:7px;--o:.56;--d:-.6s"></span>
+</div>
+<div class="fourier-rings"></div>
+<div class="fourier-core"></div>
+</div>
+<p class="stage-caption">Thousands of short exposures preserve the interference pattern before the atmosphere averages it away.</p>
+</section>
+<section class="speckle-stage">
+<span class="stage-index">03</span>
+<h4>Reconstructed binary</h4>
+<div aria-hidden="true" class="resolved-field">
+<span class="binary-compass"><span class="north">N</span><span class="east">E</span></span>
+<span class="separation-line"></span>
+<span class="resolved-star primary"></span>
+<span class="resolved-star secondary"></span>
+</div>
+<p class="stage-caption">The companion is resolved, so astrometry and photometry replace ambiguity with measurements.</p>
+</section>
+</div>
+<div class="speckle-cycle-status"><strong id="speckle-target-label">Simulated target 01 / 06 · 100 pc</strong><span id="speckle-cycle-note">New target every 3.4 seconds</span></div>
+<div aria-label="Example reconstructed companion measurements" class="measurement-strip" id="speckle-measurements">
+<div class="measurement"><span>Separation</span><strong id="speckle-separation">0.18″</strong></div>
+<div class="measurement"><span>Contrast</span><strong id="speckle-contrast">Δmag 2.3</strong></div>
+<div class="measurement"><span>Position angle</span><strong id="speckle-pa">74°</strong></div>
+<div class="measurement"><span>Projected separation</span><strong id="speckle-projected">18.0 AU</strong></div>
+</div>
+<p class="speckle-caveat">Illustrative rotating targets. Autocorrelation alone has a 180° position-angle ambiguity; reconstructed images or complementary observations establish the true orientation.</p>
+</article>
+</div>
+</section>
 <section class="section alt" id="gravitas">
 <div class="container split">
 <div aria-label="Animated Gravitas-style simulation of two black holes spiraling together, merging, and emitting gravitational waves" class="feature-panel reveal">
 <span class="panel-badge one">Open source · MIT</span>
-<span class="panel-badge two">Browser based</span>
+<button aria-label="Reset and replay the black-hole merger simulation" class="gravitas-reset" id="gravitas-reset" type="button">↻ Reset simulation</button>
 <span class="panel-badge three">Scroll-triggered merger</span>
 <div aria-hidden="true" class="gravitas-scene">
 <div class="gravitas-stars"></div>
@@ -2731,6 +3739,11 @@
 </section>
 <section class="section" id="contact">
 <div class="container">
+<div class="contact-layout">
+<figure class="contact-portrait reveal">
+<img alt="Carl Ziegler at the SFA Observatory" height="1072" loading="lazy" src="images/IMG_0627.jpg" width="804"/>
+<figcaption>At the SFA Observatory, where research, instrumentation, teaching, and public observing share the same sky.</figcaption>
+</figure>
 <div class="contact-card reveal">
 <div class="contact-copy">
 <p class="eyebrow">Contact</p>
@@ -2754,6 +3767,7 @@
 <div class="contact-line">
 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><path d="M4 19V9l8-5 8 5v10"></path><path d="M8 19v-5h8v5M2 19h20"></path></svg>
 <div><strong>Affiliation</strong><br/><a href="https://www.sfasu.edu/academics/colleges/sciences-math/physics-engineering-astronomy" rel="noopener" target="_blank">Stephen F. Austin State University</a><br/><a href="https://www.sfasu.edu/academics/colleges/sciences-math/physics-engineering-astronomy/facilities-research/observatory" rel="noopener" target="_blank">SFA Observatory</a></div>
+</div>
 </div>
 </div>
 </div>
@@ -2872,6 +3886,210 @@
           });
         }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
         revealItems.forEach(item => observer.observe(item));
+      }
+
+      const gravitasReset = document.getElementById('gravitas-reset');
+      const gravitasPanel = gravitasReset?.closest('.feature-panel');
+      if (gravitasReset && gravitasPanel) {
+        gravitasReset.addEventListener('click', () => {
+          gravitasPanel.classList.remove('play');
+          void gravitasPanel.offsetWidth;
+          gravitasPanel.classList.add('play');
+        });
+      }
+
+      const planetRadius = document.getElementById('planet-radius');
+      const companionContrast = document.getElementById('companion-contrast');
+      const companionPresent = document.getElementById('companion-present');
+
+      if (planetRadius && companionContrast && companionPresent) {
+        const radiusOutput = document.getElementById('planet-radius-output');
+        const contrastOutput = document.getElementById('companion-contrast-output');
+        const planetWorld = document.getElementById('planet-world');
+        const planetTrack = document.getElementById('planet-track');
+        const planetTypeText = document.getElementById('planet-type-text');
+        const companionStar = document.getElementById('companion-star');
+        const companionLabel = document.getElementById('companion-label');
+        const trueDepthText = document.getElementById('true-depth');
+        const observedDepthText = document.getElementById('observed-depth');
+        const correctionText = document.getElementById('radius-correction');
+        const trueCurve = document.getElementById('true-curve');
+        const observedCurve = document.getElementById('observed-curve');
+        const systemVisual = document.querySelector('.system-visual');
+
+        const setRangeFill = input => {
+          const minimum = Number(input.min);
+          const maximum = Number(input.max);
+          const fill = ((Number(input.value) - minimum) / (maximum - minimum)) * 100;
+          input.style.setProperty('--range-fill', `${fill}%`);
+        };
+
+        const formatDepth = depth => {
+          if (depth < 0.01) return `${depth.toFixed(4)}%`;
+          if (depth < 1) return `${depth.toFixed(3)}%`;
+          return `${depth.toFixed(2)}%`;
+        };
+
+        const curvePath = bottom => `M8 30 H170 C185 30 190 ${bottom} 208 ${bottom} H292 C310 ${bottom} 315 30 330 30 H492`;
+
+        const updateTransitLab = () => {
+          const radiusEarth = Number(planetRadius.value);
+          const deltaMagnitude = Number(companionContrast.value);
+          const hasCompanion = companionPresent.checked;
+          const fluxRatio = hasCompanion ? 10 ** (-0.4 * deltaMagnitude) : 0;
+          const radiusRatio = radiusEarth / 109.1;
+          const trueDepth = radiusRatio ** 2 * 100;
+          const observedDepth = trueDepth / (1 + fluxRatio);
+          const correction = Math.sqrt(1 + fluxRatio);
+          const massRatio = hasCompanion ? fluxRatio ** 0.25 : 0;
+          const stellarRadiusRatio = hasCompanion ? massRatio ** 0.8 : 0;
+
+          let planetClass = 'rocky';
+          let planetLabel = 'Rocky';
+          if (radiusEarth >= 1.8 && radiusEarth <= 4) {
+            planetClass = 'neptune';
+            planetLabel = 'Neptune-like';
+          } else if (radiusEarth > 4) {
+            planetClass = 'jupiter';
+            planetLabel = 'Jupiter-like';
+          }
+
+          const planetDisplaySize = Math.min(59, 10 + 12 * Math.sqrt(radiusEarth));
+          planetTrack.style.setProperty('--planet-size', `${planetDisplaySize}px`);
+          planetWorld.classList.remove('rocky', 'neptune', 'jupiter');
+          planetWorld.classList.add(planetClass);
+          planetTypeText.textContent = planetLabel;
+          radiusOutput.textContent = `${radiusEarth.toFixed(1)} R⊕`;
+          contrastOutput.textContent = `${deltaMagnitude.toFixed(1)} mag`;
+
+          const companionSize = 27 + stellarRadiusRatio * 49;
+          companionStar.style.setProperty('--companion-size', `${companionSize}px`);
+          companionStar.classList.toggle('hidden', !hasCompanion);
+          companionContrast.disabled = !hasCompanion;
+          companionContrast.closest('.control-group').style.opacity = hasCompanion ? '1' : '.48';
+
+          let spectralLabel = 'M dwarf';
+          let gradient = 'radial-gradient(circle at 34% 29%, #fff4df 0 4%, #f2a06d 24%, #a9433f 100%)';
+          let glow = 'rgba(231,111,81,.42)';
+          if (massRatio >= 0.45 && massRatio < 0.8) {
+            spectralLabel = 'K dwarf';
+            gradient = 'radial-gradient(circle at 34% 29%, #fff9e9 0 4%, #ffd08a 25%, #d66b3f 100%)';
+            glow = 'rgba(244,162,97,.42)';
+          } else if (massRatio >= 0.8) {
+            spectralLabel = 'G dwarf';
+            gradient = 'radial-gradient(circle at 34% 29%, #ffffff 0 5%, #fff1b5 27%, #f1a84e 100%)';
+            glow = 'rgba(255,220,132,.46)';
+          }
+          companionStar.style.setProperty('--companion-gradient', gradient);
+          companionStar.style.setProperty('--companion-glow', glow);
+          companionLabel.textContent = hasCompanion
+            ? `${spectralLabel} · ≈${massRatio.toFixed(2)} M☉`
+            : 'No unresolved companion';
+
+          trueDepthText.textContent = formatDepth(trueDepth);
+          observedDepthText.textContent = formatDepth(observedDepth);
+          correctionText.textContent = `×${correction.toFixed(3)}`;
+
+          const trueDrop = Math.min(55, 8 + Math.sqrt(trueDepth / 2.16) * 47);
+          const observedDrop = trueDrop / (1 + fluxRatio);
+          trueCurve.setAttribute('d', curvePath((30 + trueDrop).toFixed(1)));
+          observedCurve.setAttribute('d', curvePath((30 + observedDrop).toFixed(1)));
+          systemVisual.setAttribute('aria-label', `${planetLabel} planet, ${radiusEarth.toFixed(1)} Earth radii; ${hasCompanion ? `${spectralLabel} companion ${deltaMagnitude.toFixed(1)} magnitudes fainter` : 'no unresolved companion'}. True transit depth ${formatDepth(trueDepth)}; observed depth ${formatDepth(observedDepth)}.`);
+
+          setRangeFill(planetRadius);
+          setRangeFill(companionContrast);
+        };
+
+        planetRadius.addEventListener('input', updateTransitLab);
+        companionContrast.addEventListener('input', updateTransitLab);
+        companionPresent.addEventListener('change', updateTransitLab);
+        updateTransitLab();
+      }
+
+      const speckleSequence = document.querySelector('.speckle-sequence');
+      const speckleMeasurements = document.getElementById('speckle-measurements');
+      const speckleTargetLabel = document.getElementById('speckle-target-label');
+      const speckleCycleNote = document.getElementById('speckle-cycle-note');
+
+      if (speckleSequence && speckleMeasurements && speckleTargetLabel) {
+        const separationText = document.getElementById('speckle-separation');
+        const contrastText = document.getElementById('speckle-contrast');
+        const positionAngleText = document.getElementById('speckle-pa');
+        const projectedText = document.getElementById('speckle-projected');
+        const speckleTargets = [
+          { separation: .18, contrast: 2.3, angle: 74, distance: 100 },
+          { separation: .09, contrast: .8, angle: 132, distance: 73 },
+          { separation: .42, contrast: 3.7, angle: 21, distance: 142 },
+          { separation: .27, contrast: 1.5, angle: 248, distance: 48 },
+          { separation: .65, contrast: 4.5, angle: 315, distance: 120 },
+          { separation: .13, contrast: 2.9, angle: 176, distance: 91 }
+        ];
+        let speckleTargetIndex = 0;
+
+        const renderSpeckleTarget = (target, index) => {
+          const separationScale = Math.max(0, Math.min(1, (target.separation - .08) / (.65 - .08)));
+          const renderedDistance = 28 + separationScale * 72;
+          const angleRadians = target.angle * Math.PI / 180;
+          const dx = Math.sin(angleRadians) * renderedDistance;
+          const dy = -Math.cos(angleRadians) * renderedDistance;
+          const lineAngle = Math.atan2(dy, dx) * 180 / Math.PI;
+          const fluxRatio = 10 ** (-.4 * target.contrast);
+          const brightnessScale = Math.pow(fluxRatio, .24);
+          const companionSize = 10 + 13 * Math.pow(fluxRatio, .28);
+          const companionOpacity = .48 + .52 * brightnessScale;
+          const seeingSize = 41 + 20 * Math.pow(fluxRatio, .25);
+          const fourierDistanceScale = .72;
+          const fourierDx = dx * fourierDistanceScale;
+          const fourierDy = dy * fourierDistanceScale;
+          const fourierPeakSize = 8 + 8 * brightnessScale;
+          let companionGradient = 'radial-gradient(circle at 35% 30%, #fff 0 8%, #ffd092 30%, #d96c4d 100%)';
+
+          if (target.contrast < 1.2) {
+            companionGradient = 'radial-gradient(circle at 35% 30%, #fff 0 10%, #fff0be 34%, #f1a95d 100%)';
+          } else if (target.contrast > 3) {
+            companionGradient = 'radial-gradient(circle at 35% 30%, #fff2de 0 7%, #ef9a70 30%, #a63f40 100%)';
+          }
+
+          speckleSequence.style.setProperty('--resolved-dx', `${dx.toFixed(1)}px`);
+          speckleSequence.style.setProperty('--resolved-dy', `${dy.toFixed(1)}px`);
+          speckleSequence.style.setProperty('--line-distance', `${renderedDistance.toFixed(1)}px`);
+          speckleSequence.style.setProperty('--line-angle', `${lineAngle.toFixed(1)}deg`);
+          speckleSequence.style.setProperty('--seeing-dx', `${(dx * .48).toFixed(1)}px`);
+          speckleSequence.style.setProperty('--seeing-dy', `${(dy * .48).toFixed(1)}px`);
+          speckleSequence.style.setProperty('--seeing-secondary-size', `${seeingSize.toFixed(1)}px`);
+          speckleSequence.style.setProperty('--secondary-size', `${companionSize.toFixed(1)}px`);
+          speckleSequence.style.setProperty('--secondary-opacity', companionOpacity.toFixed(2));
+          speckleSequence.style.setProperty('--secondary-gradient', companionGradient);
+          speckleSequence.style.setProperty('--fourier-dx', `${fourierDx.toFixed(1)}px`);
+          speckleSequence.style.setProperty('--fourier-dy', `${fourierDy.toFixed(1)}px`);
+          speckleSequence.style.setProperty('--fourier-dx-neg', `${(-fourierDx).toFixed(1)}px`);
+          speckleSequence.style.setProperty('--fourier-dy-neg', `${(-fourierDy).toFixed(1)}px`);
+          speckleSequence.style.setProperty('--fourier-peak-size', `${fourierPeakSize.toFixed(1)}px`);
+
+          const projectedSeparation = target.separation * target.distance;
+          separationText.textContent = `${target.separation.toFixed(2)}″`;
+          contrastText.textContent = `Δmag ${target.contrast.toFixed(1)}`;
+          positionAngleText.textContent = `${target.angle}°`;
+          projectedText.textContent = `${projectedSeparation.toFixed(1)} AU`;
+          speckleTargetLabel.textContent = `Simulated target ${String(index + 1).padStart(2, '0')} / ${String(speckleTargets.length).padStart(2, '0')} · ${target.distance} pc`;
+          speckleSequence.setAttribute('aria-label', `Speckle-imaging demonstration for a simulated binary with separation ${target.separation.toFixed(2)} arcseconds, contrast ${target.contrast.toFixed(1)} magnitudes, and position angle ${target.angle} degrees.`);
+          speckleMeasurements.setAttribute('aria-label', `Reconstructed companion measurements: separation ${target.separation.toFixed(2)} arcseconds, contrast ${target.contrast.toFixed(1)} magnitudes, position angle ${target.angle} degrees, projected separation ${projectedSeparation.toFixed(1)} astronomical units.`);
+        };
+
+        renderSpeckleTarget(speckleTargets[0], 0);
+
+        if (reduceMotion) {
+          if (speckleCycleNote) speckleCycleNote.textContent = 'Rotation paused by motion preference';
+        } else {
+          window.setInterval(() => {
+            speckleSequence.classList.add('target-changing');
+            window.setTimeout(() => {
+              speckleTargetIndex = (speckleTargetIndex + 1) % speckleTargets.length;
+              renderSpeckleTarget(speckleTargets[speckleTargetIndex], speckleTargetIndex);
+              speckleSequence.classList.remove('target-changing');
+            }, 240);
+          }, 3400);
+        }
       }
 
 
