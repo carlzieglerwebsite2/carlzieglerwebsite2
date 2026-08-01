@@ -1975,7 +1975,15 @@
     .transit-visual .planet-dot {
       transform-box: fill-box;
       transform-origin: center;
-      animation: planet-cross 7.5s ease-in-out infinite;
+      will-change: transform, opacity;
+    }
+
+    .transit-visual .planet-front {
+      animation: planet-front-orbit 7.5s linear infinite;
+    }
+
+    .transit-visual .planet-rear {
+      animation: planet-rear-orbit 7.5s linear infinite;
     }
 
     .transit-visual .lightcurve-trace {
@@ -1988,10 +1996,35 @@
       animation: companion-pulse 3.2s ease-in-out infinite;
     }
 
-    @keyframes planet-cross {
-      0%, 8% { transform: translateX(0); }
-      50% { transform: translateX(315px); }
-      92%, 100% { transform: translateX(0); }
+    .transit-visual .stellar-halo {
+      pointer-events: none;
+    }
+
+    @keyframes planet-front-orbit {
+      0% { transform: translate(65px, 108px); opacity: 1; }
+      6.25% { transform: translate(76px, 119px); opacity: 1; }
+      12.5% { transform: translate(106px, 128px); opacity: 1; }
+      18.75% { transform: translate(151px, 134px); opacity: 1; }
+      25% { transform: translate(205px, 136px); opacity: 1; }
+      31.25% { transform: translate(259px, 134px); opacity: 1; }
+      37.5% { transform: translate(304px, 128px); opacity: 1; }
+      43.75% { transform: translate(334px, 119px); opacity: 1; }
+      49.8% { transform: translate(345px, 108px); opacity: 1; }
+      49.9%, 100% { transform: translate(345px, 108px); opacity: 0; }
+    }
+
+    @keyframes planet-rear-orbit {
+      0%, 49.8% { transform: translate(345px, 108px); opacity: 0; }
+      50% { transform: translate(345px, 108px); opacity: 1; }
+      56.25% { transform: translate(334px, 97px); opacity: .88; }
+      62.5% { transform: translate(304px, 88px); opacity: 1; }
+      68.75% { transform: translate(259px, 82px); opacity: 1; }
+      75% { transform: translate(205px, 80px); opacity: 1; }
+      81.25% { transform: translate(151px, 82px); opacity: 1; }
+      87.5% { transform: translate(106px, 88px); opacity: 1; }
+      93.75% { transform: translate(76px, 97px); opacity: .88; }
+      99.8% { transform: translate(65px, 108px); opacity: 1; }
+      100% { transform: translate(65px, 108px); opacity: 0; }
     }
 
     @keyframes draw-lightcurve {
@@ -4466,6 +4499,12 @@
         animation-iteration-count: 1 !important;
         transition-duration: .001ms !important;
       }
+      .transit-visual .planet-front {
+        animation: none !important;
+        opacity: 1;
+        transform: translate(65px, 108px);
+      }
+      .transit-visual .planet-rear { display: none; }
       .reveal { opacity: 1; transform: none; }
     }
   </style><link href="assets/css/parallax-stars.css" rel="stylesheet"/>
@@ -4620,7 +4659,7 @@
 </div>
 <div class="research-grid">
 <article class="research-card wide reveal">
-<div class="card-image transit-card-image"><figure aria-label="Animated exoplanet crossing the planet-hosting star in an unresolved binary while true and blended transit light curves are traced below" class="transit-visual" role="img">
+<div class="card-image transit-card-image"><figure aria-label="Animated exoplanet orbiting a planet-hosting star in an unresolved binary: it transits in front from left to right, passes behind the star on the return arc, and produces true and diluted light curves below" class="transit-visual" role="img">
 <svg aria-hidden="true" viewbox="0 0 500 350">
 <defs>
 <radialgradient cx="34%" cy="30%" id="primaryStar">
@@ -4634,20 +4673,37 @@
 <stop offset="35%" stop-color="#ffd28a"></stop>
 <stop offset="100%" stop-color="#bd6435"></stop>
 </radialgradient>
-<filter id="starGlow">
-<fegaussianblur result="blur" stddeviation="7"></fegaussianblur>
-<femerge><femergenode in="blur"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
-</filter>
+<radialgradient id="primaryHalo">
+<stop offset="0%" stop-color="#ffd27f" stop-opacity=".56"></stop>
+<stop offset="48%" stop-color="#ffb35f" stop-opacity=".24"></stop>
+<stop offset="76%" stop-color="#ff9a4a" stop-opacity=".08"></stop>
+<stop offset="100%" stop-color="#ff8a3d" stop-opacity="0"></stop>
+</radialgradient>
+<radialgradient id="secondaryHalo">
+<stop offset="0%" stop-color="#ffd79b" stop-opacity=".48"></stop>
+<stop offset="48%" stop-color="#f3a45f" stop-opacity=".2"></stop>
+<stop offset="76%" stop-color="#e88443" stop-opacity=".07"></stop>
+<stop offset="100%" stop-color="#d66c35" stop-opacity="0"></stop>
+</radialgradient>
 </defs>
 <text fill="#aebed0" font-family="system-ui, sans-serif" font-size="12" letter-spacing="1.2" x="24" y="25">UNRESOLVED BINARY</text>
-<ellipse cx="245" cy="108" fill="none" opacity=".58" rx="205" ry="62" stroke="#5e7389" stroke-dasharray="6 8" stroke-width="1.2"></ellipse>
-<circle cx="205" cy="108" fill="url(#primaryStar)" filter="url(#starGlow)" r="55"></circle>
-<circle class="companion-glow" cx="386" cy="76" fill="url(#secondaryStar)" filter="url(#starGlow)" r="25"></circle>
+<path d="M65 108 C79 70 331 70 345 108" fill="none" opacity=".3" stroke="#5e7389" stroke-dasharray="6 8" stroke-width="1.2"></path>
+<path d="M65 108 C79 146 331 146 345 108" fill="none" opacity=".7" stroke="#5e7389" stroke-dasharray="6 8" stroke-width="1.2"></path>
+<g class="planet-dot planet-rear">
+<circle cx="0" cy="0" fill="#0b1722" r="10" stroke="#80e6ff" stroke-width="2"></circle>
+<circle cx="-3" cy="-3" fill="#d3f7ff" opacity=".8" r="2.3"></circle>
+</g>
+<circle class="stellar-halo" cx="205" cy="108" fill="url(#primaryHalo)" r="91"></circle>
+<circle cx="205" cy="108" fill="url(#primaryStar)" r="55"></circle>
+<g class="companion-glow">
+<circle class="stellar-halo" cx="386" cy="76" fill="url(#secondaryHalo)" r="50"></circle>
+<circle cx="386" cy="76" fill="url(#secondaryStar)" r="25"></circle>
+</g>
 <text fill="#dceaf5" font-family="system-ui, sans-serif" font-size="11" x="169" y="181">planet host</text>
 <text fill="#aebed0" font-family="system-ui, sans-serif" font-size="11" x="349" y="121">extra flux</text>
-<g class="planet-dot">
-<circle cx="50" cy="108" fill="#0b1722" r="10" stroke="#80e6ff" stroke-width="2"></circle>
-<circle cx="47" cy="105" fill="#d3f7ff" opacity=".8" r="2.3"></circle>
+<g class="planet-dot planet-front">
+<circle cx="0" cy="0" fill="#0b1722" r="10" stroke="#80e6ff" stroke-width="2"></circle>
+<circle cx="-3" cy="-3" fill="#d3f7ff" opacity=".8" r="2.3"></circle>
 </g>
 <line stroke="#466077" stroke-width="1" x1="50" x2="470" y1="218" y2="218"></line>
 <line stroke="#466077" stroke-width="1" x1="50" x2="50" y1="218" y2="326"></line>
