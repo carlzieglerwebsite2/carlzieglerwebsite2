@@ -3150,13 +3150,47 @@
     .evidence-card[data-state="danger"] { border-color: rgba(255,120,109,.18); background: rgba(255,120,109,.035); }
     .evidence-card[data-state="warning"] { border-color: rgba(255,196,107,.16); }
 
-    .evidence-card span {
-      display: block;
+    .evidence-card-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       margin-bottom: 8px;
+    }
+
+    .evidence-card-label > span {
       color: #8096a9;
       font-size: .6rem;
       letter-spacing: .08em;
       text-transform: uppercase;
+    }
+
+    .evidence-help-trigger {
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border: 1px solid rgba(110,216,255,.32);
+      border-radius: 50%;
+      background: rgba(110,216,255,.08);
+      color: #9be5ff;
+      font: 700 .72rem/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      cursor: pointer;
+      transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .evidence-help-trigger:hover {
+      border-color: rgba(110,216,255,.62);
+      background: rgba(110,216,255,.16);
+      color: #e9faff;
+      transform: translateY(-1px);
+    }
+
+    .evidence-help-trigger:focus-visible {
+      outline: 2px solid #6ed8ff;
+      outline-offset: 3px;
     }
 
     .evidence-card strong {
@@ -3172,6 +3206,139 @@
       color: #8fa5b7;
       font-size: .7rem;
       line-height: 1.38;
+    }
+
+    .evidence-help-dialog {
+      width: min(460px, calc(100vw - 30px));
+      max-height: min(680px, calc(100vh - 30px));
+      margin: auto;
+      padding: 0;
+      overflow: auto;
+      border: 1px solid rgba(110,216,255,.25);
+      border-radius: 20px;
+      background: #091521;
+      color: #dcecf6;
+      box-shadow: 0 30px 90px rgba(0,0,0,.58), 0 0 50px rgba(35,139,190,.12);
+    }
+
+    .evidence-help-dialog::backdrop {
+      background: rgba(1,7,14,.78);
+      backdrop-filter: blur(5px);
+    }
+
+    .evidence-help-shell {
+      padding: 24px;
+      background:
+        radial-gradient(circle at 88% 5%, rgba(110,216,255,.11), transparent 34%),
+        linear-gradient(145deg, rgba(255,255,255,.025), transparent 60%);
+    }
+
+    .evidence-help-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+
+    .evidence-help-kicker {
+      display: block;
+      margin-bottom: 5px;
+      color: #6ed8ff;
+      font: 700 .59rem/1.3 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .evidence-help-head h4 {
+      margin: 0;
+      color: #f2f8fc;
+      font-size: 1.28rem;
+      line-height: 1.18;
+    }
+
+    .evidence-help-close {
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 50%;
+      background: rgba(255,255,255,.045);
+      color: #dcecf6;
+      font: 400 1.2rem/1 system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .evidence-help-close:hover,
+    .evidence-help-close:focus-visible {
+      border-color: rgba(110,216,255,.52);
+      background: rgba(110,216,255,.1);
+      color: #fff;
+    }
+
+    .evidence-help-close:focus-visible {
+      outline: 2px solid #6ed8ff;
+      outline-offset: 3px;
+    }
+
+    .evidence-help-why {
+      margin: 0 0 16px;
+      color: #aec0cd;
+      font-size: .83rem;
+      line-height: 1.62;
+    }
+
+    .evidence-help-guidance {
+      display: grid;
+      gap: 10px;
+    }
+
+    .evidence-help-guidance section {
+      padding: 13px 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 13px;
+      background: rgba(255,255,255,.028);
+    }
+
+    .evidence-help-guidance section:first-child {
+      border-color: rgba(119,227,180,.18);
+      background: rgba(119,227,180,.035);
+    }
+
+    .evidence-help-guidance section:last-child {
+      border-color: rgba(255,196,107,.17);
+      background: rgba(255,196,107,.03);
+    }
+
+    .evidence-help-guidance strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #edf7fc;
+      font-size: .67rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .evidence-help-guidance section:first-child strong { color: #9ce7c6; }
+    .evidence-help-guidance section:last-child strong { color: #ffd38c; }
+
+    .evidence-help-guidance p {
+      margin: 0;
+      color: #9fb3c2;
+      font-size: .76rem;
+      line-height: 1.52;
+    }
+
+    .evidence-help-footer {
+      margin: 15px 0 0;
+      padding-top: 13px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #71899b;
+      font-size: .67rem;
+      line-height: 1.5;
     }
 
     .mini-speckle {
@@ -4719,11 +4886,22 @@
 <section class="evidence-console">
 <div class="evidence-console-header"><h4>Follow-up evidence</h4><span>Four independent checks</span></div>
 <div class="evidence-grid">
-<div class="evidence-card" data-state="positive" id="evidence-morphology"><span>Transit morphology</span><strong id="evidence-morphology-value">U-shaped; odd/even agree</strong><small id="evidence-morphology-note">No detectable secondary eclipse</small></div>
-<div class="evidence-card" data-state="positive" id="evidence-centroid"><span>Difference-image centroid</span><strong id="evidence-centroid-value">0.05 px from target</strong><small id="evidence-centroid-note">Signal is spatially consistent with the target</small></div>
-<div class="evidence-card" data-state="positive" id="evidence-speckle"><span>Speckle imaging</span><strong id="evidence-speckle-value">No companion detected</strong><small id="evidence-speckle-note">Δmag 5.2 sensitivity at 0.2″</small><i aria-hidden="true" class="mini-speckle"></i></div>
-<div class="evidence-card" data-state="positive" id="evidence-color"><span>Color + Gaia</span><strong id="evidence-color-value">g′ and z′ depths agree</strong><small id="evidence-color-note">RUWE 1.03 · no astrometric warning</small></div>
+<div class="evidence-card" data-state="positive" id="evidence-morphology"><div class="evidence-card-label"><span>Transit morphology</span><button aria-haspopup="dialog" aria-label="Why transit morphology matters" class="evidence-help-trigger" data-evidence-help="morphology" type="button">?</button></div><strong id="evidence-morphology-value">U-shaped; odd/even agree</strong><small id="evidence-morphology-note">No detectable secondary eclipse</small></div>
+<div class="evidence-card" data-state="positive" id="evidence-centroid"><div class="evidence-card-label"><span>Difference-image centroid</span><button aria-haspopup="dialog" aria-label="Why the difference-image centroid matters" class="evidence-help-trigger" data-evidence-help="centroid" type="button">?</button></div><strong id="evidence-centroid-value">0.05 px from target</strong><small id="evidence-centroid-note">Signal is spatially consistent with the target</small></div>
+<div class="evidence-card" data-state="positive" id="evidence-speckle"><div class="evidence-card-label"><span>Speckle imaging</span><button aria-haspopup="dialog" aria-label="Why speckle imaging matters" class="evidence-help-trigger" data-evidence-help="speckle" type="button">?</button></div><strong id="evidence-speckle-value">No companion detected</strong><small id="evidence-speckle-note">Δmag 5.2 sensitivity at 0.2″</small><i aria-hidden="true" class="mini-speckle"></i></div>
+<div class="evidence-card" data-state="positive" id="evidence-color"><div class="evidence-card-label"><span>Color + Gaia</span><button aria-haspopup="dialog" aria-label="Why color observations and Gaia matter" class="evidence-help-trigger" data-evidence-help="color" type="button">?</button></div><strong id="evidence-color-value">g′ and z′ depths agree</strong><small id="evidence-color-note">RUWE 1.03 · no astrometric warning</small></div>
 </div>
+<dialog aria-describedby="evidence-help-why" aria-labelledby="evidence-help-title" class="evidence-help-dialog" id="evidence-help-dialog">
+<div class="evidence-help-shell">
+<div class="evidence-help-head"><div><span class="evidence-help-kicker">Screening guide</span><h4 id="evidence-help-title">Transit morphology</h4></div><button aria-label="Close screening guide" class="evidence-help-close" id="evidence-help-close" type="button">×</button></div>
+<p class="evidence-help-why" id="evidence-help-why"></p>
+<div class="evidence-help-guidance">
+<section><strong>Planet-like clues</strong><p id="evidence-help-look-for"></p></section>
+<section><strong>Red flags and caveats</strong><p id="evidence-help-caveat"></p></section>
+</div>
+<p class="evidence-help-footer">No single diagnostic proves that a signal is planetary. A strong disposition is the explanation that fits all of the available evidence at once.</p>
+</div>
+</dialog>
 <p class="verdict-prompt">Your disposition</p>
 <div class="verdict-grid" role="group" aria-label="Choose the candidate disposition">
 <button class="verdict-button" data-verdict="planet" type="button">Strong planet candidate</button>
@@ -5638,10 +5816,79 @@
           eb: 'Eclipsing binary on target',
           background: 'Background contaminant'
         };
+        const evidenceHelp = {
+          morphology: {
+            title: 'Transit morphology',
+            why: 'The shape and repetition of the dimming test whether a small object crossing a star is a plausible explanation. Stellar eclipses often leave extra structure that a simple planet transit does not.',
+            lookFor: 'Consistent odd and even events, a duration compatible with the orbit and host star, and no convincing secondary eclipse. A flat or gently rounded bottom can support a full transit.',
+            caveat: 'A V-shaped event, unequal alternating depths, ellipsoidal variation, or a secondary eclipse can indicate a grazing or stellar binary. Shape alone is not decisive: grazing planets and noisy data can also look V-shaped.'
+          },
+          centroid: {
+            title: 'Difference-image centroid',
+            why: 'TESS pixels are large enough to contain several stars. Comparing in-transit and out-of-transit images helps locate which point on the detector actually became fainter.',
+            lookFor: 'A difference-image source and centroid shift consistent with the intended target within the measurement uncertainty, with no repeatable motion toward a nearby star.',
+            caveat: 'A significant shift toward a neighbor points to a background or nearby eclipsing system. Crowded fields and low-signal transits can weaken the test, so the uncertainty matters as much as the offset.'
+          },
+          speckle: {
+            title: 'Speckle imaging',
+            why: 'High-resolution imaging searches inside the blurred footprint of ordinary images for close stars that can dilute a transit, create host-star ambiguity, or produce the event themselves.',
+            lookFor: 'Either no companion down to a stated contrast curve, or a measured companion whose separation and brightness are included when correcting the transit depth and testing possible hosts.',
+            caveat: 'A detected companion does not automatically invalidate the planet. It changes the false-positive analysis and usually increases the inferred planet radius; the contrast limit also varies strongly with separation.'
+          },
+          color: {
+            title: 'Color photometry + Gaia',
+            why: 'A dark planet blocks nearly the same fraction of starlight in different optical bands, while blends of stars with different temperatures often produce wavelength-dependent eclipse depths. Gaia adds nearby-source and astrometric information.',
+            lookFor: 'Transit depths that agree across filters within their uncertainties, no plausible Gaia contaminant in the aperture, and astrometry consistent with a well-behaved single-source solution.',
+            caveat: 'A much deeper event in one band can expose a blended eclipsing star, and elevated RUWE can flag unresolved multiplicity. Small color differences from limb darkening are normal, and RUWE is a clue rather than proof of a companion.'
+          }
+        };
+        const evidenceHelpDialog = document.getElementById('evidence-help-dialog');
+        const evidenceHelpClose = document.getElementById('evidence-help-close');
+        const evidenceHelpTitle = document.getElementById('evidence-help-title');
+        const evidenceHelpWhy = document.getElementById('evidence-help-why');
+        const evidenceHelpLookFor = document.getElementById('evidence-help-look-for');
+        const evidenceHelpCaveat = document.getElementById('evidence-help-caveat');
+        const evidenceHelpTriggers = [...vettingLab.querySelectorAll('.evidence-help-trigger')];
+        let lastEvidenceHelpTrigger = null;
         let candidateIndex = 0;
         let vettingCorrect = 0;
         let vettingAttempts = 0;
         let candidateAnswered = false;
+
+        const closeEvidenceHelp = () => {
+          if (!evidenceHelpDialog) return;
+          if (typeof evidenceHelpDialog.close === 'function' && evidenceHelpDialog.open) {
+            evidenceHelpDialog.close();
+          } else {
+            evidenceHelpDialog.removeAttribute('open');
+            lastEvidenceHelpTrigger?.focus();
+          }
+        };
+
+        evidenceHelpTriggers.forEach(trigger => {
+          trigger.addEventListener('click', () => {
+            const guide = evidenceHelp[trigger.dataset.evidenceHelp];
+            if (!guide || !evidenceHelpDialog) return;
+            lastEvidenceHelpTrigger = trigger;
+            evidenceHelpTitle.textContent = guide.title;
+            evidenceHelpWhy.textContent = guide.why;
+            evidenceHelpLookFor.textContent = guide.lookFor;
+            evidenceHelpCaveat.textContent = guide.caveat;
+            if (typeof evidenceHelpDialog.showModal === 'function') {
+              if (!evidenceHelpDialog.open) evidenceHelpDialog.showModal();
+            } else {
+              evidenceHelpDialog.setAttribute('open', '');
+            }
+          });
+        });
+
+        evidenceHelpClose?.addEventListener('click', closeEvidenceHelp);
+        evidenceHelpDialog?.addEventListener('click', event => {
+          if (event.target === evidenceHelpDialog) closeEvidenceHelp();
+        });
+        evidenceHelpDialog?.addEventListener('close', () => {
+          lastEvidenceHelpTrigger?.focus();
+        });
 
         const buildCandidateCurve = candidate => {
           const points = [];
