@@ -1036,6 +1036,429 @@
 
     @keyframes waveform-draw { to { stroke-dashoffset: 0; } }
 
+    /* Gravitas compact-binary sequence: animations are attached only while
+       .play is present, so removing and re-adding it always produces a true reset. */
+    .gravitas-panel {
+      --merger-duration: 9.6s;
+      min-height: 570px;
+      background:
+        radial-gradient(circle at 50% 34%, rgba(70, 185, 255, .13), transparent 28%),
+        radial-gradient(circle at 50% 80%, rgba(140, 92, 232, .13), transparent 34%),
+        linear-gradient(180deg, #030914 0%, #071321 100%);
+    }
+
+    .gravitas-panel .gravitas-scene {
+      inset: 16px;
+      border: 1px solid rgba(139, 198, 230, .12);
+      border-radius: 23px;
+      background:
+        radial-gradient(ellipse at 50% 39%, rgba(50, 151, 217, .15), transparent 31%),
+        radial-gradient(ellipse at 50% 70%, rgba(123, 86, 218, .13), transparent 38%),
+        linear-gradient(180deg, #010611 0%, #06111f 64%, #091526 100%);
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, .44);
+    }
+
+    .gravitas-panel .gravitas-scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle at center 40%, transparent 0 18%, rgba(2, 7, 15, .08) 36%, rgba(2, 7, 15, .52) 82%);
+    }
+
+    .gravitas-panel .gravitas-stars {
+      opacity: .72;
+      animation: none;
+      transform: scale(1.02);
+    }
+
+    .gravitas-panel.play .gravitas-stars {
+      animation: gravitas-star-drift 18s linear both;
+    }
+
+    .gravitas-panel .gravitas-grid {
+      inset: 27% -12% -25%;
+      z-index: 2;
+      opacity: .42;
+      background-image:
+        linear-gradient(rgba(101, 190, 242, .13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(101, 190, 242, .13) 1px, transparent 1px);
+      background-size: 46px 38px;
+      transform: perspective(650px) rotateX(67deg) scale(1.34);
+      transform-origin: center top;
+      mask-image: radial-gradient(ellipse at center top, #000 0 48%, transparent 78%);
+      animation: none;
+    }
+
+    .gravitas-panel.play .gravitas-grid {
+      animation: gravitas-grid-flex var(--merger-duration) ease-in-out both;
+    }
+
+    .gravitas-panel .gravitas-center-glow {
+      top: 40%;
+      width: 310px;
+      opacity: .72;
+      background: radial-gradient(circle, rgba(107, 216, 255, .18) 0%, rgba(92, 129, 255, .06) 38%, transparent 72%);
+      filter: blur(12px);
+    }
+
+    .gravitas-panel .gravitas-stage {
+      top: 40%;
+      width: min(84%, 480px);
+      height: 310px;
+      z-index: 4;
+    }
+
+    .gravitas-panel .spacetime-well {
+      width: 360px;
+      height: 218px;
+      opacity: .72;
+      transform: translate(-50%, -50%) rotate(-4deg);
+      background:
+        repeating-radial-gradient(ellipse at center, rgba(124, 216, 255, .16) 0 1px, transparent 2px 24px),
+        radial-gradient(ellipse at center, rgba(77, 184, 242, .14), rgba(94, 88, 190, .055) 48%, transparent 72%);
+      filter: drop-shadow(0 0 24px rgba(74, 185, 244, .1));
+      animation: none;
+    }
+
+    .gravitas-panel.play .spacetime-well {
+      animation: gravitas-well-collapse var(--merger-duration) cubic-bezier(.42, 0, .22, 1) both;
+    }
+
+    .gravitas-panel .black-hole {
+      width: 70px;
+      height: 70px;
+      opacity: 0;
+      animation: none;
+      will-change: transform, opacity;
+    }
+
+    .gravitas-panel .black-hole.bh-b {
+      width: 60px;
+      height: 60px;
+    }
+
+    .gravitas-panel.play .black-hole.bh-a {
+      animation: none;
+    }
+
+    .gravitas-panel.play .black-hole.bh-b {
+      animation: none;
+    }
+
+    .gravitas-panel .black-hole::before,
+    .gravitas-panel .remnant-hole::before {
+      content: "";
+      position: absolute;
+      inset: -15px;
+      z-index: 0;
+      border: 1px solid rgba(146, 224, 255, .28);
+      border-right-color: rgba(255, 190, 111, .54);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      filter: blur(.2px) drop-shadow(0 0 8px rgba(103, 207, 255, .26));
+      transform: rotate(-18deg) scaleY(.72);
+    }
+
+    .gravitas-panel .black-hole::after,
+    .gravitas-panel .remnant-hole::after {
+      content: "";
+      position: absolute;
+      inset: -27px;
+      z-index: 0;
+      border-radius: 50%;
+      background: conic-gradient(from 80deg, transparent 0 21%, rgba(111, 215, 255, .15) 29%, transparent 38% 66%, rgba(255, 168, 89, .12) 75%, transparent 84%);
+      filter: blur(4px);
+      animation: none;
+    }
+
+    .gravitas-panel.play .black-hole::after,
+    .gravitas-panel.play .remnant-hole::after {
+      animation: gravitas-lensing-spin 2.1s linear infinite;
+    }
+
+    .gravitas-panel .accretion-disk {
+      width: 126px;
+      height: 34px;
+      background:
+        linear-gradient(180deg, transparent 3%, rgba(255, 240, 196, .92) 42%, rgba(255, 145, 68, .63) 52%, transparent 86%),
+        radial-gradient(ellipse at center, transparent 27%, rgba(255, 225, 159, .76) 34%, rgba(242, 111, 53, .28) 58%, transparent 72%);
+      box-shadow: 0 0 13px rgba(255, 163, 78, .43), 0 0 31px rgba(85, 188, 255, .18);
+      animation: none;
+    }
+
+    .gravitas-panel .bh-b .accretion-disk {
+      width: 108px;
+      height: 30px;
+    }
+
+    .gravitas-panel.play .accretion-disk {
+      animation: gravitas-disk-pulse .72s ease-in-out infinite alternate;
+    }
+
+    .gravitas-panel .event-horizon {
+      inset: 8px;
+      background: radial-gradient(circle at 36% 30%, #0d1724 0 8%, #020409 31%, #000 72%);
+      box-shadow:
+        inset -9px -9px 16px rgba(0, 0, 0, .96),
+        0 0 0 2px rgba(255, 235, 194, .2),
+        0 0 9px rgba(255, 224, 170, .66),
+        0 0 28px rgba(86, 190, 255, .26);
+    }
+
+    .gravitas-panel .photon-ring {
+      inset: 3px;
+      border-width: 2px;
+      border-color: rgba(255, 235, 191, .8);
+      border-left-color: rgba(114, 222, 255, .82);
+      border-bottom-color: rgba(255, 127, 64, .5);
+      animation: none;
+    }
+
+    .gravitas-panel.play .photon-ring {
+      animation: gravitas-photon-flicker .52s ease-in-out infinite alternate;
+    }
+
+    .gravitas-panel .merger-core {
+      width: 52px;
+      height: 52px;
+      opacity: 0;
+      background: radial-gradient(circle, #fff 0 7%, #d9f5ff 13%, rgba(112, 220, 255, .8) 27%, rgba(156, 115, 255, .31) 48%, transparent 72%);
+      filter: blur(.35px);
+      animation: none;
+    }
+
+    .gravitas-panel.play .merger-core {
+      animation: gravitas-merger-flash var(--merger-duration) ease-out both;
+    }
+
+    .gravitas-panel .remnant-hole {
+      width: 88px;
+      height: 88px;
+      opacity: 0;
+      animation: none;
+    }
+
+    .gravitas-panel .remnant-hole .accretion-disk {
+      width: 164px;
+      height: 42px;
+      transform: translate(-50%, -50%) rotate(-7deg);
+    }
+
+    .gravitas-panel.play .remnant-hole {
+      animation: gravitas-remnant var(--merger-duration) cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .gravitas-panel .gw-rings span {
+      width: 42px;
+      height: 26px;
+      border-color: rgba(112, 223, 255, .74);
+      border-left-color: rgba(180, 146, 255, .5);
+      border-right-color: rgba(180, 146, 255, .5);
+      opacity: 0;
+      animation: none;
+    }
+
+    .gravitas-panel.play .gw-rings span {
+      animation: gravitas-wavefront 2.25s ease-out both;
+    }
+
+    .gravitas-panel.play .gw-rings span:nth-child(1) { animation-delay: 6.95s; }
+    .gravitas-panel.play .gw-rings span:nth-child(2) { animation-delay: 7.14s; }
+    .gravitas-panel.play .gw-rings span:nth-child(3) { animation-delay: 7.33s; }
+    .gravitas-panel.play .gw-rings span:nth-child(4) { animation-delay: 7.52s; }
+
+    .gravitas-panel .gravitas-status {
+      position: absolute;
+      z-index: 10;
+      left: 50%;
+      bottom: 137px;
+      max-width: calc(100% - 50px);
+      padding: 7px 11px;
+      border: 1px solid rgba(128, 209, 248, .18);
+      border-radius: 999px;
+      transform: translateX(-50%);
+      color: #b9d9eb;
+      background: rgba(3, 10, 19, .72);
+      font-size: .68rem;
+      font-weight: 720;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+    }
+
+    .gravitas-panel .waveform {
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      height: 112px;
+      padding: 10px 14px 12px;
+      border-color: rgba(122, 205, 245, .14);
+      background: linear-gradient(180deg, rgba(2, 8, 16, .82), rgba(5, 15, 26, .96));
+      overflow: hidden;
+    }
+
+    .gravitas-panel .waveform::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 31px;
+      height: 2px;
+      border-radius: 2px;
+      background: rgba(126, 211, 250, .11);
+    }
+
+    .gravitas-panel .waveform::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      bottom: 31px;
+      width: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #73ddff, #b48bff);
+      box-shadow: 0 0 8px rgba(110, 216, 255, .42);
+      animation: none;
+    }
+
+    .gravitas-panel.play .waveform::after {
+      animation: gravitas-progress var(--merger-duration) linear both;
+    }
+
+    .gravitas-panel .waveform svg {
+      position: relative;
+      z-index: 2;
+      height: 60px;
+    }
+
+    .gravitas-panel .waveform-trace {
+      stroke: #7fe2ff;
+      stroke-width: 2.4;
+      stroke-dasharray: 980;
+      stroke-dashoffset: 980;
+      filter: drop-shadow(0 0 3px rgba(103, 218, 255, .42));
+      animation: none;
+    }
+
+    .gravitas-panel.play .waveform-trace {
+      animation: gravitas-waveform var(--merger-duration) linear both;
+    }
+
+    .gravitas-panel .waveform-labels {
+      position: relative;
+      z-index: 2;
+      margin-top: 7px;
+      font-size: .68rem;
+    }
+
+    .gravitas-panel .waveform-labels span:first-child {
+      color: #dceef7;
+    }
+
+    .gravitas-panel .panel-badge.one {
+      top: 25px;
+      left: 25px;
+      border-color: rgba(120, 202, 241, .18);
+      color: #b9d5e7;
+      background: rgba(3, 10, 19, .69);
+    }
+
+    .gravitas-panel .gravitas-reset {
+      top: 25px;
+      right: 25px;
+    }
+
+    @keyframes gravitas-star-drift {
+      from { transform: scale(1.02) translate3d(0, 0, 0); opacity: .58; }
+      to { transform: scale(1.08) translate3d(-1.2%, .8%, 0); opacity: .82; }
+    }
+
+    @keyframes gravitas-grid-flex {
+      0%, 52% { opacity: .34; filter: brightness(.85); }
+      72% { opacity: .62; filter: brightness(1.45); }
+      82%, 100% { opacity: .28; filter: brightness(.76); }
+    }
+
+    @keyframes gravitas-well-collapse {
+      0% { opacity: .54; transform: translate(-50%, -50%) rotate(-4deg) scale(1.06); }
+      54% { opacity: .84; transform: translate(-50%, -50%) rotate(-1deg) scale(.88); }
+      72% { opacity: 1; transform: translate(-50%, -50%) rotate(2deg) scale(.66); filter: brightness(1.7); }
+      84%, 100% { opacity: .48; transform: translate(-50%, -50%) rotate(0deg) scale(.94); filter: brightness(.82); }
+    }
+
+    @keyframes gravitas-inspiral-a {
+      0% { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) translateX(142px) rotate(0deg) scale(1); }
+      10% { opacity: 1; transform: translate(-50%, -50%) rotate(180deg) translateX(130px) rotate(-180deg) scale(1.01); }
+      20% { opacity: 1; transform: translate(-50%, -50%) rotate(360deg) translateX(116px) rotate(-360deg) scale(1.02); }
+      30% { opacity: 1; transform: translate(-50%, -50%) rotate(540deg) translateX(99px) rotate(-540deg) scale(1.03); }
+      40% { opacity: 1; transform: translate(-50%, -50%) rotate(720deg) translateX(81px) rotate(-720deg) scale(1.04); }
+      50% { opacity: 1; transform: translate(-50%, -50%) rotate(900deg) translateX(63px) rotate(-900deg) scale(1.05); }
+      60% { opacity: 1; transform: translate(-50%, -50%) rotate(1080deg) translateX(44px) rotate(-1080deg) scale(1.07); }
+      68% { opacity: 1; transform: translate(-50%, -50%) rotate(1260deg) translateX(25px) rotate(-1260deg) scale(1.09); }
+      73% { opacity: 1; transform: translate(-50%, -50%) rotate(1440deg) translateX(3px) rotate(-1440deg) scale(1.11); }
+      76% { opacity: 0; transform: translate(-50%, -50%) rotate(1512deg) translateX(0) rotate(-1512deg) scale(.55); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(.4); }
+    }
+
+    @keyframes gravitas-inspiral-b {
+      0% { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) translateX(-142px) rotate(0deg) scale(.92); }
+      10% { opacity: 1; transform: translate(-50%, -50%) rotate(180deg) translateX(-130px) rotate(-180deg) scale(.93); }
+      20% { opacity: 1; transform: translate(-50%, -50%) rotate(360deg) translateX(-116px) rotate(-360deg) scale(.94); }
+      30% { opacity: 1; transform: translate(-50%, -50%) rotate(540deg) translateX(-99px) rotate(-540deg) scale(.95); }
+      40% { opacity: 1; transform: translate(-50%, -50%) rotate(720deg) translateX(-81px) rotate(-720deg) scale(.96); }
+      50% { opacity: 1; transform: translate(-50%, -50%) rotate(900deg) translateX(-63px) rotate(-900deg) scale(.97); }
+      60% { opacity: 1; transform: translate(-50%, -50%) rotate(1080deg) translateX(-44px) rotate(-1080deg) scale(.99); }
+      68% { opacity: 1; transform: translate(-50%, -50%) rotate(1260deg) translateX(-25px) rotate(-1260deg) scale(1.01); }
+      73% { opacity: 1; transform: translate(-50%, -50%) rotate(1440deg) translateX(-3px) rotate(-1440deg) scale(1.03); }
+      76% { opacity: 0; transform: translate(-50%, -50%) rotate(1512deg) translateX(0) rotate(-1512deg) scale(.55); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(.4); }
+    }
+
+    @keyframes gravitas-lensing-spin {
+      to { transform: rotate(342deg) scaleY(.76); }
+    }
+
+    @keyframes gravitas-disk-pulse {
+      from { opacity: .72; filter: brightness(.88) saturate(.92) blur(.3px); }
+      to { opacity: 1; filter: brightness(1.22) saturate(1.2) blur(.3px); }
+    }
+
+    @keyframes gravitas-photon-flicker {
+      from { opacity: .74; filter: brightness(.9); }
+      to { opacity: 1; filter: brightness(1.32); }
+    }
+
+    @keyframes gravitas-merger-flash {
+      0%, 70% { opacity: 0; transform: translate(-50%, -50%) scale(.08); }
+      73% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+      76% { opacity: .86; transform: translate(-50%, -50%) scale(3.2); }
+      82%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(7.2); }
+    }
+
+    @keyframes gravitas-remnant {
+      0%, 73% { opacity: 0; transform: translate(-50%, -50%) scale(.24) rotate(-12deg); }
+      78% { opacity: 1; transform: translate(-50%, -50%) scale(1.12) rotate(3deg); }
+      87%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    }
+
+    @keyframes gravitas-wavefront {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(.2); }
+      12% { opacity: .86; }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(15); }
+    }
+
+    @keyframes gravitas-progress {
+      to { width: calc(100% - 28px); }
+    }
+
+    @keyframes gravitas-waveform {
+      to { stroke-dashoffset: 0; }
+    }
+
     .check-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1836,6 +2259,7 @@
 
     .host-star {
       position: absolute;
+      z-index: 2;
       left: 40%;
       top: 46%;
       width: 174px;
@@ -1878,7 +2302,7 @@
 
     .planet-track {
       position: absolute;
-      z-index: 3;
+      z-index: auto;
       left: 7%;
       right: 31%;
       top: 45%;
@@ -1888,6 +2312,7 @@
 
     .planet-world {
       position: absolute;
+      z-index: 4;
       top: 50%;
       left: 0;
       width: var(--planet-size, 26px);
@@ -1897,7 +2322,7 @@
       border-radius: 50%;
       transform: translateY(-50%);
       box-shadow: 0 2px 10px rgba(0,0,0,.72), inset -7px -4px 10px rgba(0,0,0,.42);
-      animation: interactive-transit 8s ease-in-out infinite;
+      animation: interactive-transit 9s linear infinite;
       transition: width .25s ease, height .25s ease, background .25s ease;
     }
 
@@ -1937,16 +2362,44 @@
     }
 
     @keyframes interactive-transit {
-      0%, 8% { left: 0; }
-      48%, 52% { left: calc(100% - var(--planet-size, 26px)); }
-      92%, 100% { left: 0; }
+      0%, 5% {
+        left: 0;
+        z-index: 4;
+        transform: translateY(calc(-50% + 9px)) scale(1.02);
+        filter: brightness(1);
+      }
+      45% {
+        left: calc(100% - var(--planet-size, 26px));
+        z-index: 4;
+        transform: translateY(calc(-50% + 9px)) scale(1.02);
+        filter: brightness(1);
+      }
+      49.9% {
+        left: calc(100% - var(--planet-size, 26px));
+        z-index: 4;
+        transform: translateY(-50%) scale(.98);
+        filter: brightness(.86);
+      }
+      50% {
+        left: calc(100% - var(--planet-size, 26px));
+        z-index: 1;
+        transform: translateY(calc(-50% - 9px)) scale(.94);
+        filter: brightness(.72);
+      }
+      95%, 100% {
+        left: 0;
+        z-index: 1;
+        transform: translateY(calc(-50% - 9px)) scale(.94);
+        filter: brightness(.72);
+      }
     }
 
     .planet-readout {
       position: absolute;
       z-index: 5;
       left: 3%;
-      bottom: 7%;
+      top: 6%;
+      bottom: auto;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -2372,6 +2825,764 @@
       border-left: 2px solid #ffc46b;
       color: var(--muted);
       font-size: .79rem;
+    }
+
+    /* Candidate screening and population-inference laboratories */
+    .extended-lab {
+      padding: clamp(28px, 4vw, 48px);
+    }
+
+    .interactive-lab-topline {
+      display: grid;
+      grid-template-columns: minmax(0, .82fr) minmax(280px, 1.18fr);
+      gap: clamp(28px, 5vw, 64px);
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    .interactive-lab-topline h3 {
+      margin: 0 0 10px;
+      font-size: clamp(1.75rem, 3vw, 2.55rem);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+    }
+
+    .interactive-lab-topline .lab-intro { margin: 0; }
+
+    .vetting-lab {
+      background:
+        radial-gradient(circle at 96% 2%, rgba(110,216,255,.1), transparent 28%),
+        var(--surface);
+    }
+
+    .vetting-scoreboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 17px;
+      color: var(--muted);
+      font-size: .72rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .vetting-scoreboard span {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-soft);
+    }
+
+    .vetting-scoreboard strong { color: var(--accent); }
+
+    .vetting-board {
+      display: grid;
+      grid-template-columns: minmax(310px, .86fr) minmax(0, 1.14fr);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 21px;
+      color: #f4f7fb;
+      background:
+        linear-gradient(rgba(110,216,255,.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110,216,255,.032) 1px, transparent 1px),
+        #050c15;
+      background-size: 42px 42px;
+    }
+
+    .candidate-visual {
+      min-width: 0;
+      padding: 25px;
+      border-right: 1px solid rgba(255,255,255,.1);
+      background: radial-gradient(circle at 45% 16%, rgba(110,216,255,.09), transparent 34%);
+    }
+
+    .candidate-meta {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 17px;
+    }
+
+    .candidate-meta span {
+      display: block;
+      color: #8298aa;
+      font-size: .62rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .candidate-meta strong {
+      display: block;
+      margin-top: 3px;
+      font-size: 1.04rem;
+      letter-spacing: .01em;
+    }
+
+    .candidate-period {
+      color: #bcd8e8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .72rem;
+      text-align: right;
+    }
+
+    .vetting-lightcurve-wrap,
+    .vetting-field-wrap {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 15px;
+      background: rgba(2,7,14,.76);
+    }
+
+    .vetting-lightcurve-wrap { padding: 13px 13px 8px; }
+
+    .visual-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 5px;
+      color: #8096a9;
+      font-size: .62rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .visual-kicker strong { color: #d8e9f3; font-weight: 700; }
+
+    .vetting-lightcurve {
+      display: block;
+      width: 100%;
+      height: 160px;
+      overflow: visible;
+    }
+
+    .vetting-lightcurve .grid-line {
+      stroke: rgba(139,177,198,.12);
+      stroke-width: 1;
+    }
+
+    .vetting-lightcurve .signal-line {
+      fill: none;
+      stroke: #71dcff;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 4px rgba(110,216,255,.34));
+      transition: d .35s ease;
+    }
+
+    .vetting-lightcurve .secondary-mark {
+      fill: none;
+      stroke: #ffc46b;
+      stroke-width: 1.5;
+      stroke-dasharray: 4 4;
+      opacity: 0;
+      transition: opacity .24s ease;
+    }
+
+    .vetting-field-wrap {
+      min-height: 170px;
+      margin-top: 13px;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(255,255,255,.65) 0 1px, transparent 1.4px),
+        radial-gradient(circle at 84% 28%, rgba(255,255,255,.55) 0 1px, transparent 1.4px),
+        radial-gradient(circle at 15% 76%, rgba(255,255,255,.4) 0 1px, transparent 1.4px),
+        radial-gradient(circle at 74% 80%, rgba(255,255,255,.58) 0 1px, transparent 1.4px),
+        #020710;
+    }
+
+    .field-caption {
+      position: absolute;
+      left: 13px;
+      top: 11px;
+      z-index: 5;
+      color: #8096a9;
+      font-size: .61rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .aperture-ring {
+      position: absolute;
+      left: 50%;
+      top: 56%;
+      width: 126px;
+      height: 126px;
+      border: 1px dashed rgba(110,216,255,.33);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: inset 0 0 34px rgba(110,216,255,.04);
+    }
+
+    .field-source {
+      position: absolute;
+      left: 50%;
+      top: 56%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform .3s ease, opacity .3s ease, width .3s ease, height .3s ease;
+    }
+
+    .field-source.target {
+      width: 25px;
+      height: 25px;
+      background: #fff9d9;
+      box-shadow: 0 0 12px #fff, 0 0 35px rgba(110,216,255,.55);
+    }
+
+    .field-source.neighbor {
+      width: var(--neighbor-size, 13px);
+      height: var(--neighbor-size, 13px);
+      opacity: var(--neighbor-opacity, .7);
+      transform: translate(calc(-50% + var(--neighbor-x, 80px)), calc(-50% + var(--neighbor-y, -36px)));
+      background: #ffc98b;
+      box-shadow: 0 0 11px rgba(255,188,119,.8), 0 0 24px rgba(255,133,88,.2);
+    }
+
+    .centroid-arrow {
+      position: absolute;
+      left: 50%;
+      top: 56%;
+      width: var(--centroid-length, 4px);
+      height: 2px;
+      border-radius: 3px;
+      transform: translateY(-50%) rotate(var(--centroid-angle, 0deg));
+      transform-origin: left center;
+      opacity: var(--centroid-opacity, .25);
+      background: #ff786d;
+      box-shadow: 0 0 8px rgba(255,120,109,.65);
+      transition: width .3s ease, transform .3s ease, opacity .3s ease;
+    }
+
+    .centroid-arrow::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      border-top: 2px solid #ff786d;
+      border-right: 2px solid #ff786d;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .field-scale {
+      position: absolute;
+      right: 13px;
+      bottom: 11px;
+      color: #71879a;
+      font-size: .6rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .field-scale::before {
+      content: "";
+      display: inline-block;
+      width: 28px;
+      margin-right: 6px;
+      border-top: 1px solid #71879a;
+      vertical-align: middle;
+    }
+
+    .evidence-console {
+      min-width: 0;
+      padding: 25px;
+    }
+
+    .evidence-console-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 14px;
+    }
+
+    .evidence-console-header h4 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: -.01em;
+    }
+
+    .evidence-console-header span {
+      color: #8096a9;
+      font-size: .62rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .evidence-card {
+      position: relative;
+      min-height: 126px;
+      padding: 16px 16px 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 14px;
+      background: rgba(255,255,255,.035);
+      transition: border-color .25s ease, background .25s ease, transform .25s ease;
+    }
+
+    .evidence-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      bottom: 14px;
+      width: 2px;
+      border-radius: 3px;
+      background: #6ed8ff;
+      opacity: .75;
+    }
+
+    .evidence-card[data-state="warning"]::before { background: #ffc46b; }
+    .evidence-card[data-state="danger"]::before { background: #ff786d; }
+    .evidence-card[data-state="positive"]::before { background: #77e3b4; }
+    .evidence-card[data-state="danger"] { border-color: rgba(255,120,109,.18); background: rgba(255,120,109,.035); }
+    .evidence-card[data-state="warning"] { border-color: rgba(255,196,107,.16); }
+
+    .evidence-card span {
+      display: block;
+      margin-bottom: 8px;
+      color: #8096a9;
+      font-size: .6rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .evidence-card strong {
+      display: block;
+      color: #edf7fc;
+      font-size: .84rem;
+      line-height: 1.35;
+    }
+
+    .evidence-card small {
+      display: block;
+      margin-top: 6px;
+      color: #8fa5b7;
+      font-size: .7rem;
+      line-height: 1.38;
+    }
+
+    .mini-speckle {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      width: 54px;
+      height: 40px;
+      opacity: .8;
+    }
+
+    .mini-speckle::before,
+    .mini-speckle::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 18px;
+      border-radius: 50%;
+    }
+
+    .mini-speckle::before {
+      width: 13px;
+      height: 13px;
+      background: #fff;
+      box-shadow: 0 0 10px #6ed8ff;
+    }
+
+    .mini-speckle::after {
+      width: var(--vetting-companion-size, 0px);
+      height: var(--vetting-companion-size, 0px);
+      opacity: var(--vetting-companion-opacity, 0);
+      transform: translate(var(--vetting-companion-x, 19px), var(--vetting-companion-y, -9px));
+      background: #ffc98b;
+      box-shadow: 0 0 8px rgba(255,178,103,.72);
+      transition: width .25s ease, height .25s ease, opacity .25s ease, transform .25s ease;
+    }
+
+    .verdict-prompt {
+      margin: 19px 0 10px;
+      color: #dcebf4;
+      font-size: .77rem;
+      font-weight: 730;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .verdict-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .verdict-button,
+    .screen-next,
+    .population-run {
+      min-height: 42px;
+      border: 1px solid rgba(110,216,255,.19);
+      border-radius: 11px;
+      color: #dcecf5;
+      background: rgba(110,216,255,.055);
+      cursor: pointer;
+      font: inherit;
+      font-size: .73rem;
+      font-weight: 720;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .verdict-button { padding: 9px 11px; text-align: left; }
+
+    .verdict-button:hover,
+    .verdict-button:focus-visible,
+    .screen-next:hover,
+    .screen-next:focus-visible,
+    .population-run:hover,
+    .population-run:focus-visible {
+      border-color: rgba(110,216,255,.58);
+      background: rgba(110,216,255,.12);
+      transform: translateY(-1px);
+    }
+
+    .verdict-button:disabled { cursor: default; opacity: .48; transform: none; }
+    .verdict-button.correct { border-color: rgba(119,227,180,.62); color: #bff6dd; background: rgba(119,227,180,.1); opacity: 1; }
+    .verdict-button.incorrect { border-color: rgba(255,120,109,.55); color: #ffc0ba; background: rgba(255,120,109,.08); opacity: 1; }
+
+    .verdict-feedback {
+      min-height: 66px;
+      margin-top: 11px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      color: #9db1c0;
+      background: rgba(255,255,255,.025);
+      font-size: .75rem;
+      line-height: 1.48;
+    }
+
+    .verdict-feedback strong { color: #edf7fc; }
+    .verdict-feedback.correct { border-color: rgba(119,227,180,.25); color: #bfe9d7; }
+    .verdict-feedback.incorrect { border-color: rgba(255,120,109,.22); color: #e8b3ae; }
+
+    .screen-next {
+      width: 100%;
+      margin-top: 10px;
+      color: #06111d;
+      background: #6ed8ff;
+      border-color: #6ed8ff;
+    }
+
+    .screen-next:hover,
+    .screen-next:focus-visible { color: #06111d; background: #92e4ff; }
+
+    .suppression-lab {
+      background:
+        radial-gradient(circle at 2% 2%, rgba(165,139,255,.12), transparent 31%),
+        var(--surface);
+    }
+
+    .suppression-layout {
+      display: grid;
+      grid-template-columns: minmax(270px, .62fr) minmax(0, 1.38fr);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 21px;
+      color: #f4f7fb;
+      background: #050c15;
+    }
+
+    .suppression-controls {
+      padding: 27px;
+      border-right: 1px solid rgba(255,255,255,.1);
+      background:
+        radial-gradient(circle at 50% 12%, rgba(165,139,255,.09), transparent 34%),
+        #07111d;
+    }
+
+    .suppression-controls .control-label { color: #e4eff5; }
+    .suppression-controls .control-note { color: #8298aa; }
+    .suppression-controls .control-group + .control-group { margin-top: 23px; }
+
+    .suppression-controls .assumption-note {
+      color: #8fa5b7;
+      background: rgba(255,255,255,.035);
+    }
+
+    .binary-demo {
+      position: relative;
+      min-height: 228px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 23% 24%, rgba(255,255,255,.6) 0 1px, transparent 1.3px),
+        radial-gradient(circle at 81% 19%, rgba(255,255,255,.5) 0 1px, transparent 1.3px),
+        radial-gradient(circle at 75% 76%, rgba(255,255,255,.45) 0 1px, transparent 1.3px),
+        radial-gradient(circle at 17% 83%, rgba(255,255,255,.4) 0 1px, transparent 1.3px),
+        #020710;
+    }
+
+    .binary-separation-label {
+      position: absolute;
+      left: 13px;
+      top: 12px;
+      z-index: 6;
+      color: #8197a9;
+      font-size: .61rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .formation-disk {
+      position: absolute;
+      left: 34%;
+      top: 55%;
+      width: 145px;
+      height: 54px;
+      border: 1px solid rgba(110,216,255,.24);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) rotate(-9deg) scale(var(--formation-scale, 1));
+      opacity: var(--formation-opacity, .35);
+      background: radial-gradient(ellipse, transparent 0 26%, rgba(110,216,255,.2) 30%, rgba(165,139,255,.12) 48%, transparent 68%);
+      box-shadow: 0 0 25px rgba(110,216,255,.1);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .binary-star {
+      position: absolute;
+      top: 55%;
+      border-radius: 50%;
+      transition: left .35s ease, transform .35s ease, filter .35s ease;
+    }
+
+    .binary-star.primary {
+      z-index: 3;
+      left: 34%;
+      width: 54px;
+      height: 54px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 34% 30%, #fff 0 5%, #fff2b0 25%, #f2a54b 70%, #9f482b 100%);
+      box-shadow: 0 0 18px rgba(255,209,122,.5), 0 0 48px rgba(255,150,69,.22);
+    }
+
+    .binary-star.secondary {
+      z-index: 3;
+      left: calc(34% + var(--binary-offset, 110px));
+      width: 40px;
+      height: 40px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 34% 30%, #fff5df 0 5%, #f4a36f 30%, #a83f3f 100%);
+      box-shadow: 0 0 14px rgba(245,153,108,.5), 0 0 34px rgba(225,93,76,.18);
+    }
+
+    .planet-seed {
+      position: absolute;
+      z-index: 4;
+      left: 34%;
+      top: 55%;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      opacity: var(--seed-opacity, .3);
+      background: #8ce6ff;
+      box-shadow: 0 0 8px rgba(110,216,255,.72);
+      transition: opacity .35s ease;
+    }
+
+    .planet-seed.one { transform: translate(-50%, -50%) translate(57px, -9px); }
+    .planet-seed.two { transform: translate(-50%, -50%) translate(-47px, 12px) scale(.75); }
+    .planet-seed.three { transform: translate(-50%, -50%) translate(21px, 36px) scale(.58); }
+
+    .binary-distance-line {
+      position: absolute;
+      left: 34%;
+      top: calc(55% + 49px);
+      width: var(--binary-offset, 110px);
+      border-top: 1px dashed rgba(255,196,107,.58);
+      transition: width .35s ease;
+    }
+
+    .binary-distance-line::before,
+    .binary-distance-line::after {
+      content: "";
+      position: absolute;
+      top: -3px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ffc46b;
+    }
+
+    .binary-distance-line::before { left: -2px; }
+    .binary-distance-line::after { right: -2px; }
+
+    .binary-yield {
+      position: absolute;
+      left: 13px;
+      right: 13px;
+      bottom: 11px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #8197a9;
+      font-size: .61rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-transform: uppercase;
+    }
+
+    .binary-yield strong { color: #dcebf4; }
+
+    .population-run {
+      width: 100%;
+      margin-top: 18px;
+      color: #eef9ff;
+      background: linear-gradient(135deg, rgba(110,216,255,.17), rgba(165,139,255,.15));
+    }
+
+    .suppression-workspace {
+      min-width: 0;
+      padding: 25px;
+      background:
+        linear-gradient(rgba(110,216,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110,216,255,.03) 1px, transparent 1px),
+        #050c15;
+      background-size: 42px 42px;
+    }
+
+    .suppression-plot-wrap {
+      padding: 16px 16px 9px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 16px;
+      background: rgba(2,7,14,.76);
+    }
+
+    .plot-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 4px;
+    }
+
+    .plot-heading strong { font-size: .86rem; }
+    .plot-heading span { color: #8197aa; font-size: .64rem; text-align: right; }
+
+    .suppression-plot {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: 236px;
+    }
+
+    .suppression-plot .plot-grid { stroke: rgba(137,175,197,.12); stroke-width: 1; }
+    .suppression-plot .plot-axis { stroke: rgba(180,207,220,.3); stroke-width: 1.2; }
+    .suppression-plot .close-zone { fill: rgba(255,120,109,.05); }
+    .suppression-plot .field-line { fill: none; stroke: #859caf; stroke-width: 2; stroke-dasharray: 6 6; }
+    .suppression-plot .host-area { fill: url(#host-area-gradient); opacity: .42; }
+    .suppression-plot .host-line { fill: none; stroke: #74ddff; stroke-width: 3; filter: drop-shadow(0 0 3px rgba(110,216,255,.35)); }
+    .suppression-plot .selected-guide { stroke: #ffc46b; stroke-width: 1.4; stroke-dasharray: 4 4; }
+    .suppression-plot .selected-point { fill: #ffc46b; stroke: #07111f; stroke-width: 3; filter: drop-shadow(0 0 5px rgba(255,196,107,.55)); }
+    .suppression-plot text { fill: #8197aa; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+    .suppression-plot .axis-title { fill: #a9bdca; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+    .suppression-plot .zone-label { fill: #c18d89; font-size: 10px; letter-spacing: .04em; }
+
+    .cohort-block {
+      margin-top: 13px;
+      padding: 13px 14px 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      background: rgba(255,255,255,.025);
+    }
+
+    .cohort-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 9px;
+      color: #8197aa;
+      font-size: .61rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .cohort-heading strong { color: #dcebf4; }
+
+    .population-cohort {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: 4px;
+    }
+
+    .population-dot {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #6ed8ff;
+      box-shadow: 0 0 5px rgba(110,216,255,.44);
+      transition: opacity .3s ease, transform .3s ease, background .3s ease;
+    }
+
+    .population-dot.suppressed {
+      opacity: .13;
+      transform: scale(.62);
+      background: #6b7884;
+      box-shadow: none;
+    }
+
+    .population-cohort.sampling .population-dot {
+      animation: population-shuffle .48s ease both;
+      animation-delay: calc(var(--dot-index) * 3ms);
+    }
+
+    @keyframes population-shuffle {
+      0% { opacity: .18; transform: translateY(-8px) scale(.55); }
+      55% { opacity: .75; transform: translateY(3px) scale(1.08); }
+    }
+
+    .suppression-results {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 13px;
+    }
+
+    .suppression-result {
+      min-width: 0;
+      padding: 13px 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 13px;
+      background: rgba(255,255,255,.032);
+    }
+
+    .suppression-result span {
+      display: block;
+      margin-bottom: 4px;
+      color: #8197aa;
+      font-size: .6rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .suppression-result strong {
+      display: block;
+      color: #eef8fd;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .suppression-result.interpretation strong {
+      font-size: .8rem;
+      line-height: 1.4;
     }
 
     .teaching-evidence {
@@ -2947,6 +4158,11 @@
       .transit-lab { grid-template-columns: 1fr; }
       .lab-controls { border-right: 0; border-bottom: 1px solid var(--line); }
       .speckle-topline { grid-template-columns: 1fr; gap: 16px; }
+      .interactive-lab-topline { grid-template-columns: 1fr; gap: 16px; }
+      .vetting-board,
+      .suppression-layout { grid-template-columns: 1fr; }
+      .candidate-visual,
+      .suppression-controls { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); }
       .speckle-sequence { grid-template-columns: 1fr; }
       .speckle-stage { min-height: 300px; }
       .speckle-stage + .speckle-stage { border-left: 0; border-top: 1px solid rgba(255,255,255,.12); }
@@ -3006,6 +4222,20 @@
       .card-image { min-height: 215px; }
       .card-body { padding: 23px; }
       .feature-panel { min-height: 430px; }
+      .gravitas-panel { min-height: 500px; }
+      .gravitas-panel .gravitas-stage {
+        width: 420px;
+        transform: translate(-50%, -50%) scale(.72);
+      }
+      .gravitas-panel .gravitas-status {
+        bottom: 134px;
+        max-width: calc(100% - 32px);
+        font-size: .57rem;
+        white-space: normal;
+      }
+      .gravitas-panel .waveform { left: 12px; right: 12px; bottom: 12px; }
+      .gravitas-panel .waveform-labels { font-size: .58rem; }
+      .gravitas-panel .waveform-labels span:last-child { font-size: .54rem; letter-spacing: .06em; }
       .about-photo,
       .about-photo img { min-height: 390px; }
       .transit-card-image { min-height: 360px; padding: 14px; }
@@ -3019,11 +4249,32 @@
       .result-card { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
       .result-card span { margin-bottom: 0; }
       .speckle-lab { padding: 25px 18px; }
+      .extended-lab { padding: 25px 18px; }
+      .candidate-visual,
+      .evidence-console,
+      .suppression-controls,
+      .suppression-workspace { padding: 18px; }
+      .candidate-meta { align-items: flex-start; }
+      .vetting-lightcurve { height: 142px; }
+      .evidence-grid,
+      .verdict-grid { grid-template-columns: 1fr; }
+      .evidence-card { min-height: 112px; }
+      .suppression-results { grid-template-columns: 1fr; }
+      .suppression-result { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+      .suppression-result span { margin-bottom: 0; }
+      .population-cohort { grid-template-columns: repeat(10, 1fr); gap: 5px; }
+      .binary-star.primary,
+      .formation-disk,
+      .planet-seed,
+      .binary-distance-line { left: 28%; }
+      .binary-star.secondary { left: calc(28% + var(--binary-offset, 110px)); }
       .speckle-cycle-status { align-items: flex-start; flex-direction: column; gap: 3px; }
       .measurement { padding: 15px; }
       .measurement strong { font-size: 1rem; }
       .gravitas-reset { top: 18px; right: 18px; min-height: 36px; padding-inline: 11px; font-size: .72rem; }
       .panel-badge.one { top: 18px; left: 18px; }
+      .gravitas-panel .panel-badge.one { top: 18px; left: 18px; padding: 9px 10px; font-size: .68rem; }
+      .gravitas-panel .gravitas-reset { top: 18px; right: 18px; }
       .contact-portrait,
       .contact-portrait img { min-height: 430px; }
       .check-grid,
@@ -3314,7 +4565,7 @@
 <h2>Resolve the star. Recover the planet.</h2>
 </div>
 <p>
-            A nearby star can change both the measured transit and the inferred planet. These interactive demonstrations connect high-resolution imaging to the physical corrections used in exoplanet surveys.
+            Follow the inference chain from a blended transit and a resolved companion to candidate disposition and the population-level effect of binary stars. Each demonstration links an observation to the scientific decision it changes.
           </p>
 </div>
 <article class="method-lab transit-lab reveal" id="transit-lab">
@@ -3432,14 +4683,135 @@
 </div>
 <p class="speckle-caveat">Illustrative rotating targets. Autocorrelation alone has a 180° position-angle ambiguity; reconstructed images or complementary observations establish the true orientation.</p>
 </article>
+<article class="method-lab extended-lab vetting-lab reveal" id="vetting-lab">
+<div class="interactive-lab-topline">
+<div>
+<span class="lab-number">03</span>
+<h3>Exoplanet candidate screener</h3>
+<div class="vetting-scoreboard"><span id="vetting-case-count">Case <strong>1 / 4</strong></span><span id="vetting-score">Screening score <strong>0 / 0</strong></span></div>
+</div>
+<p class="lab-intro">A transit is only the beginning. Read the light curve, centroid, high-resolution image, and color information; then decide what is actually producing the signal.</p>
+</div>
+<div aria-label="Interactive exoplanet candidate screening challenge" class="vetting-board">
+<section class="candidate-visual" id="candidate-visual">
+<div class="candidate-meta">
+<div><span>Simulated candidate</span><strong id="candidate-name">CZ-SIM 2416.01</strong></div>
+<div class="candidate-period"><span>Period / depth</span><strong id="candidate-period">8.73 d · 0.74%</strong></div>
+</div>
+<div class="vetting-lightcurve-wrap">
+<div class="visual-kicker"><span>Phase-folded TESS photometry</span><strong id="candidate-morphology-label">U-shaped event</strong></div>
+<svg aria-labelledby="vetting-curve-title" class="vetting-lightcurve" preserveaspectratio="none" role="img" viewbox="0 0 520 150">
+<title id="vetting-curve-title">Simulated phase-folded transit light curve</title>
+<path class="grid-line" d="M8 30H512 M8 65H512 M8 100H512 M8 135H512"></path>
+<path class="signal-line" id="candidate-signal-line" d="M8 42 H190 C205 42 210 95 226 95 H294 C310 95 315 42 330 42 H512"></path>
+<ellipse class="secondary-mark" id="candidate-secondary-mark" cx="405" cy="60" rx="22" ry="15"></ellipse>
+</svg>
+</div>
+<div class="vetting-field-wrap" id="vetting-field">
+<span class="field-caption">TESS aperture + centroid motion</span>
+<span aria-hidden="true" class="aperture-ring"></span>
+<span aria-hidden="true" class="field-source target"></span>
+<span aria-hidden="true" class="field-source neighbor"></span>
+<span aria-hidden="true" class="centroid-arrow"></span>
+<span class="field-scale">1 pixel</span>
+</div>
+</section>
+<section class="evidence-console">
+<div class="evidence-console-header"><h4>Follow-up evidence</h4><span>Four independent checks</span></div>
+<div class="evidence-grid">
+<div class="evidence-card" data-state="positive" id="evidence-morphology"><span>Transit morphology</span><strong id="evidence-morphology-value">U-shaped; odd/even agree</strong><small id="evidence-morphology-note">No detectable secondary eclipse</small></div>
+<div class="evidence-card" data-state="positive" id="evidence-centroid"><span>Difference-image centroid</span><strong id="evidence-centroid-value">0.05 px from target</strong><small id="evidence-centroid-note">Signal is spatially consistent with the target</small></div>
+<div class="evidence-card" data-state="positive" id="evidence-speckle"><span>Speckle imaging</span><strong id="evidence-speckle-value">No companion detected</strong><small id="evidence-speckle-note">Δmag 5.2 sensitivity at 0.2″</small><i aria-hidden="true" class="mini-speckle"></i></div>
+<div class="evidence-card" data-state="positive" id="evidence-color"><span>Color + Gaia</span><strong id="evidence-color-value">g′ and z′ depths agree</strong><small id="evidence-color-note">RUWE 1.03 · no astrometric warning</small></div>
+</div>
+<p class="verdict-prompt">Your disposition</p>
+<div class="verdict-grid" role="group" aria-label="Choose the candidate disposition">
+<button class="verdict-button" data-verdict="planet" type="button">Strong planet candidate</button>
+<button class="verdict-button" data-verdict="diluted" type="button">Planet diluted by companion</button>
+<button class="verdict-button" data-verdict="eb" type="button">Eclipsing binary on target</button>
+<button class="verdict-button" data-verdict="background" type="button">Background contaminant</button>
+</div>
+<div aria-live="polite" class="verdict-feedback" id="verdict-feedback"><strong>Make the call.</strong> The strongest disposition should explain all four measurements at once.</div>
+<button class="screen-next" id="screen-next" type="button">Next simulated candidate →</button>
+</section>
+</div>
+</article>
+<article class="method-lab extended-lab suppression-lab reveal" id="suppression-lab">
+<div class="interactive-lab-topline">
+<div>
+<span class="lab-number">04</span>
+<h3>Binary suppression laboratory</h3>
+</div>
+<p class="lab-intro">Move a companion through a planetary system and watch an individual close binary become a population-level deficit. The default model is anchored to the nearly sevenfold suppression measured for close Sun-like binaries.</p>
+</div>
+<div class="suppression-layout">
+<section class="suppression-controls">
+<div aria-label="Illustrative binary system at the selected separation" class="binary-demo" id="binary-demo" role="img">
+<span class="binary-separation-label" id="binary-separation-scene-label">Selected binary · 32 AU</span>
+<span aria-hidden="true" class="formation-disk"></span>
+<span aria-hidden="true" class="binary-star primary"></span>
+<span aria-hidden="true" class="binary-star secondary"></span>
+<span aria-hidden="true" class="planet-seed one"></span><span aria-hidden="true" class="planet-seed two"></span><span aria-hidden="true" class="planet-seed three"></span>
+<span aria-hidden="true" class="binary-distance-line"></span>
+<span class="binary-yield"><span>Planet-forming architectures retained</span><strong id="binary-yield-label">≈16 / 100</strong></span>
+</div>
+<div class="control-group">
+<label class="control-label" for="binary-separation"><span>Binary separation</span><output id="binary-separation-output" for="binary-separation">32 AU</output></label>
+<input aria-describedby="binary-separation-note" class="method-range" id="binary-separation" max="100" min="0" step="1" type="range" value="35"/>
+<div class="control-note" id="binary-separation-note"><span>5 AU · close</span><span>1000 AU · wide</span></div>
+</div>
+<div class="control-group">
+<label class="control-label" for="suppression-factor"><span>Close-binary suppression</span><output id="suppression-factor-output" for="suppression-factor">6.8×</output></label>
+<input aria-describedby="suppression-factor-note" class="method-range" id="suppression-factor" max="10" min="1" step="0.1" type="range" value="6.8"/>
+<div class="control-note" id="suppression-factor-note"><span>1× · none</span><span>10× · strong</span></div>
+</div>
+<div class="companion-toggle">
+<span>Apply the suppression model</span>
+<label class="switch-control"><input checked id="suppression-enabled" type="checkbox"/><span aria-hidden="true" class="switch-track"></span><span class="sr-only">Toggle binary suppression model</span></label>
+</div>
+<button class="population-run" id="population-run" type="button">Run 100 potential host systems</button>
+<p class="assumption-note">Illustrative transition model: the selected close-binary factor approaches unity for wide pairs. The 6.8× default represents the measured deficit in close Sun-like planet-hosting binaries; the exact transition shape is schematic.</p>
+</section>
+<section class="suppression-workspace">
+<div class="suppression-plot-wrap">
+<div class="plot-heading"><strong>Relative planet occurrence</strong><span>Wide binaries normalized to 1.0</span></div>
+<svg aria-labelledby="suppression-plot-title suppression-plot-desc" class="suppression-plot" role="img" viewbox="0 0 700 255">
+<title id="suppression-plot-title">Modeled relative planet occurrence versus binary separation</title>
+<desc id="suppression-plot-desc">A selected binary separation is compared with a reference field-star population and a close-binary suppression model.</desc>
+<defs><linearGradient id="host-area-gradient" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#6ed8ff" stop-opacity=".34"></stop><stop offset="1" stop-color="#6ed8ff" stop-opacity="0"></stop></linearGradient></defs>
+<rect class="close-zone" height="174" width="271" x="56" y="24"></rect>
+<path class="plot-grid" d="M56 28H680 M56 70H680 M56 113H680 M56 155H680 M56 198H680"></path>
+<path class="plot-axis" d="M56 24V198H680"></path>
+<path class="field-line" d="M56 28H680"></path>
+<path class="host-area" id="suppression-area" d="M56 173 C220 172 280 160 327 138 C380 112 415 58 470 35 C540 29 610 28 680 28 L680 198 L56 198 Z"></path>
+<path class="host-line" id="suppression-curve" d="M56 173 C220 172 280 160 327 138 C380 112 415 58 470 35 C540 29 610 28 680 28"></path>
+<line class="selected-guide" id="suppression-guide" x1="270" x2="270" y1="28" y2="198"></line>
+<circle class="selected-point" id="suppression-point" cx="270" cy="170" r="6"></circle>
+<text class="zone-label" x="69" y="44">CLOSE-BINARY REGIME</text>
+<text x="47" y="32" text-anchor="end">1.0</text><text x="47" y="74" text-anchor="end">0.75</text><text x="47" y="117" text-anchor="end">0.50</text><text x="47" y="159" text-anchor="end">0.25</text><text x="47" y="202" text-anchor="end">0</text>
+<text x="56" y="219" text-anchor="middle">5</text><text x="220" y="219" text-anchor="middle">20</text><text x="327" y="219" text-anchor="middle">50</text><text x="409" y="219" text-anchor="middle">100</text><text x="538" y="219" text-anchor="middle">300</text><text x="680" y="219" text-anchor="middle">1000</text>
+<text class="axis-title" x="368" y="244" text-anchor="middle">Binary separation (AU, logarithmic)</text>
+</svg>
+</div>
+<div class="cohort-block">
+<div class="cohort-heading"><span>Illustrative cohort · each point is one potential host</span><strong id="cohort-count">16 retained</strong></div>
+<div aria-label="Illustrative cohort of 100 potential planet-hosting systems" class="population-cohort" id="population-cohort" role="img"></div>
+</div>
+<div class="suppression-results">
+<div class="suppression-result"><span>Relative occurrence</span><strong id="relative-occurrence">0.16×</strong></div>
+<div class="suppression-result"><span>Effective suppression</span><strong id="effective-suppression">6.2×</strong></div>
+<div class="suppression-result interpretation"><span>Population inference</span><strong id="suppression-interpretation">Close companions strongly reduce the surviving planet-host population.</strong></div>
+</div>
+</section>
+</div>
+</article>
 </div>
 </section>
 <section class="section alt" id="gravitas">
 <div class="container split">
-<div aria-label="Animated Gravitas-style simulation of two black holes spiraling together, merging, and emitting gravitational waves" class="feature-panel reveal">
+<div aria-label="Animated Gravitas-style simulation of two black holes spiraling together, merging, and emitting gravitational waves" class="feature-panel gravitas-panel reveal" id="gravitas-demo">
 <span class="panel-badge one">Open source · MIT</span>
 <button aria-label="Reset and replay the black-hole merger simulation" class="gravitas-reset" id="gravitas-reset" type="button">↻ Reset simulation</button>
-<span class="panel-badge three">Scroll-triggered merger</span>
 <div aria-hidden="true" class="gravitas-scene">
 <div class="gravitas-stars"></div>
 <div class="gravitas-grid"></div>
@@ -3458,12 +4830,13 @@
 <span class="accretion-disk"></span><span class="event-horizon"></span><span class="photon-ring"></span>
 </div>
 </div>
+<div aria-live="polite" class="gravitas-status" id="gravitas-status">Inspiral · orbital frequency rising</div>
 <div class="waveform">
-<svg aria-hidden="true" preserveaspectratio="none" viewbox="0 0 280 52">
-<path class="waveform-grid" d="M0 26 H280 M0 12 H280 M0 40 H280"></path>
-<path class="waveform-trace" d="M0 26 C18 26, 24 25, 34 26 C42 27, 49 24, 58 26 C68 29, 74 20, 83 26 C92 34, 100 17, 109 26 C119 39, 127 10, 136 26 C146 43, 156 5, 166 26 C176 48, 188 3, 200 26 C212 45, 224 8, 236 26 C246 39, 254 17, 262 26 C269 31, 275 24, 280 26"></path>
+<svg aria-hidden="true" preserveaspectratio="none" viewbox="0 0 560 64">
+<path class="waveform-grid" d="M0 32 H560 M0 12 H560 M0 52 H560"></path>
+<path class="waveform-trace" d="M0 32 C28 32 44 31 60 32 C73 33 82 30 95 32 C108 35 117 28 130 32 C143 38 152 24 165 32 C178 43 187 19 200 32 C213 49 222 13 235 32 C248 55 258 8 271 32 C284 61 294 3 307 32 C320 62 330 2 343 32 C356 60 366 5 379 32 C392 55 402 10 415 32 C428 49 438 16 451 32 C464 44 474 21 487 32 C500 40 510 25 523 32 C536 36 547 29 560 32"></path>
 </svg>
-<div class="waveform-labels"><span>Gravitational-wave chirp</span><span>compact binary merger</span></div>
+<div class="waveform-labels"><span>Gravitational-wave strain</span><span>inspiral → merger → ringdown</span></div>
 </div>
 </div>
 </div>
@@ -3867,20 +5240,105 @@
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const revealItems = document.querySelectorAll('.reveal');
+      const gravitasPanel = document.getElementById('gravitas-demo');
+      const gravitasReset = document.getElementById('gravitas-reset');
+      const gravitasStatus = document.getElementById('gravitas-status');
+      const gravitasHoleA = gravitasPanel?.querySelector('.black-hole.bh-a');
+      const gravitasHoleB = gravitasPanel?.querySelector('.black-hole.bh-b');
+      let gravitasTimers = [];
+      let gravitasFrame = 0;
+      let gravitasSecondFrame = 0;
+      let gravitasOrbitFrame = 0;
+
+      const clearGravitasSchedule = () => {
+        gravitasTimers.forEach(timer => window.clearTimeout(timer));
+        gravitasTimers = [];
+        window.cancelAnimationFrame(gravitasFrame);
+        window.cancelAnimationFrame(gravitasSecondFrame);
+        window.cancelAnimationFrame(gravitasOrbitFrame);
+        [gravitasHoleA, gravitasHoleB].forEach(hole => {
+          if (!hole) return;
+          hole.style.removeProperty('transform');
+          hole.style.removeProperty('opacity');
+          hole.style.removeProperty('z-index');
+        });
+      };
+
+      const setGravitasStatus = text => {
+        if (gravitasStatus) gravitasStatus.textContent = text;
+      };
+
+      const animateGravitasInspiral = () => {
+        if (!gravitasHoleA || !gravitasHoleB) return;
+        const startTime = performance.now();
+        const inspiralDuration = 7050;
+
+        const drawOrbit = now => {
+          const progress = Math.min(1, (now - startTime) / inspiralDuration);
+          const easedRadius = Math.pow(1 - progress, .72);
+          const radius = 3 + 139 * easedRadius;
+          const phase = Math.PI * 2 * (1.08 * progress + 3.42 * progress ** 3);
+          const x = Math.cos(phase) * radius;
+          const y = Math.sin(phase) * radius * .52;
+          const fade = progress < .965 ? 1 : Math.max(0, 1 - (progress - .965) / .035);
+          const scaleA = 1 + .11 * progress;
+          const scaleB = .92 + .11 * progress;
+
+          gravitasHoleA.style.transform = `translate(-50%, -50%) translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${scaleA.toFixed(3)})`;
+          gravitasHoleB.style.transform = `translate(-50%, -50%) translate(${(-x).toFixed(2)}px, ${(-y).toFixed(2)}px) scale(${scaleB.toFixed(3)})`;
+          gravitasHoleA.style.opacity = fade.toFixed(3);
+          gravitasHoleB.style.opacity = fade.toFixed(3);
+          gravitasHoleA.style.zIndex = y >= 0 ? '5' : '4';
+          gravitasHoleB.style.zIndex = y < 0 ? '5' : '4';
+
+          if (progress < 1) {
+            gravitasOrbitFrame = window.requestAnimationFrame(drawOrbit);
+          } else {
+            gravitasHoleA.style.opacity = '0';
+            gravitasHoleB.style.opacity = '0';
+          }
+        };
+
+        gravitasOrbitFrame = window.requestAnimationFrame(drawOrbit);
+      };
+
+      const playGravitas = () => {
+        if (!gravitasPanel) return;
+        clearGravitasSchedule();
+        gravitasPanel.classList.remove('play');
+
+        if (reduceMotion) {
+          gravitasPanel.classList.add('play');
+          setGravitasStatus('Merger complete · stable remnant');
+          return;
+        }
+
+        setGravitasStatus('Inspiral · orbital frequency rising');
+        void gravitasPanel.offsetWidth;
+        gravitasFrame = window.requestAnimationFrame(() => {
+          gravitasSecondFrame = window.requestAnimationFrame(() => {
+            gravitasPanel.classList.add('play');
+            animateGravitasInspiral();
+            gravitasTimers.push(
+              window.setTimeout(() => setGravitasStatus('Merger · peak gravitational-wave emission'), 6500),
+              window.setTimeout(() => setGravitasStatus('Ringdown · remnant settling'), 7450),
+              window.setTimeout(() => setGravitasStatus('Merger complete · stable remnant'), 9250)
+            );
+          });
+        });
+      };
 
       if (reduceMotion || !('IntersectionObserver' in window)) {
         revealItems.forEach(item => {
           item.classList.add('visible');
-          if (item.classList.contains('feature-panel')) item.classList.add('play');
+          if (item === gravitasPanel) playGravitas();
         });
       } else {
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add('visible');
-              if (entry.target.classList.contains('feature-panel')) {
-                entry.target.classList.add('play');
-              }
+              if (entry.target === gravitasPanel) playGravitas();
               observer.unobserve(entry.target);
             }
           });
@@ -3888,14 +5346,8 @@
         revealItems.forEach(item => observer.observe(item));
       }
 
-      const gravitasReset = document.getElementById('gravitas-reset');
-      const gravitasPanel = gravitasReset?.closest('.feature-panel');
       if (gravitasReset && gravitasPanel) {
-        gravitasReset.addEventListener('click', () => {
-          gravitasPanel.classList.remove('play');
-          void gravitasPanel.offsetWidth;
-          gravitasPanel.classList.add('play');
-        });
+        gravitasReset.addEventListener('click', playGravitas);
       }
 
       const planetRadius = document.getElementById('planet-radius');
@@ -4090,6 +5542,345 @@
             }, 240);
           }, 3400);
         }
+      }
+
+      const vettingLab = document.getElementById('vetting-lab');
+      const verdictButtons = vettingLab ? [...vettingLab.querySelectorAll('.verdict-button')] : [];
+
+      if (vettingLab && verdictButtons.length) {
+        const candidateCases = [
+          {
+            name: 'CZ-SIM 2416.01', period: '8.73 d', depth: '0.74%', profile: 'planet', curveDepth: 48,
+            morphologyLabel: 'U-shaped event', answer: 'planet',
+            neighbor: { x: 82, y: -38, size: 9, opacity: .38 }, centroid: { length: 4, angle: -25 },
+            companion: { size: 0, opacity: 0, x: 19, y: -9 }, secondary: false,
+            evidence: [
+              ['positive', 'U-shaped; odd/even agree', 'No detectable secondary eclipse'],
+              ['positive', '0.05 px from target', 'Signal is spatially consistent with the target'],
+              ['positive', 'No companion detected', 'Δmag 5.2 sensitivity at 0.2″'],
+              ['positive', 'g′ and z′ depths agree', 'RUWE 1.03 · no astrometric warning']
+            ],
+            explanation: 'A centered, achromatic, U-shaped event with no resolved contaminant is the coherent planet interpretation.'
+          },
+          {
+            name: 'CZ-SIM 3189.01', period: '13.42 d', depth: '0.39%', profile: 'diluted', curveDepth: 35,
+            morphologyLabel: 'Shallow U-shaped event', answer: 'diluted',
+            neighbor: { x: 42, y: -21, size: 8, opacity: .24 }, centroid: { length: 5, angle: -27 },
+            companion: { size: 8, opacity: .82, x: 20, y: -10 }, secondary: false,
+            evidence: [
+              ['positive', 'U-shaped; odd/even agree', 'Transit morphology remains planet-like'],
+              ['positive', '0.07 px from target', 'No significant off-target centroid shift'],
+              ['warning', 'Companion at 0.18″', 'Δmag 1.7 · inside the discovery aperture'],
+              ['warning', 'Depths agree after blending', 'The companion contributes substantial extra flux']
+            ],
+            explanation: 'The event is planet-like and on target, but the resolved companion dilutes the transit. The planet radius must be corrected upward.'
+          },
+          {
+            name: 'CZ-SIM 4072.01', period: '2.16 d', depth: '2.46%', profile: 'background', curveDepth: 72,
+            morphologyLabel: 'V-shaped event', answer: 'background',
+            neighbor: { x: 88, y: 16, size: 17, opacity: .9 }, centroid: { length: 59, angle: 10 },
+            companion: { size: 0, opacity: 0, x: 19, y: -9 }, secondary: false,
+            evidence: [
+              ['danger', 'V-shaped; long ingress', 'Geometry is consistent with a grazing eclipse'],
+              ['danger', '1.8 px toward neighbor', 'The dimming source is spatially off target'],
+              ['positive', 'No subarcsecond companion', 'Close-in contrast curve is clean'],
+              ['danger', 'Transit is deeper in g′', 'Gaia source 2.9 mag fainter at 11″']
+            ],
+            explanation: 'The centroid moves toward the nearby Gaia source during a chromatic, V-shaped event: the signal is a background eclipsing contaminant.'
+          },
+          {
+            name: 'CZ-SIM 5528.01', period: '4.91 d', depth: '1.83%', profile: 'eb', curveDepth: 66,
+            morphologyLabel: 'Unequal eclipses', answer: 'eb',
+            neighbor: { x: -74, y: -42, size: 8, opacity: .3 }, centroid: { length: 3, angle: 210 },
+            companion: { size: 0, opacity: 0, x: 19, y: -9 }, secondary: true,
+            evidence: [
+              ['danger', 'Odd/even depths differ', 'A secondary eclipse appears at phase 0.5'],
+              ['positive', '0.03 px from target', 'The eclipses originate on the target'],
+              ['positive', 'No companion detected', 'No resolved third-light source'],
+              ['danger', 'Secondary eclipse detected', 'RUWE 2.41 · astrometric excess noise']
+            ],
+            explanation: 'The signal is centered on the target, but unequal primary and secondary eclipses identify an eclipsing stellar binary rather than a planet.'
+          }
+        ];
+
+        const candidateVisual = document.getElementById('candidate-visual');
+        const vettingField = document.getElementById('vetting-field');
+        const candidateName = document.getElementById('candidate-name');
+        const candidatePeriod = document.getElementById('candidate-period');
+        const candidateMorphologyLabel = document.getElementById('candidate-morphology-label');
+        const candidateSignalLine = document.getElementById('candidate-signal-line');
+        const candidateSecondaryMark = document.getElementById('candidate-secondary-mark');
+        const vettingFeedback = document.getElementById('verdict-feedback');
+        const vettingNext = document.getElementById('screen-next');
+        const vettingCaseStrong = document.querySelector('#vetting-case-count strong');
+        const vettingScoreStrong = document.querySelector('#vetting-score strong');
+        const evidenceCards = [
+          document.getElementById('evidence-morphology'),
+          document.getElementById('evidence-centroid'),
+          document.getElementById('evidence-speckle'),
+          document.getElementById('evidence-color')
+        ];
+        const evidenceValues = [
+          document.getElementById('evidence-morphology-value'),
+          document.getElementById('evidence-centroid-value'),
+          document.getElementById('evidence-speckle-value'),
+          document.getElementById('evidence-color-value')
+        ];
+        const evidenceNotes = [
+          document.getElementById('evidence-morphology-note'),
+          document.getElementById('evidence-centroid-note'),
+          document.getElementById('evidence-speckle-note'),
+          document.getElementById('evidence-color-note')
+        ];
+        const answerLabels = {
+          planet: 'Strong planet candidate',
+          diluted: 'Planet diluted by companion',
+          eb: 'Eclipsing binary on target',
+          background: 'Background contaminant'
+        };
+        let candidateIndex = 0;
+        let vettingCorrect = 0;
+        let vettingAttempts = 0;
+        let candidateAnswered = false;
+
+        const buildCandidateCurve = candidate => {
+          const points = [];
+          const total = 120;
+          for (let index = 0; index < total; index += 1) {
+            const phase = index / (total - 1);
+            const x = 8 + phase * 504;
+            const noise = Math.sin(index * 1.73 + candidateIndex) * .9 + Math.sin(index * .47 + 1.2) * .55;
+            let drop = 0;
+
+            if (candidate.profile === 'eb') {
+              const primaryDistance = Math.abs(phase - .34);
+              const secondaryDistance = Math.abs(phase - .75);
+              if (primaryDistance < .095) drop = candidate.curveDepth * (1 - primaryDistance / .095);
+              if (secondaryDistance < .07) drop = Math.max(drop, 23 * (1 - secondaryDistance / .07));
+            } else if (candidate.profile === 'background') {
+              const distance = Math.abs(phase - .5);
+              if (distance < .14) drop = candidate.curveDepth * (1 - distance / .14);
+            } else {
+              const distance = Math.abs(phase - .5);
+              if (distance < .12) {
+                drop = distance <= .075
+                  ? candidate.curveDepth
+                  : candidate.curveDepth * (1 - (distance - .075) / .045);
+              }
+            }
+
+            points.push(`${index === 0 ? 'M' : 'L'}${x.toFixed(1)} ${(40 + drop + noise).toFixed(1)}`);
+          }
+          return points.join(' ');
+        };
+
+        const renderCandidate = () => {
+          const candidate = candidateCases[candidateIndex];
+          candidateAnswered = false;
+          candidateName.textContent = candidate.name;
+          candidatePeriod.textContent = `${candidate.period} · ${candidate.depth}`;
+          candidateMorphologyLabel.textContent = candidate.morphologyLabel;
+          candidateSignalLine.setAttribute('d', buildCandidateCurve(candidate));
+          candidateSecondaryMark.style.opacity = candidate.secondary ? '1' : '0';
+          candidateVisual.style.setProperty('--neighbor-x', `${candidate.neighbor.x}px`);
+          candidateVisual.style.setProperty('--neighbor-y', `${candidate.neighbor.y}px`);
+          candidateVisual.style.setProperty('--neighbor-size', `${candidate.neighbor.size}px`);
+          candidateVisual.style.setProperty('--neighbor-opacity', String(candidate.neighbor.opacity));
+          candidateVisual.style.setProperty('--centroid-length', `${candidate.centroid.length}px`);
+          candidateVisual.style.setProperty('--centroid-angle', `${candidate.centroid.angle}deg`);
+          candidateVisual.style.setProperty('--centroid-opacity', candidate.centroid.length > 10 ? '.92' : '.28');
+          candidateVisual.style.setProperty('--vetting-companion-size', `${candidate.companion.size}px`);
+          candidateVisual.style.setProperty('--vetting-companion-opacity', String(candidate.companion.opacity));
+          candidateVisual.style.setProperty('--vetting-companion-x', `${candidate.companion.x}px`);
+          candidateVisual.style.setProperty('--vetting-companion-y', `${candidate.companion.y}px`);
+
+          candidate.evidence.forEach((evidence, index) => {
+            evidenceCards[index].dataset.state = evidence[0];
+            evidenceValues[index].textContent = evidence[1];
+            evidenceNotes[index].textContent = evidence[2];
+          });
+
+          verdictButtons.forEach(button => {
+            button.disabled = false;
+            button.classList.remove('correct', 'incorrect');
+          });
+          vettingFeedback.className = 'verdict-feedback';
+          vettingFeedback.innerHTML = '<strong>Make the call.</strong> The strongest disposition should explain all four measurements at once.';
+          vettingCaseStrong.textContent = `${candidateIndex + 1} / ${candidateCases.length}`;
+          vettingScoreStrong.textContent = `${vettingCorrect} / ${vettingAttempts}`;
+          vettingNext.textContent = candidateIndex === candidateCases.length - 1 ? 'Cycle to the first candidate →' : 'Next simulated candidate →';
+          vettingField.setAttribute('aria-label', `TESS aperture for ${candidate.name}; difference-image centroid shift ${candidate.evidence[1][1]}.`);
+          vettingLab.setAttribute('aria-label', `Candidate-screening case ${candidateIndex + 1} of ${candidateCases.length}: ${candidate.name}.`);
+        };
+
+        verdictButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            if (candidateAnswered) return;
+            candidateAnswered = true;
+            vettingAttempts += 1;
+            const candidate = candidateCases[candidateIndex];
+            const choice = button.dataset.verdict;
+            const isCorrect = choice === candidate.answer;
+            if (isCorrect) vettingCorrect += 1;
+
+            verdictButtons.forEach(option => {
+              option.disabled = true;
+              if (option.dataset.verdict === candidate.answer) option.classList.add('correct');
+            });
+            if (!isCorrect) button.classList.add('incorrect');
+
+            vettingFeedback.className = `verdict-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            vettingFeedback.innerHTML = `<strong>${isCorrect ? 'Good call.' : `Best disposition: ${answerLabels[candidate.answer]}.`}</strong> ${candidate.explanation}`;
+            vettingScoreStrong.textContent = `${vettingCorrect} / ${vettingAttempts}`;
+          });
+        });
+
+        vettingNext.addEventListener('click', () => {
+          candidateIndex = (candidateIndex + 1) % candidateCases.length;
+          renderCandidate();
+        });
+
+        renderCandidate();
+      }
+
+      const binarySeparation = document.getElementById('binary-separation');
+      const suppressionFactor = document.getElementById('suppression-factor');
+      const suppressionEnabled = document.getElementById('suppression-enabled');
+
+      if (binarySeparation && suppressionFactor && suppressionEnabled) {
+        const separationOutput = document.getElementById('binary-separation-output');
+        const suppressionOutput = document.getElementById('suppression-factor-output');
+        const binaryDemo = document.getElementById('binary-demo');
+        const binarySceneLabel = document.getElementById('binary-separation-scene-label');
+        const binaryYieldLabel = document.getElementById('binary-yield-label');
+        const suppressionCurve = document.getElementById('suppression-curve');
+        const suppressionArea = document.getElementById('suppression-area');
+        const suppressionGuide = document.getElementById('suppression-guide');
+        const suppressionPoint = document.getElementById('suppression-point');
+        const populationCohort = document.getElementById('population-cohort');
+        const cohortCount = document.getElementById('cohort-count');
+        const relativeOccurrence = document.getElementById('relative-occurrence');
+        const effectiveSuppression = document.getElementById('effective-suppression');
+        const suppressionInterpretation = document.getElementById('suppression-interpretation');
+        const populationRun = document.getElementById('population-run');
+        const suppressionDescription = document.getElementById('suppression-plot-desc');
+        const cohortDots = [];
+        let populationSeed = 0;
+
+        for (let index = 0; index < 100; index += 1) {
+          const dot = document.createElement('span');
+          dot.className = 'population-dot';
+          dot.style.setProperty('--dot-index', String(index));
+          populationCohort.appendChild(dot);
+          cohortDots.push(dot);
+        }
+
+        const separationFromSlider = () => {
+          const minimum = Math.log10(5);
+          const maximum = Math.log10(1000);
+          return 10 ** (minimum + Number(binarySeparation.value) / 100 * (maximum - minimum));
+        };
+
+        const occurrenceAt = (separation, factor, enabled) => {
+          if (!enabled || factor <= 1) return 1;
+          const closeOccurrence = 1 / factor;
+          const transition = 1 / (1 + Math.exp(-(Math.log10(separation) - Math.log10(100)) / .085));
+          return closeOccurrence + (1 - closeOccurrence) * transition;
+        };
+
+        const plotX = separation => 56 + (Math.log10(separation) - Math.log10(5)) / (Math.log10(1000) - Math.log10(5)) * 624;
+        const plotY = occurrence => 198 - occurrence * 170;
+
+        const buildSuppressionPath = (factor, enabled) => {
+          const points = [];
+          for (let index = 0; index <= 90; index += 1) {
+            const fraction = index / 90;
+            const separation = 10 ** (Math.log10(5) + fraction * (Math.log10(1000) - Math.log10(5)));
+            const occurrence = occurrenceAt(separation, factor, enabled);
+            points.push(`${index === 0 ? 'M' : 'L'}${plotX(separation).toFixed(1)} ${plotY(occurrence).toFixed(1)}`);
+          }
+          return points.join(' ');
+        };
+
+        const formatSeparation = separation => separation < 10 ? `${separation.toFixed(1)} AU` : `${Math.round(separation)} AU`;
+
+        const fillRange = input => {
+          const amount = (Number(input.value) - Number(input.min)) / (Number(input.max) - Number(input.min)) * 100;
+          input.style.setProperty('--range-fill', `${amount}%`);
+        };
+
+        const renderCohort = (retained, animate) => {
+          const retainedCount = Math.round(retained * 100);
+          cohortDots.forEach((dot, index) => {
+            const rank = (index * 37 + populationSeed * 17) % 100;
+            dot.classList.toggle('suppressed', rank >= retainedCount);
+          });
+          cohortCount.textContent = `${retainedCount} retained`;
+          populationCohort.setAttribute('aria-label', `${retainedCount} of 100 illustrative potential planet-hosting systems retained by the selected binary-suppression model.`);
+
+          if (animate && !reduceMotion) {
+            populationCohort.classList.remove('sampling');
+            void populationCohort.offsetWidth;
+            populationCohort.classList.add('sampling');
+            window.setTimeout(() => populationCohort.classList.remove('sampling'), 850);
+          }
+        };
+
+        const renderSuppressionLab = (animate = false) => {
+          const separation = separationFromSlider();
+          const factor = Number(suppressionFactor.value);
+          const enabled = suppressionEnabled.checked;
+          const occurrence = occurrenceAt(separation, factor, enabled);
+          const effectiveFactor = 1 / occurrence;
+          const normalizedX = (Math.log10(separation) - Math.log10(5)) / (Math.log10(1000) - Math.log10(5));
+          const markerX = plotX(separation);
+          const markerY = plotY(occurrence);
+          const curvePath = buildSuppressionPath(factor, enabled);
+          const retainedCount = Math.round(occurrence * 100);
+
+          separationOutput.textContent = formatSeparation(separation);
+          suppressionOutput.textContent = `${factor.toFixed(1)}×`;
+          binarySceneLabel.textContent = `Selected binary · ${formatSeparation(separation)}`;
+          binaryYieldLabel.textContent = `≈${retainedCount} / 100`;
+          relativeOccurrence.textContent = `${occurrence.toFixed(2)}×`;
+          effectiveSuppression.textContent = `${effectiveFactor.toFixed(1)}×`;
+          suppressionCurve.setAttribute('d', curvePath);
+          suppressionArea.setAttribute('d', `${curvePath} L680 198 L56 198 Z`);
+          suppressionGuide.setAttribute('x1', markerX.toFixed(1));
+          suppressionGuide.setAttribute('x2', markerX.toFixed(1));
+          suppressionPoint.setAttribute('cx', markerX.toFixed(1));
+          suppressionPoint.setAttribute('cy', markerY.toFixed(1));
+
+          binaryDemo.style.setProperty('--binary-offset', `${(58 + normalizedX * 72).toFixed(1)}px`);
+          binaryDemo.style.setProperty('--formation-opacity', (.12 + .76 * occurrence).toFixed(2));
+          binaryDemo.style.setProperty('--formation-scale', (.74 + .27 * occurrence).toFixed(2));
+          binaryDemo.style.setProperty('--seed-opacity', (.12 + .88 * occurrence).toFixed(2));
+          binaryDemo.setAttribute('aria-label', `Illustrative binary separated by ${formatSeparation(separation)}, with relative planet occurrence ${occurrence.toFixed(2)} compared with wide binaries.`);
+
+          if (!enabled) {
+            suppressionInterpretation.textContent = 'Control model: binaries retain the wide-pair planet occurrence at every separation.';
+          } else if (occurrence < .3) {
+            suppressionInterpretation.textContent = 'Close companions strongly deplete the surviving planet-host population.';
+          } else if (occurrence < .8) {
+            suppressionInterpretation.textContent = 'This separation lies in the transition between suppressed and wide-binary regimes.';
+          } else {
+            suppressionInterpretation.textContent = 'At wide separation, relative planet occurrence approaches the reference population.';
+          }
+
+          suppressionDescription.textContent = `At ${formatSeparation(separation)}, the illustrative model gives relative planet occurrence ${occurrence.toFixed(2)} and effective suppression ${effectiveFactor.toFixed(1)}.`;
+          renderCohort(occurrence, animate);
+          fillRange(binarySeparation);
+          fillRange(suppressionFactor);
+        };
+
+        binarySeparation.addEventListener('input', () => renderSuppressionLab(false));
+        suppressionFactor.addEventListener('input', () => renderSuppressionLab(false));
+        suppressionEnabled.addEventListener('change', () => renderSuppressionLab(true));
+        populationRun.addEventListener('click', () => {
+          populationSeed = (populationSeed + 1) % 100;
+          renderSuppressionLab(true);
+        });
+        renderSuppressionLab(false);
       }
 
 

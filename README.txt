@@ -11,7 +11,9 @@ Live site: https://carlziegler.space/
 - Planet visualization that transitions from rocky to Neptune-like to Jupiter-like as radius changes
 - Main-sequence companion approximation that changes stellar size, color, mass label, and flux contribution with contrast
 - Rotating speckle-imaging targets that keep the seeing-limited blur, Fourier peaks, reconstructed companion, and measured properties physically synchronized
-- Resettable Gravitas black-hole merger demonstration
+- Four-case exoplanet candidate-screening challenge combining transit morphology, centroid motion, speckle imaging, color information, and Gaia diagnostics
+- Interactive binary-suppression population model with a logarithmic separation explorer and a 100-system cohort experiment
+- Resettable Gravitas black-hole merger demonstration with continuously accelerated inspiral motion
 - Responsive navigation, dark/light appearance modes, reduced-motion support, and accessible controls
 - Full and condensed CVs, dissertation, research figures, observatory photographs, and the astronaut crew
 
