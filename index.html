@@ -4508,6 +4508,7 @@
       .reveal { opacity: 1; transform: none; }
     }
   </style><link href="assets/css/parallax-stars.css" rel="stylesheet"/>
+<link href="assets/css/exoplanet-explorer.css" rel="stylesheet"/>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -4551,6 +4552,7 @@
 <nav aria-label="Primary navigation" class="nav-links" id="nav-links">
 <a href="#about">About</a>
 <a href="#research">Research</a>
+<a href="#exoplanet-explorer">Explorer</a>
 <a href="#methods">Methods</a>
 <a href="#gravitas">Gravitas</a>
 <a href="#ai-science">AI &amp; Science</a>
@@ -4777,6 +4779,98 @@
 </div>
 <div class="card-image project-photo"><img alt="Carl Ziegler beside a research telescope at sunset" height="1080" loading="lazy" src="images/IMG_0650.jpg" width="1440"/></div>
 </article>
+</div>
+</div>
+</section>
+<section class="section alt exoplanet-section" id="exoplanet-explorer">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<p class="eyebrow">Interactive exoplanet census</p>
+<h2>Watch the planetary census redraw itself.</h2>
+</div>
+<p>
+            Step from the pre-exoplanet landscape of 1991 through the current catalog and watch discovery techniques populate entirely different regions of parameter space. Hover over any world for its measured properties and discovery hardware, search for a favorite system, or turn on population features to see the structures that planet formation and evolution have carved into the data.
+          </p>
+</div>
+<p class="exo-intro-note reveal">One point represents one confirmed planet using the NASA Exoplanet Archive's default parameter set. Radius and mass views deliberately remain separate so that unlike physical quantities are never mixed on one axis.</p>
+
+<article aria-label="Interactive exoplanet discovery timeline" class="exo-explorer reveal">
+<div class="exo-toolbar">
+<div class="exo-year-tools">
+<span class="exo-toolbar-label">Discovery year</span>
+<div class="exo-year-row">
+<button aria-label="Previous year" class="exo-icon-control" id="exo-year-prev" title="Previous year" type="button">←</button>
+<button aria-label="Play discovery timeline" class="exo-icon-control" id="exo-year-play" title="Play timeline" type="button">▶</button>
+<input aria-label="Discovery year" class="exo-year-range" id="exo-year-range" max="2026" min="1991" step="1" type="range" value="2026"/>
+<button aria-label="Next year" class="exo-icon-control" id="exo-year-next" title="Next year" type="button">→</button>
+<output aria-live="polite" class="exo-year-badge" id="exo-year" for="exo-year-range">2026</output>
+</div>
+<div class="exo-search-row">
+<input aria-label="Search planet or host star" autocomplete="off" class="exo-search" id="exo-search" placeholder="Search planet or host star…" type="search"/>
+<span aria-live="polite" class="exo-search-status" id="exo-search-status">Loading…</span>
+</div>
+</div>
+<label>
+<span class="exo-control-label">Plot</span>
+<select class="exo-view-select" id="exo-view">
+<option selected value="radius">Radius vs. period</option>
+<option value="mass">Mass vs. period</option>
+</select>
+</label>
+</div>
+
+<div aria-live="polite" class="exo-milestone-banner" id="exo-milestone"></div>
+
+<div class="exo-stage-grid">
+<div class="exo-chart-column">
+<div class="exo-chart-shell" id="exo-chart-shell">
+<canvas aria-label="Scatter plot of confirmed exoplanets by discovery year. Use the year slider or arrow keys to move through time; hover or tap points for planet details." class="exo-chart" id="exo-chart" role="img" tabindex="0"></canvas>
+<div aria-live="polite" class="exo-loading" id="exo-loading">Loading the confirmed-planet census …</div>
+<div class="exo-tooltip" hidden id="exo-tooltip" role="dialog"></div>
+</div>
+<div class="exo-chart-caption">
+<span><i aria-hidden="true" class="exo-key-new"></i> white edge = new that year</span>
+<span><i aria-hidden="true" class="exo-key-milestone">★</i> milestone</span>
+<span><i aria-hidden="true" class="exo-key-solar"></i> Solar System</span>
+<span>Hover a point · click/tap to pin details</span>
+</div>
+</div>
+
+<aside aria-label="Cumulative discovery counts" class="exo-sidebar">
+<div class="exo-count-topline">
+<strong>Cumulative census</strong>
+<div aria-label="Display counter as counts or share" class="exo-mode-toggle">
+<button aria-pressed="true" class="exo-mode-button active" data-count-mode="count" type="button">Counts</button>
+<button aria-pressed="false" class="exo-mode-button" data-count-mode="share" type="button">Share</button>
+</div>
+</div>
+<div class="exo-total-card">
+<strong class="exo-total-value" id="exo-total-value">—</strong>
+<span class="exo-total-note" id="exo-total-note">confirmed planets</span>
+<span class="exo-new-note" id="exo-new-note"></span>
+</div>
+<div class="exo-method-list" id="exo-method-list"></div>
+<p class="exo-method-hint">Click a discovery method to hide or restore its points. In Share mode, method percentages refer to the cumulative catalog in the selected year.</p>
+</aside>
+</div>
+
+<div class="exo-feature-bar">
+<span class="exo-feature-title">Population features</span>
+<div class="exo-region-buttons">
+<button aria-pressed="false" class="exo-region-button" data-exo-region="neptune" type="button">Hot Neptune desert</button>
+<button aria-pressed="false" class="exo-region-button" data-exo-region="valley" type="button">Radius valley</button>
+<button aria-pressed="true" class="exo-reference-button active" id="exo-solar-system" type="button">Solar System reference</button>
+</div>
+<div class="exo-region-info" id="exo-region-info"><span><strong>Why the gaps matter.</strong> Click a named population feature to shade it on the plot and read the leading physical interpretation.</span><span>Boundaries are empirical guides, not hard exclusions.</span></div>
+</div>
+</article>
+
+<div class="exo-downloads reveal">
+<a class="button compact primary" href="https://github.com/carlzieglerwebsite2/carlzieglerwebsite2/tree/master/exoplanets" rel="noopener" target="_blank">View plotting code</a>
+<a class="button compact" download href="downloads/exoplanet_plots_dark.zip">Download dark plots (.zip)</a>
+<a class="button compact" download href="downloads/exoplanet_plots_light.zip">Download light plots (.zip)</a>
+<p class="exo-update-line" id="exo-update-line">Loading data provenance…</p>
 </div>
 </div>
 </section>
@@ -6214,5 +6308,6 @@
       document.getElementById('year').textContent = new Date().getFullYear();
     })();
   </script>
+<script defer src="assets/js/exoplanet-explorer.js"></script>
 </body>
 </html>
