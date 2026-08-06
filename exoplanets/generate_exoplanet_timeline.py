@@ -11,9 +11,11 @@ Running this file refreshes three website deliverables:
   downloads/exoplanet_plots_dark.zip
   downloads/exoplanet_plots_light.zip
 
-The two ZIP files contain one two-panel PNG for every year from START_YEAR
-through the current UTC year.  A small Carl Ziegler / carlziegler.space credit
-is included in the lower-left corner of every downloadable figure.
+The two ZIP files contain one period-versus-radius-equivalent PNG for every
+year from START_YEAR through the current UTC year.  Measured radii are used
+where available; otherwise a measured mass is mapped to an approximate radius
+with the Chen & Kipping (2017) piecewise mass-radius relation.  A small Carl
+Ziegler / carlziegler.space credit is included in the lower-left corner.
 """
 
 from __future__ import annotations
@@ -81,6 +83,69 @@ METHOD_COLORS = {
 }
 OTHER_COLOR = "#8e9cab"
 
+# The static downloadable figures intentionally retain the visual language of
+# Carl's attached plot.py rather than the website UI palette.
+STATIC_GROUP_COLORS = {
+    "Pulsar Timing": "magenta",
+    "Radial Velocity": "dodgerblue",
+    "Transit": "lightgreen",
+    "Imaging": "red",
+    "Microlensing": "#ff9900",
+    "Other": "lightslategray",
+}
+
+
+def static_method_group(method: object) -> str:
+    name = str(method or "").strip()
+    if name in {"Pulsar Timing", "Pulsation Timing Variations"}:
+        return "Pulsar Timing"
+    if name in {"Radial Velocity", "Astrometry", "Disk Kinematics"}:
+        return "Radial Velocity"
+    if name in {"Transit", "Transit Timing Variations", "Eclipse Timing Variations", "Orbital Brightness Modulation"}:
+        return "Transit"
+    if name == "Imaging":
+        return "Imaging"
+    if name == "Microlensing":
+        return "Microlensing"
+    return "Other"
+
+
+def static_method_color(method: object) -> str:
+    return STATIC_GROUP_COLORS[static_method_group(method)]
+
+# Chen & Kipping (2017), ApJ 834, 17 ("Forecaster").  Their deterministic
+# broken-power-law mean is used only as a display fallback for planets that
+# have a mass but no radius in the Archive default solution.  The relation is
+# intrinsically probabilistic, so these values are *radius-equivalents*, not
+# measurements.  We use the planetary Terran/Neptunian/Jovian regimes; the
+# stellar regime is irrelevant to the confirmed-planet plot.
+# https://doi.org/10.3847/1538-4357/834/1/17
+CK_LOG_C0 = 0.00346
+CK_SLOPES = (0.2790, 0.589, -0.044)
+CK_LOG_MASS_BREAKS = (0.309, 2.119)  # ~2.04 and ~131.6 M_earth
+
+
+def chen_kipping_radius(mass_earth: float | np.ndarray) -> float | np.ndarray:
+    """Return the CK17 median/mean-relation radius in Earth radii.
+
+    The published model is linear in log10(M)–log10(R) with continuity at the
+    fitted population transitions.  This deterministic center line is useful
+    for visualization but intentionally does not represent the intrinsic
+    scatter of the probabilistic Forecaster model.
+    """
+    masses = np.asarray(mass_earth, dtype=float)
+    log_m = np.log10(masses)
+    c1 = CK_LOG_C0
+    c2 = c1 + CK_LOG_MASS_BREAKS[0] * (CK_SLOPES[0] - CK_SLOPES[1])
+    c3 = c2 + CK_LOG_MASS_BREAKS[1] * (CK_SLOPES[1] - CK_SLOPES[2])
+    log_r = np.select(
+        [log_m < CK_LOG_MASS_BREAKS[0], log_m < CK_LOG_MASS_BREAKS[1]],
+        [c1 + CK_SLOPES[0] * log_m, c2 + CK_SLOPES[1] * log_m],
+        default=c3 + CK_SLOPES[2] * log_m,
+    )
+    radius = np.power(10.0, log_r)
+    return float(radius) if np.ndim(mass_earth) == 0 else radius
+
 SOLAR_SYSTEM = [
     ("Mercury", 87.97, 0.383, 0.0553),
     ("Venus", 224.70, 0.949, 0.815),
@@ -107,22 +172,22 @@ MILESTONES = {
 
 THEMES = {
     "dark": {
-        "background": "#07111f",
-        "panel": "#0b1726",
-        "grid": "#27425a",
-        "text": "#edf7ff",
-        "muted": "#9db0c4",
-        "solar": "#f3f7fb",
+        "background": "#000000",
+        "panel": "#000000",
+        "grid": "#555555",
+        "text": "#ffffff",
+        "muted": "#aaaaaa",
+        "solar": "#ffffff",
         "new_edge": "#ffffff",
     },
     "light": {
-        "background": "#f5f8fb",
+        "background": "#ffffff",
         "panel": "#ffffff",
-        "grid": "#d7e1ea",
-        "text": "#132739",
-        "muted": "#5c7286",
-        "solar": "#1a2633",
-        "new_edge": "#101820",
+        "grid": "#777777",
+        "text": "#000000",
+        "muted": "#555555",
+        "solar": "#000000",
+        "new_edge": "#000000",
     },
 }
 
@@ -246,6 +311,15 @@ def prepare(df: pd.DataFrame) -> pd.DataFrame:
     )
     data.loc[missing_period, "period_derived"] = True
 
+    # Put the population onto one display axis.  A measured radius always wins.
+    # Only radius-missing planets with a positive measured mass get a CK17
+    # radius-equivalent; no radius is ever inferred from another inferred value.
+    data["radius_equiv"] = data["pl_rade"]
+    data["radius_inferred"] = False
+    infer_radius = data["radius_equiv"].isna() & data["pl_bmasse"].gt(0)
+    data.loc[infer_radius, "radius_equiv"] = chen_kipping_radius(data.loc[infer_radius, "pl_bmasse"].to_numpy())
+    data.loc[infer_radius, "radius_inferred"] = True
+
     # Do not clamp discovery years to --end-year.  That option controls which
     # static frames are rendered; it should never rewrite the source timeline.
     # Ignore only genuinely future discovery years beyond the present UTC year.
@@ -270,6 +344,8 @@ def write_browser_json(data: pd.DataFrame, path: Path, end_year: int) -> None:
                 "period": finite_or_none(row.period_best),
                 "periodDerived": bool(row.period_derived),
                 "radius": finite_or_none(row.pl_rade),
+                "plotRadius": finite_or_none(row.radius_equiv),
+                "radiusInferred": bool(row.radius_inferred),
                 "mass": finite_or_none(row.pl_bmasse),
                 "teq": finite_or_none(row.pl_eqt, 1),
                 "distance": finite_or_none(row.sy_dist, 3),
@@ -289,6 +365,11 @@ def write_browser_json(data: pd.DataFrame, path: Path, end_year: int) -> None:
         "startYear": START_YEAR,
         "endYear": end_year,
         "totalConfirmed": len(planets),
+        "radiusModel": {
+            "name": "Chen & Kipping (2017) Forecaster broken power law",
+            "doi": "https://doi.org/10.3847/1538-4357/834/1/17",
+            "usage": "Measured radius where available; mass-derived radius-equivalent only when radius is absent",
+        },
         "planets": planets,
     }
     path.write_text(json.dumps(payload, separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
@@ -303,14 +384,12 @@ def style_axis(ax: plt.Axes, theme: dict[str, str]) -> None:
     ax.tick_params(colors=theme["muted"], labelsize=10)
     for spine in ax.spines.values():
         spine.set_color(theme["grid"])
-    ax.grid(which="major", color=theme["grid"], alpha=0.58, linewidth=0.7)
-    ax.grid(which="minor", color=theme["grid"], alpha=0.16, linewidth=0.45)
+    ax.grid(False)
 
 
-def plot_solar_system(ax: plt.Axes, field: str, theme: dict[str, str]) -> None:
-    value_index = 2 if field == "radius" else 3
+def plot_solar_system(ax: plt.Axes, theme: dict[str, str]) -> None:
     x = [planet[1] for planet in SOLAR_SYSTEM]
-    y = [planet[value_index] for planet in SOLAR_SYSTEM]
+    y = [planet[2] for planet in SOLAR_SYSTEM]
     ax.scatter(
         x,
         y,
@@ -328,11 +407,10 @@ def plot_solar_system(ax: plt.Axes, field: str, theme: dict[str, str]) -> None:
 def plot_population(
     ax: plt.Axes,
     data: pd.DataFrame,
-    field: str,
     year: int,
     theme: dict[str, str],
 ) -> None:
-    column = "pl_rade" if field == "radius" else "pl_bmasse"
+    column = "radius_equiv"
     valid = data["period_best"].gt(0) & data[column].gt(0)
     subset = data.loc[valid].copy()
     old = subset[subset["disc_year_filled"] < year]
@@ -340,32 +418,35 @@ def plot_population(
 
     # Draw in method groups so identical colors are batched efficiently.
     for method, group in old.groupby("discoverymethod", dropna=False):
-        ax.scatter(
-            group["period_best"],
-            group[column],
-            s=11,
-            color=method_color(method),
-            alpha=0.72,
-            linewidths=0,
-            rasterized=True,
-            zorder=2,
-        )
+        measured = group[~group["radius_inferred"]]
+        inferred = group[group["radius_inferred"]]
+        if not measured.empty:
+            ax.scatter(
+                measured["period_best"], measured[column], s=20,
+                color=static_method_color(method), alpha=1, linewidths=0,
+                rasterized=True, zorder=2,
+            )
+        if not inferred.empty:
+            ax.scatter(
+                inferred["period_best"], inferred[column], s=20,
+                facecolors="none", edgecolors=static_method_color(method), alpha=1,
+                linewidths=0.8, rasterized=True, zorder=2,
+            )
     for method, group in new.groupby("discoverymethod", dropna=False):
-        ax.scatter(
-            group["period_best"],
-            group[column],
-            s=20,
-            color=method_color(method),
-            alpha=0.98,
-            edgecolors=theme["new_edge"],
-            linewidths=0.45,
-            rasterized=True,
-            zorder=3,
-        )
+        measured = group[~group["radius_inferred"]]
+        inferred = group[group["radius_inferred"]]
+        if not measured.empty:
+            ax.scatter(measured["period_best"], measured[column], s=32,
+                       color=static_method_color(method), alpha=1, edgecolors=theme["new_edge"],
+                       linewidths=0.65, rasterized=True, zorder=3)
+        if not inferred.empty:
+            ax.scatter(inferred["period_best"], inferred[column], s=32,
+                       facecolors="none", edgecolors=static_method_color(method), alpha=1,
+                       linewidths=1.15, rasterized=True, zorder=3)
 
 
-def annotate_milestones(ax: plt.Axes, data: pd.DataFrame, field: str, year: int, theme: dict[str, str]) -> None:
-    column = "pl_rade" if field == "radius" else "pl_bmasse"
+def annotate_milestones(ax: plt.Axes, data: pd.DataFrame, year: int, theme: dict[str, str]) -> None:
+    column = "radius_equiv"
     for name, (event_year, label) in MILESTONES.items():
         if event_year > year:
             continue
@@ -406,48 +487,40 @@ def render_year(data: pd.DataFrame, year: int, theme_name: str, output: Path, dp
         "figure.facecolor": theme["background"],
         "savefig.facecolor": theme["background"],
     }):
-        fig, (ax_radius, ax_mass) = plt.subplots(2, 1, figsize=(13.5, 10.2), sharex=True)
-        fig.subplots_adjust(left=0.09, right=0.965, top=0.89, bottom=0.10, hspace=0.16)
-        fig.suptitle(f"The growing exoplanet census · {year}", fontsize=21, fontweight="bold", y=0.965)
-        fig.text(
-            0.5,
-            0.922,
-            f"{count:,} confirmed planets by this year · +{new_count:,} discovered in {year}",
-            ha="center",
-            color=theme["muted"],
-            fontsize=10.5,
-        )
+        # Deliberately return to the large, sparse aesthetic of Carl's original
+        # plot.py: one canvas, log period, linear radius, in-plot method labels.
+        fig, ax = plt.subplots(figsize=(20, 14))
+        fig.subplots_adjust(left=0.10, right=0.955, top=0.955, bottom=0.105)
+        style_axis(ax, theme)
+        plot_population(ax, through_year, year, theme)
+        plot_solar_system(ax, theme)
+        annotate_milestones(ax, through_year, year, theme)
+        ax.set_xscale("log")
+        ax.set_xlim(0.3, 100_000)
+        ax.set_ylim(0, 26)
+        ax.set_xlabel("Orbital Period (days)", fontsize=28, labelpad=12)
+        ax.set_ylabel(r"Planetary Radius / Radius-equivalent (R$_\oplus$)", fontsize=28, labelpad=12)
+        ax.tick_params(labelsize=22)
 
-        for ax, field in ((ax_radius, "radius"), (ax_mass, "mass")):
-            style_axis(ax, theme)
-            plot_population(ax, through_year, field, year, theme)
-            plot_solar_system(ax, field, theme)
-            annotate_milestones(ax, through_year, field, year, theme)
-            ax.set_xscale("log")
-            # Span ultra-short-period planets through most directly imaged
-            # systems (including HR 8799) without letting a handful of
-            # extremely wide companions compress the entire plot.
-            ax.set_xlim(0.1, 1_000_000)
-
-        ax_radius.set_ylim(0, 26)
-        ax_radius.set_ylabel(r"Planet radius (R$_\oplus$)", fontsize=12)
-        ax_radius.set_title("Radius–period space", loc="left", fontsize=12, pad=8)
-
-        ax_mass.set_yscale("log")
-        ax_mass.set_ylim(0.03, 30000)
-        ax_mass.set_ylabel(r"Planet mass (M$_\oplus$)", fontsize=12)
-        ax_mass.set_xlabel("Orbital period (days)", fontsize=12)
-        ax_mass.set_title("Mass–period space", loc="left", fontsize=12, pad=8)
-
-        fig.text(0.012, 0.018, "© Carl Ziegler · carlziegler.space", fontsize=8.2, color=theme["muted"], ha="left")
-        fig.text(
-            0.988,
-            0.018,
-            "Data: NASA Exoplanet Archive · outlined circles = Solar System · white-edged points = new this year",
-            fontsize=7.8,
-            color=theme["muted"],
-            ha="right",
-        )
+        label_x = 2000
+        labels = [
+            (8.0, "Solar System", theme["solar"]),
+            (7.0, "Pulsar Timing", STATIC_GROUP_COLORS["Pulsar Timing"]),
+            (6.0, "Radial Velocity", STATIC_GROUP_COLORS["Radial Velocity"]),
+            (5.0, "Transit", STATIC_GROUP_COLORS["Transit"]),
+            (4.0, "Direct Imaging", STATIC_GROUP_COLORS["Imaging"]),
+            (3.0, "Microlensing", STATIC_GROUP_COLORS["Microlensing"]),
+        ]
+        for y, label, color in labels:
+            ax.text(label_x, y, label, fontsize=25, color=color)
+        ax.text(19_000, 1.05, str(year), fontsize=34, color=theme["text"], fontweight="bold")
+        ax.text(0.985, 0.985, f"{count:,} confirmed · +{new_count:,} in {year}", transform=ax.transAxes,
+                ha="right", va="top", fontsize=14, color=theme["muted"])
+        ax.text(0.012, 0.018, "© Carl Ziegler · carlziegler.space", transform=ax.transAxes,
+                fontsize=10, color=theme["muted"], ha="left", va="bottom")
+        ax.text(0.012, 0.045,
+                "Filled = measured radius · open = CK17 radius-equivalent inferred from measured mass",
+                transform=ax.transAxes, fontsize=9.3, color=theme["muted"], ha="left", va="bottom")
         fig.savefig(output, dpi=dpi, bbox_inches="tight", pad_inches=0.15)
         plt.close(fig)
 
@@ -477,8 +550,11 @@ def archive_plots(data: pd.DataFrame, site_root: Path, start_year: int, end_year
                 "Carl Ziegler — The Growing Exoplanet Census\n"
                 f"Static {theme_name} figures, {start_year}–{end_year}\n\n"
                 "Data: NASA Exoplanet Archive Planetary Systems table, default_flag=1.\n"
-                "Each image has a radius–period panel and a mass–period panel.\n"
-                "White-edged points were discovered in the frame year; outlined diamonds are Solar System planets.\n\n"
+                "Each image contains one period-versus-radius-equivalent plot.\n"
+                "Measured radii are filled points. If radius is absent but mass is measured, an open point uses the\n"
+                "Chen & Kipping (2017) Forecaster broken-power-law center as an approximate radius-equivalent.\n"
+                "That conversion has intrinsic scatter and is for population visualization, not a radius measurement.\n"
+                "White-edged filled points were discovered in the frame year; outlined diamonds are Solar System planets.\n\n"
                 "Interactive version: https://carlziegler.space/#exoplanet-explorer\n"
                 "Plotting code: https://github.com/carlzieglerwebsite2/carlzieglerwebsite2/tree/master/exoplanets\n",
                 encoding="utf-8",

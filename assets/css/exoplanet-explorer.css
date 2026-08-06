@@ -44,7 +44,7 @@ html[data-theme="light"] .exo-explorer {
 
 .exo-toolbar {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(190px, .58fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
   align-items: end;
   padding: 22px 24px 18px;
@@ -68,13 +68,14 @@ html[data-theme="light"] .exo-explorer {
 
 .exo-year-row {
   display: grid;
-  grid-template-columns: auto auto minmax(120px, 1fr) auto auto;
-  gap: 9px;
+  grid-template-columns: minmax(148px, .55fr) minmax(90px, .3fr) minmax(148px, .55fr);
+  gap: 12px;
   align-items: center;
 }
 
 .exo-icon-control,
-.exo-view-select,
+.exo-step-control,
+.exo-play-control,
 .exo-search,
 .exo-mode-button,
 .exo-region-button,
@@ -105,14 +106,68 @@ html[data-theme="light"] .exo-explorer {
 
 .exo-icon-control:active { transform: translateY(1px); }
 
+.exo-step-control,
+.exo-play-control {
+  color: var(--text);
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease;
+}
+
+.exo-step-control {
+  min-height: 52px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: .86rem;
+  font-weight: 780;
+}
+
+.exo-step-control span[aria-hidden="true"] { color: var(--accent); font-size: 1.15rem; }
+.exo-step-control:hover:not(:disabled), .exo-step-control:focus-visible,
+.exo-play-control:hover, .exo-play-control:focus-visible {
+  border-color: rgba(110,216,255,.55);
+  background: rgba(110,216,255,.1);
+}
+.exo-step-control:disabled { opacity: .38; cursor: not-allowed; }
+.exo-step-control:active:not(:disabled), .exo-play-control:active { transform: translateY(1px); }
+
 .exo-year-badge {
   min-width: 82px;
   text-align: center;
   color: var(--text);
-  font-size: 1.55rem;
+  font-size: 1.8rem;
   line-height: 1;
   font-weight: 820;
   letter-spacing: -.04em;
+}
+
+.exo-year-secondary {
+  display: grid;
+  grid-template-columns: auto minmax(120px, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin-top: 11px;
+}
+
+.exo-play-control {
+  min-height: 36px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: .75rem;
+  font-weight: 730;
+}
+
+.exo-jump-label {
+  color: var(--muted);
+  font-size: .68rem;
+  white-space: nowrap;
 }
 
 .exo-year-range {
@@ -122,16 +177,6 @@ html[data-theme="light"] .exo-explorer {
   cursor: ew-resize;
 }
 
-.exo-view-select {
-  width: 100%;
-  min-height: 42px;
-  padding: 8px 34px 8px 12px;
-  border-radius: 12px;
-  outline: 0;
-  cursor: pointer;
-}
-
-.exo-view-select:focus-visible,
 .exo-search:focus-visible {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(110,216,255,.12);
@@ -325,6 +370,7 @@ html[data-theme="light"] .exo-tooltip {
 .exo-chart-caption span { display: inline-flex; align-items: center; gap: 6px; }
 
 .exo-key-new,
+.exo-key-inferred,
 .exo-key-milestone,
 .exo-key-solar {
   display: inline-block;
@@ -333,6 +379,7 @@ html[data-theme="light"] .exo-tooltip {
 }
 
 .exo-key-new { border: 1.5px solid var(--text); border-radius: 50%; background: var(--accent); }
+.exo-key-inferred { border: 1.5px solid var(--accent); border-radius: 50%; background: transparent; }
 .exo-key-milestone { color: #ffe37a; width: auto; height: auto; line-height: 1; }
 .exo-key-solar { border: 1.5px solid var(--text); transform: rotate(45deg); }
 
@@ -571,15 +618,18 @@ html[data-theme="light"] .exo-sidebar { background: rgba(20,65,91,.025); }
 @media (max-width: 680px) {
   .exo-explorer { border-radius: 20px; }
   .exo-toolbar { padding: 18px 15px 15px; }
-  .exo-year-row { grid-template-columns: auto auto minmax(70px, 1fr) auto; }
+  .exo-year-row { grid-template-columns: 1fr 82px 1fr; gap: 7px; }
   .exo-year-badge {
-    grid-column: 1 / -1;
+    grid-column: 2;
     grid-row: 1;
-    justify-self: start;
-    margin-bottom: 4px;
+    justify-self: center;
+    margin: 0;
+    font-size: 1.45rem;
   }
-  .exo-year-row .exo-icon-control { grid-row: 2; }
-  .exo-year-range { grid-row: 2; }
+  .exo-step-control { min-height: 46px; padding: 8px 9px; font-size: .74rem; }
+  .exo-step-control > span:not([aria-hidden="true"]) { display: none; }
+  .exo-year-secondary { grid-template-columns: auto minmax(60px, 1fr); }
+  .exo-jump-label { display: none; }
   .exo-search-row { grid-template-columns: 1fr; }
   .exo-search-status { text-align: left; }
   .exo-milestone-banner { margin-left: 15px; margin-right: 15px; }

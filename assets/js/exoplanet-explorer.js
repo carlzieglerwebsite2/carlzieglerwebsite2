@@ -14,7 +14,6 @@
     previous: root.querySelector('#exo-year-prev'),
     next: root.querySelector('#exo-year-next'),
     play: root.querySelector('#exo-year-play'),
-    view: root.querySelector('#exo-view'),
     search: root.querySelector('#exo-search'),
     searchStatus: root.querySelector('#exo-search-status'),
     milestone: root.querySelector('#exo-milestone'),
@@ -47,14 +46,14 @@
   };
 
   const SOLAR_SYSTEM = [
-    { name: 'Mercury', period: 87.97, radius: .383, mass: .0553 },
-    { name: 'Venus', period: 224.70, radius: .949, mass: .815 },
-    { name: 'Earth', period: 365.26, radius: 1, mass: 1 },
-    { name: 'Mars', period: 686.98, radius: .532, mass: .107 },
-    { name: 'Jupiter', period: 4332.59, radius: 11.21, mass: 317.83 },
-    { name: 'Saturn', period: 10759.2, radius: 9.45, mass: 95.16 },
-    { name: 'Uranus', period: 30688.5, radius: 4.01, mass: 14.54 },
-    { name: 'Neptune', period: 60182, radius: 3.88, mass: 17.15 },
+    { name: 'Mercury', period: 87.97, radius: .383, mass: .0553, kind: 'Terrestrial planet' },
+    { name: 'Venus', period: 224.70, radius: .949, mass: .815, kind: 'Terrestrial planet' },
+    { name: 'Earth', period: 365.26, radius: 1, mass: 1, kind: 'Terrestrial planet' },
+    { name: 'Mars', period: 686.98, radius: .532, mass: .107, kind: 'Terrestrial planet' },
+    { name: 'Jupiter', period: 4332.59, radius: 11.21, mass: 317.83, kind: 'Gas giant' },
+    { name: 'Saturn', period: 10759.2, radius: 9.45, mass: 95.16, kind: 'Gas giant' },
+    { name: 'Uranus', period: 30688.5, radius: 4.01, mass: 14.54, kind: 'Ice giant' },
+    { name: 'Neptune', period: 60182, radius: 3.88, mass: 17.15, kind: 'Ice giant' },
   ];
 
   const MILESTONES = [
@@ -111,12 +110,11 @@
   const REGIONS = {
     neptune: {
       title: 'Hot Neptune desert',
-      html: 'A real scarcity of intermediate-size/mass planets on the very shortest orbits. The shaded boundaries follow the classic <strong>Mazeh et al. (2016)</strong> empirical period–radius or period–mass relations. The leading picture is evolutionary: intense irradiation can strip lower-mass planets of H/He, while migration plus tides and disruption help set the giant-planet edge. The exact boundary depends on the sample and is still being refined.',
+      html: 'A real scarcity of intermediate-size planets on the very shortest orbits. The shaded guide follows the classic <strong>Mazeh et al. (2016)</strong> period–radius boundaries. Intense irradiation can strip lower-mass planets of H/He, while migration, tides, and disruption help shape the giant-planet edge. The exact boundary depends on the sample and is still being refined.',
       sources: [
         ['Mazeh et al. 2016', 'https://arxiv.org/abs/1602.07843'],
         ['Owen & Lai 2018', 'https://arxiv.org/abs/1807.00012'],
       ],
-      views: ['radius', 'mass'],
     },
     valley: {
       title: 'Radius valley',
@@ -124,7 +122,21 @@
       sources: [
         ['Van Eylen et al. 2018', 'https://arxiv.org/abs/1710.05398'],
       ],
-      views: ['radius'],
+    },
+    giantvalley: {
+      title: 'Giant-planet period valley',
+      html: 'Giant planets are relatively sparse at periods of a few tens of days, between the hot-Jupiter concentration and the longer-period giant population. <strong>Udry et al. (2003)</strong> interpreted this as a transition between populations that experienced different migration histories. Later transit and RV samples show that the exact shape is selection- and mass-dependent, so the 10–100 day band here is deliberately a broad visual pointer rather than a fitted boundary.',
+      sources: [
+        ['Udry et al. 2003', 'https://www.aanda.org/articles/aa/pdf/2003/31/aa3256.pdf'],
+        ['Santerne et al. 2016', 'https://www.aanda.org/articles/aa/full_html/2016/03/aa27329-15/aa27329-15.html'],
+      ],
+    },
+    hotjupiter: {
+      title: 'Hot-Jupiter pile-up',
+      html: 'A conspicuous concentration of giant planets sits at periods of only a few days. These worlds almost certainly did not assemble where we see most of them today: disk migration and/or later high-eccentricity migration can move giants inward, while stellar tides and disruption sculpt the innermost edge. The shaded 2–5 day box is a visual guide to the classic pile-up, not a classification cut.',
+      sources: [
+        ['Udry et al. 2003', 'https://www.aanda.org/articles/aa/pdf/2003/31/aa3256.pdf'],
+      ],
     },
   };
 
@@ -133,8 +145,7 @@
     planets: [],
     startYear: 1991,
     endYear: new Date().getUTCFullYear(),
-    year: new Date().getUTCFullYear(),
-    view: 'radius',
+    year: 1991,
     countMode: 'count',
     activeRegions: new Set(),
     solarSystem: true,
@@ -176,11 +187,15 @@
     return light ? {
       bg: '#ffffff', grid: '#d6e1e9', gridMinor: '#e8eff4', text: '#20364a', muted: '#607487',
       plotBorder: '#bfcdd8', regionNeptune: 'rgba(242,184,75,.13)', regionNeptuneLine: '#b77d13',
-      regionValley: 'rgba(169,134,255,.13)', regionValleyLine: '#7559c7', solar: '#27384a', newEdge: '#0b1726',
+      regionValley: 'rgba(169,134,255,.13)', regionValleyLine: '#7559c7',
+      regionGiant: 'rgba(110,216,255,.10)', regionGiantLine: '#147c9e',
+      regionHotJupiter: 'rgba(255,113,133,.10)', regionHotJupiterLine: '#b84255', solar: '#27384a', newEdge: '#0b1726',
     } : {
       bg: '#07111f', grid: '#29445c', gridMinor: '#193047', text: '#edf7ff', muted: '#96aabd',
       plotBorder: '#39566e', regionNeptune: 'rgba(242,184,75,.105)', regionNeptuneLine: '#f2b84b',
-      regionValley: 'rgba(169,134,255,.11)', regionValleyLine: '#b49cff', solar: '#f0f5f8', newEdge: '#ffffff',
+      regionValley: 'rgba(169,134,255,.11)', regionValleyLine: '#b49cff',
+      regionGiant: 'rgba(110,216,255,.085)', regionGiantLine: '#6ed8ff',
+      regionHotJupiter: 'rgba(255,113,133,.085)', regionHotJupiterLine: '#ff8ca0', solar: '#f0f5f8', newEdge: '#ffffff',
     };
   }
 
@@ -200,7 +215,7 @@
     window.clearInterval(state.playTimer);
     state.playTimer = null;
     if (els.play) {
-      els.play.textContent = '▶';
+      els.play.innerHTML = '<span aria-hidden="true">▶</span> Play';
       els.play.setAttribute('aria-label', 'Play discovery timeline');
       els.play.title = 'Play timeline';
     }
@@ -211,7 +226,7 @@
     if (state.year >= state.endYear) setYear(state.startYear);
     state.playing = true;
     if (els.play) {
-      els.play.textContent = 'Ⅱ';
+      els.play.innerHTML = '<span aria-hidden="true">Ⅱ</span> Pause';
       els.play.setAttribute('aria-label', 'Pause discovery timeline');
       els.play.title = 'Pause timeline';
     }
@@ -299,11 +314,7 @@
 
   function updateRegionAvailability() {
     els.regionButtons.forEach(button => {
-      const region = REGIONS[button.dataset.exoRegion];
-      const allowed = region?.views.includes(state.view);
-      button.disabled = !allowed;
-      button.setAttribute('aria-disabled', allowed ? 'false' : 'true');
-      const active = allowed && state.activeRegions.has(button.dataset.exoRegion);
+      const active = state.activeRegions.has(button.dataset.exoRegion);
       button.classList.toggle('active', active);
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
@@ -373,14 +384,9 @@
     const xLogMax = Math.log10(xMax);
     const mapX = value => plot.left + (Math.log10(value) - xLogMin) / (xLogMax - xLogMin) * plot.width;
 
-    const radiusView = state.view === 'radius';
-    const yMin = radiusView ? 0 : .03;
-    const yMax = radiusView ? 26 : 30000;
-    const yLogMin = Math.log10(yMin || .03);
-    const yLogMax = Math.log10(yMax);
-    const mapY = radiusView
-      ? value => plot.bottom - (value - yMin) / (yMax - yMin) * plot.height
-      : value => plot.bottom - (Math.log10(value) - yLogMin) / (yLogMax - yLogMin) * plot.height;
+    const yMin = 0;
+    const yMax = 26;
+    const mapY = value => plot.bottom - (value - yMin) / (yMax - yMin) * plot.height;
 
     // Plot frame and grid.
     context.lineWidth = 1;
@@ -399,7 +405,7 @@
 
     context.textAlign = 'right';
     context.textBaseline = 'middle';
-    const yTicks = radiusView ? [0, 5, 10, 15, 20, 25] : [.1, 1, 10, 100, 1000, 10000];
+    const yTicks = [0, 5, 10, 15, 20, 25];
     yTicks.forEach(tick => {
       const y = mapY(tick);
       context.strokeStyle = theme.grid;
@@ -418,12 +424,12 @@
       for (let i = 0; i <= 60; i += 1) logPeriods.push(-.45 + i / 60 * 1.45); // ~0.35–10 d
       const upper = logPeriods.map(lp => {
         const period = 10 ** lp;
-        const value = radiusView ? 10 ** (-.31 * lp + 1.19) : 317.83 * 10 ** (-1.14 * lp + .23);
+        const value = 10 ** (-.31 * lp + 1.19);
         return [mapX(period), mapY(value)];
       });
       const lower = logPeriods.map(lp => {
         const period = 10 ** lp;
-        const value = radiusView ? 10 ** (.68 * lp) : 317.83 * 10 ** (.98 * lp - 1.85);
+        const value = 10 ** (.68 * lp);
         return [mapX(period), mapY(value)];
       }).reverse();
       context.save();
@@ -437,11 +443,11 @@
       context.fillStyle = theme.regionNeptuneLine;
       context.font = `600 ${small ? 9 : 10}px Inter, system-ui, sans-serif`;
       context.textAlign = 'left'; context.textBaseline = 'top';
-      context.fillText('Hot Neptune desert', mapX(.45) + 4, Math.max(plot.top + 5, mapY(radiusView ? 13 : 250)));
+      context.fillText('Hot Neptune desert', mapX(.45) + 4, Math.max(plot.top + 5, mapY(13)));
       context.restore();
     }
 
-    if (radiusView && state.activeRegions.has('valley')) {
+    if (state.activeRegions.has('valley')) {
       const periods = [];
       for (let i = 0; i <= 70; i += 1) periods.push(10 ** (-.15 + i / 70 * 2.25)); // ~0.7–126 d
       const upper = periods.map(period => [mapX(period), mapY(1.9 * (period / 10) ** -.09 + .16)]);
@@ -458,11 +464,34 @@
       context.fillText('Radius valley', mapX(12), mapY(2.25));
     }
 
+    // The giant-planet overlays intentionally emphasize approximate domains,
+    // not hard population cuts: the historical "period valley" is selection-
+    // and mass-dependent and the hot-Jupiter pile-up has a soft boundary.
+    const drawRegionBox = (x1, x2, y1, y2, fill, stroke, label) => {
+      const left = mapX(x1), right = mapX(x2), top = mapY(y2), bottom = mapY(y1);
+      context.save();
+      context.beginPath(); context.rect(plot.left, plot.top, plot.width, plot.height); context.clip();
+      context.fillStyle = fill; context.fillRect(left, top, right - left, bottom - top);
+      context.strokeStyle = stroke; context.lineWidth = 1.1; context.setLineDash([5, 4]);
+      context.strokeRect(left, top, right - left, bottom - top); context.setLineDash([]);
+      context.fillStyle = stroke; context.font = `600 ${small ? 9 : 10}px Inter, system-ui, sans-serif`;
+      context.textAlign = 'left'; context.textBaseline = 'top'; context.fillText(label, left + 5, top + 5);
+      context.restore();
+    };
+    if (state.activeRegions.has('giantvalley')) {
+      drawRegionBox(10, 100, 8, 18, theme.regionGiant, theme.regionGiantLine, 'Giant-planet period valley');
+    }
+    if (state.activeRegions.has('hotjupiter')) {
+      drawRegionBox(2, 5, 8, 18, theme.regionHotJupiter, theme.regionHotJupiterLine, 'Hot-Jupiter pile-up');
+    }
+
     // Solar System reference points preserve the useful reference from Carl's
     // original script while making them visually distinct from exoplanets.
+    const query = state.search;
+    const points = [];
     if (state.solarSystem) {
       SOLAR_SYSTEM.forEach(planet => {
-        const value = radiusView ? planet.radius : planet.mass;
+        const value = planet.radius;
         if (!isFinitePositive(planet.period) || !isFinitePositive(value)) return;
         const x = mapX(planet.period), y = mapY(value), r = 4;
         context.save();
@@ -470,28 +499,33 @@
         context.strokeStyle = theme.solar; context.lineWidth = 1.25;
         context.strokeRect(-r, -r, r * 2, r * 2);
         context.restore();
+        const matchesSearch = !query || planet.name.toLowerCase().includes(query);
+        points.push({ x, y, planet: { ...planet, solar: true }, matchesSearch });
       });
     }
 
     const milestoneNames = new Set(MILESTONES.filter(item => item.year <= state.year).map(item => item.name));
-    const query = state.search;
-    const points = [];
-
     state.planets.forEach(planet => {
       if (!Number.isFinite(planet.year) || planet.year > state.year) return;
       if (state.hiddenMethods.has(planet.method)) return;
-      const value = radiusView ? planet.radius : planet.mass;
+      const value = planet.plotRadius;
       if (!isFinitePositive(planet.period) || !isFinitePositive(value)) return;
       if (planet.period < xMin || planet.period > xMax || value <= yMin || value > yMax) return;
       const x = mapX(planet.period), y = mapY(value);
       const matchesSearch = !query || planet.name.toLowerCase().includes(query) || (planet.host || '').toLowerCase().includes(query);
       context.globalAlpha = query && !matchesSearch ? .12 : (planet.year === state.year ? .96 : .68);
-      context.fillStyle = METHOD_COLORS[planet.method] || METHOD_COLORS.Other;
-      context.beginPath(); context.arc(x, y, matchesSearch && query ? 4.2 : 2.55, 0, Math.PI * 2); context.fill();
+      const color = METHOD_COLORS[planet.method] || METHOD_COLORS.Other;
+      const pointRadius = matchesSearch && query ? 4.2 : 2.65;
+      context.beginPath(); context.arc(x, y, pointRadius, 0, Math.PI * 2);
+      if (planet.radiusInferred) {
+        context.strokeStyle = color; context.lineWidth = 1.15; context.stroke();
+      } else {
+        context.fillStyle = color; context.fill();
+      }
       if (planet.year === state.year) {
         context.globalAlpha = query && !matchesSearch ? .16 : .92;
         context.strokeStyle = theme.newEdge; context.lineWidth = .8;
-        context.beginPath(); context.arc(x, y, 3.65, 0, Math.PI * 2); context.stroke();
+        context.beginPath(); context.arc(x, y, planet.radiusInferred ? 4.05 : 3.65, 0, Math.PI * 2); context.stroke();
       }
       points.push({ x, y, planet, matchesSearch });
     });
@@ -514,14 +548,14 @@
     context.fillText('Orbital period (days)', plot.left + plot.width / 2, height - 5);
     context.save();
     context.translate(small ? 13 : 17, plot.top + plot.height / 2); context.rotate(-Math.PI / 2);
-    context.fillText(radiusView ? 'Planet radius (R⊕)' : 'Planet mass (M⊕)', 0, 0);
+    context.fillText('Planet radius / radius-equivalent (R⊕)', 0, 0);
     context.restore();
 
     if (query && els.searchStatus) {
       const matches = points.filter(point => point.matchesSearch).length;
       els.searchStatus.textContent = `${number.format(matches)} visible match${matches === 1 ? '' : 'es'}`;
     } else if (els.searchStatus) {
-      const visible = points.length;
+      const visible = points.filter(point => !point.planet.solar).length;
       els.searchStatus.textContent = `${number.format(visible)} plotted`;
     }
   }
@@ -541,9 +575,20 @@
   }
 
   function tooltipRows(planet) {
+    if (planet.solar) {
+      const solarRows = [
+        ['Radius', `${formatNumber(planet.radius)} R⊕`],
+        ['Mass', `${formatNumber(planet.mass)} M⊕`],
+        ['Orbital period', `${formatNumber(planet.period)} d`],
+        ['Class', planet.kind],
+        ['Reference', 'Solar System'],
+      ];
+      return solarRows.map(([label, value]) => `<dt>${escapeHTML(label)}</dt><dd>${escapeHTML(value)}</dd>`).join('');
+    }
     const period = planet.periodDerived ? `${formatNumber(planet.period)} (derived)` : formatNumber(planet.period);
     const rows = [
       ['Radius', Number.isFinite(planet.radius) ? `${formatNumber(planet.radius)} R⊕` : '—'],
+      ['Plot radius', Number.isFinite(planet.plotRadius) ? `${formatNumber(planet.plotRadius)} R⊕${planet.radiusInferred ? ' (CK17 inferred)' : ' (measured)'}` : '—'],
       ['Mass', Number.isFinite(planet.mass) ? `${formatNumber(planet.mass)} M⊕` : '—'],
       ['Period', Number.isFinite(planet.period) ? `${period} d` : '—'],
       ['Equil. temp.', Number.isFinite(planet.teq) ? `${formatNumber(planet.teq)} K` : '—'],
@@ -561,11 +606,14 @@
     state.hoveredPoint = point;
     state.pinnedTooltip = pinned;
     const planet = point.planet;
-    const archiveURL = `https://exoplanetarchive.ipac.caltech.edu/overview/${encodeURIComponent(planet.name)}`;
+    const detailURL = planet.solar
+      ? `https://science.nasa.gov/${encodeURIComponent(planet.name.toLowerCase())}/`
+      : `https://exoplanetarchive.ipac.caltech.edu/overview/${encodeURIComponent(planet.name)}`;
+    const detailLabel = planet.solar ? 'NASA Solar System profile ↗' : 'NASA Exoplanet Archive ↗';
     els.tooltip.innerHTML = `
-      <div class="exo-tooltip-head"><span class="exo-tooltip-name">${escapeHTML(planet.name)}</span><span class="exo-tooltip-year">${escapeHTML(planet.year)}</span></div>
+      <div class="exo-tooltip-head"><span class="exo-tooltip-name">${escapeHTML(planet.name)}</span><span class="exo-tooltip-year">${planet.solar ? 'Solar System' : escapeHTML(planet.year)}</span></div>
       <dl class="exo-tooltip-grid">${tooltipRows(planet)}</dl>
-      <a class="exo-tooltip-link" href="${archiveURL}" target="_blank" rel="noopener">NASA Exoplanet Archive ↗</a>`;
+      <a class="exo-tooltip-link" href="${detailURL}" target="_blank" rel="noopener">${detailLabel}</a>`;
     els.tooltip.hidden = false;
 
     const shellWidth = els.chartShell.clientWidth;
@@ -594,7 +642,7 @@
     state.planets = payload.planets || [];
     state.startYear = payload.startYear || 1991;
     state.endYear = payload.endYear || new Date().getUTCFullYear();
-    state.year = state.endYear;
+    state.year = state.startYear;
 
     state.planets.forEach(planet => {
       if (!planet.method) planet.method = 'Other';
@@ -606,9 +654,10 @@
 
     els.yearRange.min = state.startYear;
     els.yearRange.max = state.endYear;
-    els.yearRange.value = state.endYear;
-    els.year.textContent = state.endYear;
-    els.view.value = state.view;
+    els.yearRange.value = state.startYear;
+    els.year.textContent = state.startYear;
+    if (els.previous) els.previous.disabled = true;
+    if (els.next) els.next.disabled = state.startYear >= state.endYear;
 
     const generated = payload.generatedUTC ? new Date(payload.generatedUTC) : null;
     const dateLabel = generated && !Number.isNaN(generated.getTime())
@@ -630,14 +679,6 @@
   els.play?.addEventListener('click', startPlayback);
   els.yearRange?.addEventListener('input', event => setYear(event.target.value, { stop: true }));
 
-  els.view?.addEventListener('change', event => {
-    state.view = event.target.value;
-    state.pinnedTooltip = false;
-    hideTooltip(true);
-    updateRegionAvailability();
-    draw();
-  });
-
   els.search?.addEventListener('input', event => {
     state.search = event.target.value.trim().toLowerCase();
     hideTooltip(true);
@@ -657,7 +698,7 @@
   els.regionButtons.forEach(button => button.addEventListener('click', () => {
     const key = button.dataset.exoRegion;
     const region = REGIONS[key];
-    if (!region?.views.includes(state.view)) return;
+    if (!region) return;
     if (state.activeRegions.has(key)) state.activeRegions.delete(key);
     else state.activeRegions.add(key);
     describeRegion(key);
