@@ -202,6 +202,7 @@
       font-size: .94rem;
       font-weight: 650;
       padding: 9px 11px;
+      white-space: nowrap;
       border-radius: 10px;
       transition: color .18s ease, background .18s ease;
     }
@@ -4272,6 +4273,24 @@
       outline-offset: 3px;
     }
 
+    /* Keep the full desktop navigation on one line on narrower desktop windows. */
+    @media (min-width: 981px) {
+      .site-header > .container {
+        width: min(calc(100% - 24px), 1460px);
+      }
+    }
+
+    @media (min-width: 981px) and (max-width: 1180px) {
+      .nav { gap: 10px; }
+      .brand { gap: 8px; font-size: .88rem; }
+      .brand-mark { width: 32px; }
+      .brand-mark::after { width: 42px; height: 15px; }
+      .nav-links { gap: 1px; }
+      .nav-links a { padding: 8px 6px; font-size: .82rem; }
+      .nav-actions { gap: 4px; }
+      .icon-button, .menu-button { width: 38px; height: 38px; }
+    }
+
     @media (max-width: 980px) {
       .site-header::after {
         content: "";
@@ -4508,7 +4527,7 @@
       .reveal { opacity: 1; transform: none; }
     }
   </style><link href="assets/css/parallax-stars.css" rel="stylesheet"/>
-<link href="assets/css/exoplanet-explorer.css?v=20260807-2" rel="stylesheet"/>
+<link href="assets/css/exoplanet-explorer.css?v=20260807-3" rel="stylesheet"/>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -4745,6 +4764,10 @@
               </p>
 <a class="text-link" href="https://ui.adsabs.harvard.edu/abs/2018AJ....155..161Z/abstract" rel="noopener" target="_blank">
                 View a key survey paper
+                <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+<a class="text-link" href="roboao-kepler/">
+                Explore the complete Robo-AO Kepler Survey
                 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </a>
 </div>
@@ -6307,6 +6330,6 @@
       document.getElementById('year').textContent = new Date().getFullYear();
     })();
   </script>
-<script defer src="assets/js/exoplanet-explorer.js?v=20260807-2"></script>
+<script defer src="assets/js/exoplanet-explorer.js?v=20260807-3"></script>
 </body>
 </html>
