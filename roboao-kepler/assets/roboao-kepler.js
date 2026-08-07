@@ -15,21 +15,6 @@
     revealItems.forEach((el) => observer.observe(el));
   }
 
-  const hostField = document.getElementById('host-field');
-  if (hostField) {
-    // 193 dots represent ~20 of the 3,857 systems each. 28 / 193 = 14.5%.
-    const totalDots = 193;
-    const companionDots = 28;
-    const companionSlots = new Set();
-    for (let i = 0; i < companionDots; i += 1) companionSlots.add((i * 53 + 11) % totalDots);
-    for (let i = 0; i < totalDots; i += 1) {
-      const dot = document.createElement('span');
-      dot.className = `host-dot${companionSlots.has(i) ? ' has-companion' : ''}`;
-      dot.setAttribute('aria-hidden', 'true');
-      hostField.appendChild(dot);
-    }
-  }
-
   const aoSlider = document.getElementById('ao-slider');
   const aoStage = document.getElementById('ao-stage');
   const aoFwhm = document.getElementById('ao-fwhm');
