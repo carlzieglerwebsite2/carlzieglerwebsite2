@@ -126,13 +126,53 @@ html[data-theme="light"] .exo-explorer {
   gap: 10px;
   font-size: .86rem;
   font-weight: 780;
+  letter-spacing: .01em;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
 }
 
-.exo-step-control span[aria-hidden="true"] { color: var(--accent); font-size: 1.15rem; }
+.exo-step-control .exo-step-arrow {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid rgba(110,216,255,.28);
+  border-radius: 9px;
+  color: var(--accent);
+  background: rgba(110,216,255,.075);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.exo-step-next {
+  border-color: transparent;
+  color: #06111d;
+  background: linear-gradient(110deg, var(--accent), #a8ecff);
+  box-shadow: 0 12px 30px rgba(110,216,255,.16);
+}
+
+.exo-step-next .exo-step-arrow {
+  border-color: rgba(6,17,29,.13);
+  color: #06111d;
+  background: rgba(6,17,29,.07);
+}
+
+html[data-theme="light"] .exo-step-next {
+  color: #06111d;
+}
+
 .exo-step-control:hover:not(:disabled), .exo-step-control:focus-visible,
 .exo-play-control:hover, .exo-play-control:focus-visible {
   border-color: rgba(110,216,255,.55);
   background: rgba(110,216,255,.1);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.16);
+}
+.exo-step-next:hover:not(:disabled), .exo-step-next:focus-visible {
+  border-color: transparent;
+  color: #06111d;
+  background: linear-gradient(110deg, #83deff, #c0f2ff);
+  box-shadow: 0 14px 34px rgba(110,216,255,.23);
 }
 .exo-step-control:disabled { opacity: .38; cursor: not-allowed; }
 .exo-step-control:active:not(:disabled), .exo-play-control:active { transform: translateY(1px); }

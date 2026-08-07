@@ -4508,7 +4508,7 @@
       .reveal { opacity: 1; transform: none; }
     }
   </style><link href="assets/css/parallax-stars.css" rel="stylesheet"/>
-<link href="assets/css/exoplanet-explorer.css" rel="stylesheet"/>
+<link href="assets/css/exoplanet-explorer.css?v=20260807-1" rel="stylesheet"/>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -4800,12 +4800,12 @@
 <div class="exo-year-tools">
 <span class="exo-toolbar-label">Discovery year</span>
 <div class="exo-year-row">
-<button aria-label="Previous year" class="exo-step-control" id="exo-year-prev" title="Previous year" type="button"><span aria-hidden="true">←</span><span>Previous year</span></button>
+<button aria-label="Previous year" class="button exo-step-control" id="exo-year-prev" title="Previous year" type="button"><span aria-hidden="true" class="exo-step-arrow">←</span><span>Previous year</span></button>
 <output aria-live="polite" class="exo-year-badge" id="exo-year" for="exo-year-range">1991</output>
-<button aria-label="Next year" class="exo-step-control exo-step-next" id="exo-year-next" title="Next year" type="button"><span>Next year</span><span aria-hidden="true">→</span></button>
+<button aria-label="Next year" class="button primary exo-step-control exo-step-next" id="exo-year-next" title="Next year" type="button"><span>Next year</span><span aria-hidden="true" class="exo-step-arrow">→</span></button>
 </div>
 <div class="exo-year-secondary">
-<button aria-label="Play discovery timeline" class="exo-play-control" id="exo-year-play" title="Play timeline" type="button"><span aria-hidden="true">▶</span> Play</button>
+<button aria-label="Play discovery timeline" class="button compact exo-play-control" id="exo-year-play" title="Play timeline" type="button"><span aria-hidden="true">▶</span> Play</button>
 <input aria-label="Jump to discovery year" class="exo-year-range" id="exo-year-range" max="2026" min="1991" step="1" type="range" value="1991"/>
 <span class="exo-jump-label">drag to jump</span>
 </div>
@@ -6307,6 +6307,6 @@
       document.getElementById('year').textContent = new Date().getFullYear();
     })();
   </script>
-<script defer src="assets/js/exoplanet-explorer.js"></script>
+<script defer src="assets/js/exoplanet-explorer.js?v=20260807-1"></script>
 </body>
 </html>

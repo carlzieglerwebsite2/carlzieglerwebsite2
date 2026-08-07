@@ -207,7 +207,9 @@
   }
 
   function hideLoading() {
-    if (els.loading) els.loading.hidden = true;
+    if (!els.loading) return;
+    els.loading.hidden = true;
+    els.loading.style.color = '';
   }
 
   function stopPlayback() {
@@ -716,11 +718,13 @@
   els.canvas.addEventListener('pointermove', event => {
     if (state.pinnedTooltip) return;
     const point = nearestPoint(event.offsetX, event.offsetY);
+    els.canvas.style.cursor = point ? 'pointer' : 'crosshair';
     if (point) showTooltip(point);
     else hideTooltip();
   }, { passive: true });
 
   els.canvas.addEventListener('pointerleave', () => {
+    els.canvas.style.cursor = '';
     if (!state.pinnedTooltip) hideTooltip();
   });
 
@@ -751,7 +755,10 @@
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   setLoading('Loading the confirmed-planet census …');
-  fetch('exoplanets/data/exoplanets.json', { cache: 'no-cache' })
+  // Keep the data URL versioned with the CSS/JS references in index.html.
+  // This prevents browser/CDN caches from mixing incompatible generations of
+  // the explorer during a GitHub Pages deployment.
+  fetch('exoplanets/data/exoplanets.json?v=20260807-1', { cache: 'no-store' })
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
