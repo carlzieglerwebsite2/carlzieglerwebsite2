@@ -12,7 +12,7 @@ The explorer is intentionally built with the same no-build-stack approach as the
 - Searches by planet or host name.
 - Filters the point cloud by discovery method.
 - Shows cumulative discovery-method counts or shares at every year.
-- Marks selected milestones including 51 Peg b, HD 209458 b, Kepler-10 b, Proxima Cen b, TRAPPIST-1 e, and TOI-700 d.
+- Marks selected milestones including 51 Peg b, HD 209458 b, Kepler-10 b, Proxima Cen b, TRAPPIST-1 e, and TOI-700 d. The star is shown only in the milestone year; later frames return the planet to its ordinary discovery-method symbol.
 - Adds optional Solar System reference points with hover/tap radius, mass, period, planet class, and NASA Solar System links.
 - Adds optional guides for the hot Neptune desert, radius valley, giant-planet period valley, and hot-Jupiter pile-up, with explanations and literature links in the interface.
 - Automatically adopts the dark or light theme selected for the rest of carlziegler.space.
@@ -47,7 +47,7 @@ downloads/exoplanet_plots_dark.zip
 downloads/exoplanet_plots_light.zip
 ```
 
-Each ZIP contains one PNG per year from 1991 through the current UTC year plus a short README. Every PNG follows the large single-panel aesthetic of Carl's original `plot.py`, groups methods with the original magenta/dodger-blue/light-green/red/orange palette, distinguishes measured radii (filled) from mass-derived radius-equivalents (open), flags discoveries from that frame year, includes Solar System references, and carries a small lower-left credit:
+Each ZIP contains one PNG per year from 1991 through the current UTC year plus a short README. Every PNG follows the large single-panel aesthetic of Carl's original `plot.py`, groups methods with the original magenta/dodger-blue/light-green/red/orange palette, distinguishes measured radii (filled) from mass-derived radius-equivalents (open), flags discoveries from that frame year, includes Solar System references, and carries a small lower-right credit below the horizontal axis. The same footer states that the open circles use the Chen & Kipping (2017) radius-equivalent conversion and are approximate rather than measured radii.
 
 `© Carl Ziegler · carlziegler.space`
 

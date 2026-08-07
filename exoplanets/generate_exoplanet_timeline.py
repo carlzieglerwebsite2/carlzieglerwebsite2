@@ -15,7 +15,8 @@ The two ZIP files contain one period-versus-radius-equivalent PNG for every
 year from START_YEAR through the current UTC year.  Measured radii are used
 where available; otherwise a measured mass is mapped to an approximate radius
 with the Chen & Kipping (2017) piecewise mass-radius relation.  A small Carl
-Ziegler / carlziegler.space credit is included in the lower-left corner.
+Ziegler / carlziegler.space credit and the CK17 conversion note are included
+below the horizontal axis at lower right.
 """
 
 from __future__ import annotations
@@ -448,7 +449,9 @@ def plot_population(
 def annotate_milestones(ax: plt.Axes, data: pd.DataFrame, year: int, theme: dict[str, str]) -> None:
     column = "radius_equiv"
     for name, (event_year, label) in MILESTONES.items():
-        if event_year > year:
+        # Keep the star tied to the milestone moment itself. In later frames
+        # the planet returns to its normal discovery-method symbol.
+        if event_year != year:
             continue
         row = data[data["pl_name"] == name]
         if row.empty:
@@ -458,19 +461,16 @@ def annotate_milestones(ax: plt.Axes, data: pd.DataFrame, year: int, theme: dict
         if not (np.isfinite(x) and np.isfinite(y) and x > 0 and y > 0):
             continue
         ax.scatter([x], [y], marker="*", s=95, color="#ffe37a", edgecolor="#152131", linewidth=0.7, zorder=6)
-        # Label only when the planet first appears and on the final frame.  This
-        # keeps intermediate yearly plots readable while preserving the story.
-        if year in (event_year, datetime.now(timezone.utc).year):
-            ax.annotate(
-                name,
-                xy=(x, y),
-                xytext=(7, 7),
-                textcoords="offset points",
-                fontsize=7.5,
-                color=theme["text"],
-                bbox={"boxstyle": "round,pad=0.22", "fc": theme["panel"], "ec": theme["grid"], "alpha": 0.9},
-                zorder=7,
-            )
+        ax.annotate(
+            name,
+            xy=(x, y),
+            xytext=(7, 7),
+            textcoords="offset points",
+            fontsize=7.5,
+            color=theme["text"],
+            bbox={"boxstyle": "round,pad=0.22", "fc": theme["panel"], "ec": theme["grid"], "alpha": 0.9},
+            zorder=7,
+        )
 
 
 def render_year(data: pd.DataFrame, year: int, theme_name: str, output: Path, dpi: int) -> None:
@@ -490,7 +490,9 @@ def render_year(data: pd.DataFrame, year: int, theme_name: str, output: Path, dp
         # Deliberately return to the large, sparse aesthetic of Carl's original
         # plot.py: one canvas, log period, linear radius, in-plot method labels.
         fig, ax = plt.subplots(figsize=(20, 14))
-        fig.subplots_adjust(left=0.10, right=0.955, top=0.955, bottom=0.105)
+        # The extra lower margin keeps the credit and model caveat outside the
+        # science panel, to the right of the centered x-axis title.
+        fig.subplots_adjust(left=0.10, right=0.955, top=0.955, bottom=0.13)
         style_axis(ax, theme)
         plot_population(ax, through_year, year, theme)
         plot_solar_system(ax, theme)
@@ -516,11 +518,11 @@ def render_year(data: pd.DataFrame, year: int, theme_name: str, output: Path, dp
         ax.text(19_000, 1.05, str(year), fontsize=34, color=theme["text"], fontweight="bold")
         ax.text(0.985, 0.985, f"{count:,} confirmed · +{new_count:,} in {year}", transform=ax.transAxes,
                 ha="right", va="top", fontsize=14, color=theme["muted"])
-        ax.text(0.012, 0.018, "© Carl Ziegler · carlziegler.space", transform=ax.transAxes,
-                fontsize=10, color=theme["muted"], ha="left", va="bottom")
-        ax.text(0.012, 0.045,
-                "Filled = measured radius · open = CK17 radius-equivalent inferred from measured mass",
-                transform=ax.transAxes, fontsize=9.3, color=theme["muted"], ha="left", va="bottom")
+        fig.text(0.955, 0.045, "© Carl Ziegler · carlziegler.space",
+                 fontsize=10, color=theme["muted"], ha="right", va="bottom")
+        fig.text(0.955, 0.025,
+                 "Open circles: Chen & Kipping (2017) radius-equivalent from measured mass; approximate, not a measured radius",
+                 fontsize=9.3, color=theme["muted"], ha="right", va="bottom")
         fig.savefig(output, dpi=dpi, bbox_inches="tight", pad_inches=0.15)
         plt.close(fig)
 

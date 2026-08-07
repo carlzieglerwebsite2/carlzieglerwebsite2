@@ -6,7 +6,7 @@
   <meta name="description" content="One Hit Wonders: recovering long-period single-transit planets discovered by TESS.">
   <link rel="canonical" href="https://carlziegler.space/onehitwonders/">
   <link rel="icon" href="images/icon.png">
-  <link rel="stylesheet" href="assets/onehitwonders.css">
+  <link rel="stylesheet" href="assets/onehitwonders.css?v=20260807-2">
   <title>One Hit Wonders · TESS single-transit planets</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
     <div class="wrap nav-inner">
       <a class="brand" href="./"><i aria-hidden="true"></i>One Hit Wonders</a>
       <div class="nav-links">
-        <a href="#survey">Survey</a><a href="#science">Science</a><a href="#team">Team</a><a href="blog.html">Field journal</a>
+        <a href="#survey">Survey</a><a href="#strategy">Strategy</a><a href="#forecast">Forecast</a><a href="#science">Science</a><a href="#team">Team</a><a href="blog.html">Field journal</a>
         <a class="back" href="../#research">← Carl Ziegler research</a>
       </div>
     </div>
@@ -24,9 +24,10 @@
     <div class="wrap hero-copy">
       <p class="kicker">A TESS follow-up survey · established 2019</p>
       <h1>One Hit Wonders</h1>
-      <p class="hero-lede">Recovering the long-period planets that TESS may see transit only once—before a one-time dip becomes a lost ephemeris.</p>
+      <p class="hero-lede">Recovering the longest-period TESS planets by turning a single observed transit into a schedulable orbit.</p>
       <div class="hero-actions">
         <a class="button primary" href="#survey">How the survey works ↓</a>
+        <a class="button" href="One_Hit_Wonders.pdf" target="_blank" rel="noopener">Read the draft survey paper ↗</a>
         <a class="button" href="blog.html">Telescope field journal</a>
       </div>
     </div>
@@ -34,22 +35,75 @@
 
   <main>
     <div class="wrap stats reveal" aria-label="Survey at a glance">
-      <div class="stat"><strong>1 transit</strong><span>can be all TESS sees for a long-period world</span></div>
-      <div class="stat"><strong>60–90 d</strong><span>a particularly useful period regime for targeted recovery</span></div>
-      <div class="stat"><strong>0.5 m</strong><span>dedicated telescope at Deep Sky West, New Mexico</span></div>
+      <div class="stat"><strong>904 ± 65</strong><span>single-transit planets predicted in the original TESS primary-mission simulation</span></div>
+      <div class="stat"><strong>24 ± 4</strong><span>simulated first-year recoveries with the One Hit Wonders strategy</span></div>
+      <div class="stat"><strong>2–4</strong><span>habitable-zone planets predicted among a typical first-year recovery sample</span></div>
+      <div class="stat"><strong>0.5 m</strong><span>dedicated robotic telescope at Deep Sky West, New Mexico</span></div>
     </div>
 
     <section class="section" id="survey">
       <div class="wrap">
         <div class="section-head reveal">
-          <div><p class="kicker">The observing problem</p><h2>A planet can transit once—and then disappear from the schedule.</h2></div>
-          <p>TESS discovers planets by watching stars dim during transits. Short-period planets repeat quickly. For longer-period planets, a TESS sector may catch only one event, leaving the orbital period poorly constrained and making the next transit difficult to recover from the ground.</p>
+          <div><p class="kicker">The observing problem</p><h2>A planet can transit once, then disappear from the schedule.</h2></div>
+          <p>TESS's original observing strategy moved to a new sector every 27.4 days. Across most of the sky, that strongly favored multiple transits for planets with periods shorter than about 14 days. Longer-period planets could appear only once, leaving the orbital period poorly constrained even when the transit itself was convincing.</p>
         </div>
         <div class="story-grid">
-          <article class="story-card reveal"><img src="images/tess_yield.png" alt="Expected TESS planet yield plotted across orbital period"><h3>TESS favors short periods</h3><p>The mission's observing baseline makes repeated transits easiest to collect for planets close to their stars.</p></article>
+          <article class="story-card reveal"><img src="images/tess_yield.png" alt="Expected TESS planet yield plotted across orbital period"><h3>A thousand one-time events</h3><p>The survey simulation predicted 904 ± 65 detectable single-transit planets, comparable to independent pre-launch estimates and concentrated at longer periods than the multi-transit TESS population.</p></article>
           <article class="story-card reveal"><img src="images/animation.gif" alt="Animation illustrating a single long-period transit"><h3>The single-transit problem</h3><p>A long-period planet can cross its star once in the available data. Without another transit, its ephemeris rapidly becomes uncertain.</p></article>
-          <article class="story-card reveal"><img src="images/period_vs_magnitude_previous_dark.png" alt="Period versus host-star magnitude for known transiting planets"><h3>A valuable corner of parameter space</h3><p>Longer-period planets around bright stars are unusually useful for precise follow-up and atmospheric characterization.</p></article>
+          <article class="story-card reveal"><img src="images/period_vs_magnitude_previous_dark.png" alt="Period versus host-star magnitude for known transiting planets"><h3>A valuable corner of parameter space</h3><p>Longer-period planets around bright stars fill a sparse part of the transiting-planet census and are unusually valuable for mass measurements and atmospheric characterization.</p></article>
         </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="strategy">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><p class="kicker">The recovery engine</p><h2>Watch many windows. Trigger on the one that dips.</h2></div>
+          <p>The draft survey design combines a dedicated 0.5-m telescope, period estimates from the TESS transit and stellar properties, automated scheduling, and real-time photometry. Instead of staring at one uncertain target all night, the telescope cycles through several plausible transit windows until the data themselves tell it to stop.</p>
+        </div>
+        <div class="strategy-layout reveal">
+          <div class="strategy-media"><img src="images/dsw.jpg" alt="Deep Sky West observing site in New Mexico"><div class="strategy-caption"><strong>Deep Sky West · Rowe, New Mexico</strong><span>2,200 m elevation · roughly 250 photometric nights per year in the survey design</span></div></div>
+          <div class="hardware-card">
+            <p class="kicker">Survey hardware</p>
+            <h3>Purpose-built for long photometric windows.</h3>
+            <ul class="detail-list">
+              <li><strong>PlaneWave CDK-20</strong><span>0.5-m corrected Dall-Kirkham optical tube</span></li>
+              <li><strong>~0.8 deg² field</strong><span>f/4.5 reduced beam for efficient differential photometry</span></li>
+              <li><strong>Apogee U16M</strong><span>16-megapixel camera at 0.82 arcsec per pixel</span></li>
+              <li><strong>Engineered diffuser</strong><span>spreads bright-star light into a stable top-hat PSF for precision photometry</span></li>
+              <li><strong>Python automation</strong><span>scripted scheduling, calibration, photometry, and trigger logic</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="workflow-grid reveal" aria-label="One Hit Wonders observing workflow">
+          <article><span>01</span><h3>Estimate</h3><p>Fit the single TESS transit and stellar density to turn transit duration and geometry into a probability distribution for orbital period.</p></article>
+          <article><span>02</span><h3>Schedule</h3><p>Build a nightly list of plausible transit windows. The design expected 6–8 targets on a typical night, with 12 as a hard limit.</p></article>
+          <article><span>03</span><h3>Cycle</h3><p>Observe the targets at long cadence while on-the-fly aperture photometry compares each star with stable nearby references.</p></article>
+          <article><span>04</span><h3>Trigger</h3><p>Consecutive significant low points trigger continuous short-cadence observations, securing the transit and collapsing the ephemeris uncertainty.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="forecast">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><p class="kicker">Original survey forecast</p><h2>What could a single dedicated site recover?</h2></div>
+          <p>The draft paper used Monte Carlo populations and a simulated New Mexico observing season to estimate the opportunity. These numbers describe the survey forecast, not a claim about the final realized yield.</p>
+        </div>
+        <div class="forecast-grid reveal">
+          <article><strong>615 ± 35</strong><span>future transit events from the simulated TESS single-transit population were observable from one mid-latitude site over a year</span></article>
+          <article><strong>6–8</strong><span>targets were expected on a typical observing night, allowing the robot to multiplex uncertain transit windows</span></article>
+          <article><strong>24 ± 4</strong><span>single-transit planets were recovered in the simulated first survey year, with a mean radius of 6 ± 3 R⊕</span></article>
+          <article><strong>2–4</strong><span>habitable-zone planets were typically recovered in a simulated first year</span></article>
+        </div>
+        <aside class="paper-card reveal">
+          <div>
+            <p class="kicker">Draft manuscript · August 6, 2026</p>
+            <h3><em>One Hit Wonders: recovering the longest period TESS planets</em></h3>
+            <p>Carl Ziegler, Suresh Sivanandam, Julia Pasiecznik, James Mang, Emily Deibert, Adam Butko, and Masen Lamb. The manuscript documents the single-transit yield simulation, telescope design, period-estimation strategy, automated trigger concept, survey forecast, and science case.</p>
+          </div>
+          <a class="button primary paper-button" href="One_Hit_Wonders.pdf" target="_blank" rel="noopener">Read the full draft PDF ↗</a>
+        </aside>
       </div>
     </section>
 
@@ -61,7 +115,7 @@
         </div>
         <div class="feature reverse reveal">
           <div class="feature-media"><img src="images/animation2.gif" alt="Animation showing recovered long-period planet transits"></div>
-          <div class="feature-copy"><span class="number">02 · Characterize</span><h2>Cooler planets around bright stars.</h2><p>Moving to longer periods opens a population at lower stellar irradiation than the canonical hot-planet sample. Around bright stars, recovered ephemerides can enable mass measurements and atmospheric observations that connect hot exoplanets with the cooler worlds of our own Solar System.</p></div>
+          <div class="feature-copy"><span class="number">02 · Characterize</span><h2>An atmospheric bridge to cooler worlds.</h2><p>Most early transmission work concentrated on intensely irradiated hot Jupiters. Moving to longer periods opens planets at lower equilibrium temperatures, where different molecules and condensates become important. Around bright stars, recovered ephemerides can enable mass measurements and atmospheric observations that connect hot exoplanets with the cooler giant planets of our own Solar System.</p></div>
         </div>
       </div>
     </section>
@@ -71,13 +125,13 @@
         <div class="section-head reveal"><div><p class="kicker">The team</p><h2>Built around hands-on follow-up.</h2></div><p>The survey was developed during Carl Ziegler's Dunlap Fellowship and began observing in September 2019, combining small-telescope operations, automated photometry, and student-accessible exoplanet follow-up.</p></div>
         <div class="people reveal">
           <div class="pi-card"><span class="role">Principal investigator</span><strong>Carl Ziegler</strong><p>Exoplanet astronomer, survey builder, and telescope/instrumentation researcher.</p><a class="button primary" href="../#about">Carl's current site →</a></div>
-          <div class="team-card"><span class="role">Collaborators</span><div class="team-list"><div class="team-person"><strong>Suresh Sivanandam</strong><span>University of Toronto</span></div><div class="team-person"><strong>Adam Butko</strong><span>Dunlap Institute</span></div><div class="team-person"><strong>Emily Deibert</strong><span>University of Toronto</span></div><div class="team-person"><strong>Masen Lamb</strong><span>Dunlap Institute</span></div></div></div>
+          <div class="team-card"><span class="role">Draft-paper collaborators</span><div class="team-list"><div class="team-person"><strong>Suresh Sivanandam</strong><span>University of Toronto</span></div><div class="team-person"><strong>Julia Pasiecznik</strong><span>University of Toronto</span></div><div class="team-person"><strong>James Mang</strong><span>UC Berkeley</span></div><div class="team-person"><strong>Emily Deibert</strong><span>University of Toronto</span></div><div class="team-person"><strong>Adam Butko</strong><span>University of Toronto</span></div><div class="team-person"><strong>Masen Lamb</strong><span>University of Toronto</span></div></div></div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer"><div class="wrap footer-inner"><span>© Carl Ziegler · One Hit Wonders</span><span>Now part of <a href="https://carlziegler.space/">carlziegler.space</a> · <a href="blog.html">Field journal</a></span></div></footer>
-  <script src="assets/onehitwonders.js"></script>
+  <footer class="footer"><div class="wrap footer-inner"><span>© Carl Ziegler · One Hit Wonders</span><span>Now part of <a href="https://carlziegler.space/">carlziegler.space</a> · <a href="One_Hit_Wonders.pdf" target="_blank" rel="noopener">Draft paper</a> · <a href="blog.html">Field journal</a></span></div></footer>
+  <script src="assets/onehitwonders.js?v=20260807-2"></script>
 </body>
 </html>

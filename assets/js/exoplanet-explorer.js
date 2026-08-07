@@ -45,6 +45,21 @@
     'Other': '#8e9cab',
   };
 
+  const METHOD_DESCRIPTIONS = {
+    'Transit': 'Measures the repeated dip in starlight when a planet crosses its star. The depth constrains planet size and the spacing between transits gives the orbital period.',
+    'Radial Velocity': 'Measures the Doppler shift of a star as an orbiting planet tugs it toward and away from us. The signal constrains the planet\'s mass and orbit.',
+    'Microlensing': 'Uses the temporary magnification of a background star by a foreground planetary system. A planet adds a short anomaly to the gravitational-lens light curve.',
+    'Imaging': 'Suppresses or separates the host star\'s light so photons from the planet itself can be detected at a measurable angular separation.',
+    'Transit Timing Variations': 'Finds planets from small departures from perfectly periodic transit times, caused by gravitational interactions with another world in the system.',
+    'Eclipse Timing Variations': 'Uses shifts in the timing of stellar eclipses as a precise clock. A third body can move the eclipsing pair and change when its eclipses arrive.',
+    'Orbital Brightness Modulation': 'Detects periodic changes in the combined light of a star and planet from reflected light, thermal emission, beaming, or tidal distortion over an orbit.',
+    'Pulsar Timing': 'Uses the extraordinary regularity of pulsar pulses as a clock. A planet makes the pulsar move, producing periodic changes in pulse arrival times.',
+    'Astrometry': 'Measures a star\'s tiny motion across the plane of the sky as the star and planet orbit their common center of mass.',
+    'Pulsation Timing Variations': 'Uses stable stellar pulsations as a clock. Reflex motion from an orbiting companion shifts the observed arrival times of the pulsation pattern.',
+    'Disk Kinematics': 'Infers an embedded planet from localized disturbances in the motion of gas or dust within a young circumstellar disk.',
+    'Other': 'Groups discovery techniques that do not fall into the principal method categories shown above.',
+  };
+
   const SOLAR_SYSTEM = [
     { name: 'Mercury', period: 87.97, radius: .383, mass: .0553, kind: 'Terrestrial planet' },
     { name: 'Venus', period: 224.70, radius: .949, mass: .815, kind: 'Terrestrial planet' },
@@ -302,8 +317,10 @@
       button.style.setProperty('--method-color', METHOD_COLORS[method] || METHOD_COLORS.Other);
       button.style.setProperty('--method-share', `${Math.min(100, share)}%`);
       button.setAttribute('aria-pressed', state.hiddenMethods.has(method) ? 'false' : 'true');
-      button.title = state.hiddenMethods.has(method) ? `Show ${method}` : `Hide ${method}`;
-      button.innerHTML = `<span class="exo-method-dot" aria-hidden="true"></span><span class="exo-method-name">${escapeHTML(method)}</span><span class="exo-method-value">${value}</span>`;
+      button.setAttribute('aria-label', `${state.hiddenMethods.has(method) ? 'Show' : 'Hide'} ${method} planets`);
+      const helpId = `exo-method-help-${method.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+      button.setAttribute('aria-describedby', helpId);
+      button.innerHTML = `<span class="exo-method-dot" aria-hidden="true"></span><span class="exo-method-name">${escapeHTML(method)}</span><span class="exo-method-value">${value}</span><span class="exo-method-description" id="${helpId}" role="tooltip"><strong>${escapeHTML(method)}</strong>${escapeHTML(METHOD_DESCRIPTIONS[method] || METHOD_DESCRIPTIONS.Other)}<small>Click to ${state.hiddenMethods.has(method) ? 'show' : 'hide'} these planets.</small></span>`;
       button.addEventListener('click', () => {
         if (state.hiddenMethods.has(method)) state.hiddenMethods.delete(method);
         else state.hiddenMethods.add(method);
@@ -506,7 +523,10 @@
       });
     }
 
-    const milestoneNames = new Set(MILESTONES.filter(item => item.year <= state.year).map(item => item.name));
+    // A milestone is deliberately transient: the star calls attention to the
+    // discovery in its event year, then the planet returns to an ordinary
+    // census point in every later frame.
+    const milestoneNames = new Set(MILESTONES.filter(item => item.year === state.year).map(item => item.name));
     state.planets.forEach(planet => {
       if (!Number.isFinite(planet.year) || planet.year > state.year) return;
       if (state.hiddenMethods.has(planet.method)) return;
@@ -758,7 +778,7 @@
   // Keep the data URL versioned with the CSS/JS references in index.html.
   // This prevents browser/CDN caches from mixing incompatible generations of
   // the explorer during a GitHub Pages deployment.
-  fetch('exoplanets/data/exoplanets.json?v=20260807-1', { cache: 'no-store' })
+  fetch('exoplanets/data/exoplanets.json?v=20260807-2', { cache: 'no-store' })
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
