@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#090d17">
   <link rel="canonical" href="https://carlziegler.space/soar-tess/">
   <link rel="icon" href="../images/telescope.png" type="image/png">
-  <link rel="stylesheet" href="assets/soar-tess.css?v=20260809-1">
+  <link rel="stylesheet" href="assets/soar-tess.css?v=20260809-2">
   <title>SOAR TESS Survey</title>
 </head>
 <body>
@@ -102,17 +102,52 @@
       <div class="wrap">
         <div class="section-head reveal">
           <div><p class="kicker">Interactive · speckle autocorrelation</p><h2>Move a hidden companion through the data.</h2></div>
-          <p>Change the separation, position angle, and contrast. The simulated autocorrelation responds with the central target peak and two mirrored companion peaks, as in the real HRCam mosaic above. The texture and sensitivity are illustrative; the geometry and magnitude-to-flux conversion are quantitative.</p>
+          <p>Change the separation, position angle, and contrast, then switch between the blurred seeing-limited image and the final autocorrelation. The ACF reveals the companion as two mirrored peaks, as in the real HRCam mosaic above. The texture and sensitivity are illustrative; the geometry and magnitude-to-flux conversion are quantitative.</p>
+        </div>
+
+        <div class="tess-scale-card reveal">
+          <div class="tess-scale-visual" id="tess-scale-visual">
+            <div class="tess-pixel" id="tess-pixel" role="img" aria-label="Scale comparison showing a 2.8 arcsecond HRCam field inside one 21 arcsecond TESS pixel">
+              <div class="comparison-grid" aria-hidden="true"></div>
+              <span class="field-star star-one" aria-hidden="true"></span>
+              <span class="field-star star-two" aria-hidden="true"></span>
+              <span class="field-star star-three" aria-hidden="true"></span>
+              <span class="field-star star-four" aria-hidden="true"></span>
+              <span class="tess-pixel-label">1 TESS pixel · 21″</span>
+              <div class="soar-footprint" aria-hidden="true">
+                <span class="zoom-star zoom-primary"></span>
+                <span class="zoom-star zoom-companion"></span>
+                <em>2.8″ HRCam field</em>
+              </div>
+            </div>
+          </div>
+          <div class="tess-scale-copy">
+            <p class="kicker">First, set the scale</p>
+            <h3>One TESS pixel contains a great deal of sky.</h3>
+            <p>A TESS pixel is 21″ on a side. The 2.8″ autocorrelation field used in the interactive below is 7.5 times narrower and covers only about 1.8% as much sky area. Within that small patch, SOAR reaches roughly 0.04″ resolution.</p>
+            <div class="scale-facts">
+              <div><strong>21″</strong><span>one TESS pixel</span></div>
+              <div><strong>7.5×</strong><span>narrower HRCam frame</span></div>
+              <div><strong>~56×</strong><span>less sky area</span></div>
+            </div>
+            <button class="button compact" id="tess-zoom" type="button" aria-pressed="false">Zoom into the 2.8″ SOAR field</button>
+            <p class="microcopy">The grid subdivides the TESS pixel into 2.8″ comparison fields; those grid cells are not additional TESS detector pixels.</p>
+          </div>
         </div>
 
         <div class="speckle-lab reveal">
           <div class="speckle-stage">
             <canvas id="acf-canvas" width="760" height="620" role="img" aria-label="Interactive illustrative speckle autocorrelation function with a central target peak and two mirrored companion peaks"></canvas>
-            <div class="canvas-label"><span>Illustrative ACF</span><span>2.8″ × 2.8″</span></div>
+            <div class="canvas-label"><span id="canvas-mode-label">Illustrative ACF</span><span>2.8″ × 2.8″</span></div>
             <div class="scale-bar" aria-hidden="true"><i></i><span>0.5″</span></div>
           </div>
           <div class="speckle-controls">
             <span class="eyebrow">Binary parameters</span>
+            <div class="view-switch" role="group" aria-label="Choose the image view">
+              <button class="view-button" id="view-seeing" type="button" aria-pressed="false">Seeing-limited</button>
+              <button class="view-button active" id="view-acf" type="button" aria-pressed="true">Speckle ACF</button>
+            </div>
+            <p class="view-description" id="view-description" aria-live="polite">The autocorrelation reveals the companion as a symmetric pair of peaks.</p>
             <div class="control-group">
               <label for="acf-separation">Angular separation <b id="acf-separation-value">0.45″</b></label>
               <input id="acf-separation" type="range" min="0.08" max="1.25" value="0.45" step="0.01">
@@ -128,9 +163,9 @@
             <div class="lab-results">
               <div><strong id="acf-projected">90 AU</strong><span>projected separation at 200 pc</span></div>
               <div><strong id="acf-flux">15.8%</strong><span>companion-to-primary flux ratio</span></div>
-              <div class="accent-result"><strong id="acf-state">Clear pair</strong><span>illustrative ACF visibility</span></div>
+              <div class="accent-result"><strong id="acf-state">Clear pair</strong><span id="acf-state-label">illustrative ACF visibility</span></div>
             </div>
-            <button class="button compact" id="acf-refresh" type="button">Regenerate speckle texture</button>
+            <button class="button compact" id="acf-refresh" type="button">Regenerate image texture</button>
             <p class="microcopy">Real detections are tested against the measured 5σ contrast curve for each observation and modeled in the power spectrum; this visual is an explanatory simulation, not a detection classifier.</p>
           </div>
         </div>
@@ -271,6 +306,6 @@
     </div>
   </footer>
 
-  <script src="assets/soar-tess.js?v=20260809-1"></script>
+  <script src="assets/soar-tess.js?v=20260809-2"></script>
 </body>
 </html>

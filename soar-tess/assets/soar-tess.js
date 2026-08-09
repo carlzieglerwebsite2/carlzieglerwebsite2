@@ -25,7 +25,13 @@
   const projected = document.getElementById('acf-projected');
   const flux = document.getElementById('acf-flux');
   const state = document.getElementById('acf-state');
+  const stateLabel = document.getElementById('acf-state-label');
+  const canvasModeLabel = document.getElementById('canvas-mode-label');
+  const viewDescription = document.getElementById('view-description');
+  const viewSeeing = document.getElementById('view-seeing');
+  const viewAcf = document.getElementById('view-acf');
   const refresh = document.getElementById('acf-refresh');
+  let imageMode = 'acf';
   let textureSeed = 7319;
 
   function seededRandom(seed) {
@@ -55,6 +61,24 @@
     ctx.fill();
   }
 
+  function drawSeeingStar(ctx, x, y, fwhm, brightness, warm = false) {
+    const radius = fwhm * 1.25;
+    const peak = Math.min(1, .96 * Math.sqrt(brightness));
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    gradient.addColorStop(0, warm ? `rgba(255,247,222,${peak})` : `rgba(245,251,255,${peak})`);
+    gradient.addColorStop(.08, warm ? `rgba(255,211,137,${peak * .78})` : `rgba(188,221,255,${peak * .78})`);
+    gradient.addColorStop(.32, warm ? `rgba(255,155,92,${peak * .3})` : `rgba(103,166,224,${peak * .3})`);
+    gradient.addColorStop(.62, warm ? `rgba(205,92,67,${peak * .08})` : `rgba(65,112,167,${peak * .08})`);
+    gradient.addColorStop(1, 'rgba(20,35,55,0)');
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
   function drawAcf() {
     if (!canvas || !separation || !angle || !contrast) return;
     const rect = canvas.getBoundingClientRect();
@@ -74,7 +98,7 @@
     const cy = height / 2;
     const rand = seededRandom(textureSeed);
 
-    ctx.strokeStyle = 'rgba(115,226,209,.065)';
+    ctx.strokeStyle = imageMode === 'acf' ? 'rgba(115,226,209,.065)' : 'rgba(120,168,255,.045)';
     ctx.lineWidth = 1;
     for (let i = 1; i < 8; i += 1) {
       const x = (width / 8) * i;
@@ -95,12 +119,14 @@
       ctx.fill();
     }
 
-    for (let i = 0; i < 42; i += 1) {
-      const theta = rand() * Math.PI * 2;
-      const radial = Math.pow(rand(), .62) * Math.min(width, height) * .31;
-      const x = cx + Math.cos(theta) * radial;
-      const y = cy + Math.sin(theta) * radial;
-      drawGlow(ctx, x, y, 4 + rand() * 10, .018 + rand() * .035, rand() > .5);
+    if (imageMode === 'acf') {
+      for (let i = 0; i < 42; i += 1) {
+        const theta = rand() * Math.PI * 2;
+        const radial = Math.pow(rand(), .62) * Math.min(width, height) * .31;
+        const x = cx + Math.cos(theta) * radial;
+        const y = cy + Math.sin(theta) * radial;
+        drawGlow(ctx, x, y, 4 + rand() * 10, .018 + rand() * .035, rand() > .5);
+      }
     }
 
     const sepArcsec = Number(separation.value);
@@ -111,20 +137,25 @@
     const radians = paDegrees * Math.PI / 180;
     const dx = Math.sin(radians) * sepPixels;
     const dy = -Math.cos(radians) * sepPixels;
-    const companionOpacity = .18 + .78 * Math.pow(fluxRatio, .33);
-    const companionRadius = 19 + 9 * Math.pow(fluxRatio, .18);
+    if (imageMode === 'acf') {
+      const companionOpacity = .18 + .78 * Math.pow(fluxRatio, .33);
+      const companionRadius = 19 + 9 * Math.pow(fluxRatio, .18);
+      drawGlow(ctx, cx, cy, 58, .97, false);
+      drawGlow(ctx, cx, cy, 25, .96, true);
+      drawGlow(ctx, cx + dx, cy + dy, companionRadius, companionOpacity, true);
+      drawGlow(ctx, cx - dx, cy - dy, companionRadius, companionOpacity, true);
 
-    drawGlow(ctx, cx, cy, 58, .97, false);
-    drawGlow(ctx, cx, cy, 25, .96, true);
-    drawGlow(ctx, cx + dx, cy + dy, companionRadius, companionOpacity, true);
-    drawGlow(ctx, cx - dx, cy - dy, companionRadius, companionOpacity, true);
-
-    ctx.strokeStyle = 'rgba(244,247,251,.14)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(cx - 8, cy); ctx.lineTo(cx + 8, cy);
-    ctx.moveTo(cx, cy - 8); ctx.lineTo(cx, cy + 8);
-    ctx.stroke();
+      ctx.strokeStyle = 'rgba(244,247,251,.14)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx - 8, cy); ctx.lineTo(cx + 8, cy);
+      ctx.moveTo(cx, cy - 8); ctx.lineTo(cx, cy + 8);
+      ctx.stroke();
+    } else {
+      const seeingFwhm = (1.1 / 2.8) * Math.min(width, height);
+      drawSeeingStar(ctx, cx + dx, cy + dy, seeingFwhm, fluxRatio, true);
+      drawSeeingStar(ctx, cx, cy, seeingFwhm, 1, false);
+    }
 
     ctx.fillStyle = 'rgba(205,219,229,.48)';
     ctx.font = '11px Inter, system-ui, sans-serif';
@@ -142,15 +173,40 @@
     if (projected) projected.textContent = `${Math.round(sepArcsec * 200)} AU`;
     if (flux) flux.textContent = `${(fluxRatio * 100).toFixed(1)}%`;
     if (state) {
-      if (sepArcsec < .13 || deltaMag > 4.2) state.textContent = 'Subtle pair';
+      if (imageMode === 'seeing') {
+        if (sepArcsec < .72 || deltaMag > 2.7) state.textContent = 'Blended';
+        else if (sepArcsec < 1.05) state.textContent = 'Elongated';
+        else state.textContent = 'Partly resolved';
+      } else if (sepArcsec < .13 || deltaMag > 4.2) state.textContent = 'Subtle pair';
       else if (sepArcsec < .2 || deltaMag > 3.2) state.textContent = 'Emerging pair';
       else state.textContent = 'Clear pair';
     }
 
-    canvas.setAttribute('aria-label', `Illustrative speckle autocorrelation with mirrored companion peaks at ${sepArcsec.toFixed(2)} arcseconds, position angle ${paDegrees.toFixed(0)} degrees, and brightness contrast ${deltaMag.toFixed(1)} magnitudes.`);
+    if (imageMode === 'seeing') {
+      canvas.setAttribute('aria-label', `Illustrative seeing-limited image with a companion at ${sepArcsec.toFixed(2)} arcseconds, position angle ${paDegrees.toFixed(0)} degrees, and brightness contrast ${deltaMag.toFixed(1)} magnitudes, blurred by 1.1 arcsecond seeing.`);
+    } else {
+      canvas.setAttribute('aria-label', `Illustrative speckle autocorrelation with mirrored companion peaks at ${sepArcsec.toFixed(2)} arcseconds, position angle ${paDegrees.toFixed(0)} degrees, and brightness contrast ${deltaMag.toFixed(1)} magnitudes.`);
+    }
+  }
+
+  function setImageMode(mode) {
+    imageMode = mode === 'seeing' ? 'seeing' : 'acf';
+    const seeingActive = imageMode === 'seeing';
+    viewSeeing?.classList.toggle('active', seeingActive);
+    viewAcf?.classList.toggle('active', !seeingActive);
+    viewSeeing?.setAttribute('aria-pressed', String(seeingActive));
+    viewAcf?.setAttribute('aria-pressed', String(!seeingActive));
+    if (canvasModeLabel) canvasModeLabel.textContent = seeingActive ? 'Seeing-limited image · ~1.1″ FWHM' : 'Illustrative ACF';
+    if (stateLabel) stateLabel.textContent = seeingActive ? 'seeing-limited appearance' : 'illustrative ACF visibility';
+    if (viewDescription) viewDescription.textContent = seeingActive
+      ? 'Ordinary atmospheric seeing blends the stars into one broad point-spread function.'
+      : 'The autocorrelation reveals the companion as a symmetric pair of peaks.';
+    drawAcf();
   }
 
   [separation, angle, contrast].forEach((input) => input?.addEventListener('input', drawAcf));
+  viewSeeing?.addEventListener('click', () => setImageMode('seeing'));
+  viewAcf?.addEventListener('click', () => setImageMode('acf'));
   refresh?.addEventListener('click', () => {
     textureSeed = Math.floor(Math.random() * 1000000) + 1;
     drawAcf();
@@ -161,7 +217,27 @@
     if (resizeFrame) cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(drawAcf);
   });
-  drawAcf();
+  setImageMode('acf');
+
+  const tessScaleVisual = document.getElementById('tess-scale-visual');
+  const tessPixel = document.getElementById('tess-pixel');
+  const tessZoom = document.getElementById('tess-zoom');
+  let tessZoomed = false;
+
+  function updateTessScale() {
+    tessScaleVisual?.classList.toggle('zoomed', tessZoomed);
+    tessZoom?.setAttribute('aria-pressed', String(tessZoomed));
+    if (tessZoom) tessZoom.textContent = tessZoomed ? 'Return to the 21″ TESS pixel' : 'Zoom into the 2.8″ SOAR field';
+    if (tessPixel) tessPixel.setAttribute('aria-label', tessZoomed
+      ? 'Zoomed view of a 2.8 arcsecond HRCam field containing a close binary star'
+      : 'Scale comparison showing a 2.8 arcsecond HRCam field inside one 21 arcsecond TESS pixel');
+  }
+
+  tessZoom?.addEventListener('click', () => {
+    tessZoomed = !tessZoomed;
+    updateTessScale();
+  });
+  updateTessScale();
 
   const binarySeparation = document.getElementById('binary-separation');
   const binaryDistance = document.getElementById('binary-distance');
