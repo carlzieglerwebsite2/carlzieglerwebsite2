@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#090d17">
   <link rel="canonical" href="https://carlziegler.space/soar-tess/">
   <link rel="icon" href="../images/telescope.png" type="image/png">
-  <link rel="stylesheet" href="assets/soar-tess.css?v=20260809-2">
+  <link rel="stylesheet" href="assets/soar-tess.css?v=20260809-3">
   <title>SOAR TESS Survey</title>
 </head>
 <body>
@@ -40,11 +40,11 @@
           <a class="button" href="#results">Explore the main results</a>
         </div>
       </div>
-      <aside class="hero-note reveal visible" aria-label="Survey completeness summary">
-        <span class="eyebrow">Papers I + II</span>
-        <strong>95%</strong>
-        <p>of bright, non-false-positive TESS planet candidates accessible from the south had high-resolution imaging in the first two survey papers.</p>
-        <a href="https://arxiv.org/abs/2103.12076" target="_blank" rel="noopener">SOAR TESS Survey II ↗</a>
+      <aside class="hero-note reveal visible" aria-label="Cumulative survey summary">
+        <span class="eyebrow">Cumulative draft · Survey III</span>
+        <strong>2,982</strong>
+        <p>unique TESS Input Catalog targets observed with HRCam in the cumulative companion census.</p>
+        <a href="#results">Explore the Paper III results ↓</a>
       </aside>
     </div>
     <div class="wrap hero-credit">SOAR beneath the southern sky: CTIO/NOIRLab/NSF/AURA/T. Slovinský. <a href="https://noirlab.edu/public/images/iotw2411a/" target="_blank" rel="noopener">Source ↗</a></div>
@@ -52,10 +52,10 @@
 
   <main id="main">
     <section class="wrap stats reveal" aria-label="Survey at a glance">
-      <div class="stat"><strong>1,131</strong><span>TESS Objects of Interest imaged across Papers I and II</span></div>
-      <div class="stat"><strong>206</strong><span>target systems with companions within 3″ reported across the two papers</span></div>
+      <div class="stat"><strong>2,982</strong><span>unique TIC targets observed in the cumulative HRCam survey</span></div>
+      <div class="stat"><strong>729</strong><span>latest-epoch component detections around 688 host stars</span></div>
       <div class="stat"><strong>~0.04″</strong><span>diffraction-limited resolution delivered by the 4.1-m telescope</span></div>
-      <div class="stat"><strong>300</strong><span>targets that HRCam can observe in a productive night</span></div>
+      <div class="stat"><strong>630</strong><span>systems with a source inside 3″ and a primary-host dilution correction</span></div>
     </section>
 
     <section class="section" id="survey">
@@ -114,6 +114,7 @@
               <span class="field-star star-three" aria-hidden="true"></span>
               <span class="field-star star-four" aria-hidden="true"></span>
               <span class="tess-pixel-label">1 TESS pixel · 21″</span>
+              <span class="added-light-label">Every star adds measured light</span>
               <div class="soar-footprint" aria-hidden="true">
                 <span class="zoom-star zoom-primary"></span>
                 <span class="zoom-star zoom-companion"></span>
@@ -124,13 +125,18 @@
           <div class="tess-scale-copy">
             <p class="kicker">First, set the scale</p>
             <h3>One TESS pixel contains a great deal of sky.</h3>
-            <p>A TESS pixel is 21″ on a side. The 2.8″ autocorrelation field used in the interactive below is 7.5 times narrower and covers only about 1.8% as much sky area. Within that small patch, SOAR reaches roughly 0.04″ resolution.</p>
+            <p>A TESS pixel is 21″ on a side. The 2.8″ autocorrelation field used below is 7.5 times narrower and covers only about 1.8% as much sky area. Within that small patch, SOAR reaches roughly 0.04″ resolution.</p>
+            <p><strong>Every additional star whose light falls into the target’s TESS pixel or photometric aperture adds flux to the light curve.</strong> That extra light dilutes the fractional brightness drop: the observed transit becomes shallower, so—without a correction—the planet appears smaller than it really is.</p>
+            <div class="dilution-flow" aria-label="Extra stellar light makes the measured transit shallower and the inferred planet smaller">
+              <span>extra stellar light</span><i aria-hidden="true">→</i><span>shallower transit</span><i aria-hidden="true">→</i><b>planet appears smaller</b>
+            </div>
             <div class="scale-facts">
               <div><strong>21″</strong><span>one TESS pixel</span></div>
               <div><strong>7.5×</strong><span>narrower HRCam frame</span></div>
               <div><strong>~56×</strong><span>less sky area</span></div>
             </div>
             <button class="button compact" id="tess-zoom" type="button" aria-pressed="false">Zoom into the 2.8″ SOAR field</button>
+            <p class="paper3-scale-note"><strong>Paper III draft:</strong> for 630 systems with a source inside 3″, the median primary-host planet-radius correction is ×1.070; the 90th-percentile correction is ×1.326.</p>
             <p class="microcopy">The grid subdivides the TESS pixel into 2.8″ comparison fields; those grid cells are not additional TESS detector pixels.</p>
           </div>
         </div>
@@ -175,8 +181,8 @@
     <section class="section" id="results">
       <div class="wrap">
         <div class="section-head reveal">
-          <div><p class="kicker">The population result</p><h2>Close binary stars remove planetary systems from the census.</h2></div>
-          <p>After known and likely false positives were removed, the combined sample showed far fewer planet-hosting close binaries than expected from field-star statistics. The best-fit step model retained only 15% of binaries below a semimajor-axis cutoff of 58 AU.</p>
+          <div><p class="kicker">The cumulative population result</p><h2>Nearby stellar companions are missing from the TOI census.</h2></div>
+          <p>The Paper III draft expands the controlled analysis to 1,199 dwarf primaries and 162 candidate visual companions with empirical mass ratio q ≥ 0.4. It finds a deep close-source deficit relative to a sensitivity-convolved field-binary model, followed by a gradual recovery with separation.</p>
         </div>
 
         <div class="suppression-lab reveal">
@@ -188,57 +194,77 @@
               <span class="planet-orbit"></span>
               <span class="planet"></span>
             </div>
-            <div class="suppression-meter" role="img" aria-label="Relative occurrence of planet-hosting binaries compared with field binaries">
-              <div class="meter-row"><span>Field binaries</span><i><b></b></i><strong>100%</strong></div>
-              <div class="meter-row observed"><span>Planet hosts</span><i><b id="host-meter"></b></i><strong id="host-percent">15%</strong></div>
+            <div class="suppression-meter" role="img" aria-label="Conditional relative frequency of companions around TESS Objects of Interest compared with field binaries">
+              <div class="meter-row"><span>Field expectation</span><i><b></b></i><strong>100%</strong></div>
+              <div class="meter-row observed"><span>TOI hosts</span><i><b id="host-meter"></b></i><strong id="host-percent">32%</strong></div>
             </div>
           </div>
           <div class="suppression-controls">
-            <span class="eyebrow">Paper II best-fit step model</span>
-            <div class="readout"><strong id="binary-distance">35 AU</strong><span>binary semimajor axis</span></div>
-            <label for="binary-separation"><span>5 AU</span><span>300 AU</span></label>
-            <input id="binary-separation" type="range" min="5" max="300" value="35" step="1">
-            <div class="model-callout" id="model-callout"><b>Strongly suppressed.</b> Inside the fitted 58 AU cutoff, the model contains only 15% as many planet-hosting binaries as the field population—about 6.7 times fewer.</div>
-            <p class="microcopy">This interactive evaluates the published two-parameter step model. Real binary suppression is unlikely to change instantaneously at one separation; the simple form summarizes the ensemble.</p>
+            <span class="eyebrow">Paper III smooth-recovery model</span>
+            <div class="readout"><strong id="binary-distance">50 AU</strong><span>binary semimajor axis</span></div>
+            <label for="binary-separation"><span>5 AU</span><span>3,000 AU</span></label>
+            <input id="binary-separation" type="range" min="0" max="1000" value="360" step="1">
+            <div class="model-callout" id="model-callout"><b>Deep deficit.</b> At a 50 AU semimajor axis, the smooth model is about 32% of the field frequency. In the fixed projected-separation count, SOAR sees 24 sources inside 50 AU where 87.2 are expected.</div>
+            <p class="microcopy">The curve uses the draft posterior medians S₀ = 0.129, a₅₀ = 228 AU, and w = 0.518 dex. The 228 AU midpoint is model-dependent—not a hard observed boundary—and the physical planet-occurrence interpretation remains conditional on association, selection, completeness, and candidate reliability.</p>
           </div>
         </div>
 
         <div class="finding-grid">
           <article class="finding-card big reveal">
-            <div class="card-number">01 · Paper II</div>
-            <div class="impact-number">~6.7×</div>
-            <h3>fewer close solar-type binaries among planet hosts</h3>
-            <p>The best-fit model has a binary suppression factor of 0.15 inside 58 AU. In plain language, only about one in seven of the close binaries expected from the field population remains among the transiting planet hosts.</p>
-            <a class="text-link" href="https://arxiv.org/abs/2103.12076" target="_blank" rel="noopener">Source · Survey II ↗</a>
+            <div class="card-number">01 · Inside 50 AU</div>
+            <div class="impact-number">3.6×</div>
+            <h3>fewer nearby sources than the field model predicts</h3>
+            <p>SOAR detects 24 sources inside 50 AU in the mass-ratio-matched sample; the target-by-target field model predicts 87.2. The inferred relative frequency is 0.283, with a 16–84% interval of 0.230–0.343.</p>
           </article>
 
           <article class="finding-card reveal">
-            <div class="card-number">02 · Occurrence rates</div>
-            <div class="impact-number gold">2×</div>
-            <h3>the potential bias in magnitude-limited surveys</h3>
-            <p>Because unresolved binaries are overrepresented in magnitude-limited samples, ignoring the suppressed planet population can make occurrence rates appear about twice too high.</p>
+            <div class="card-number">02 · Inside 100 AU</div>
+            <div class="impact-number gold">3.0×</div>
+            <h3>fewer sources remain across a wider aperture</h3>
+            <p>Inside 100 AU, 48 sources are observed where 142.8 are expected. The inferred relative frequency is 0.341, with a 16–84% interval of 0.295–0.392.</p>
           </article>
 
           <article class="finding-card reveal">
-            <div class="card-number">03 · False positives</div>
-            <div class="cleaning-viz" aria-hidden="true"><span>candidate list</span><i></i><b>cleaned sample</b></div>
-            <h3>Cleaning changed the wide-binary story.</h3>
-            <p>Once false-positive systems were removed, the apparent surplus of widely separated companions to giant-planet candidates disappeared. The result is a reminder that population inference depends on careful target vetting.</p>
+            <div class="card-number">03 · Continuous recovery</div>
+            <div class="impact-number gold compact-number">228 AU</div>
+            <h3>The transition is gradual, not a single cutoff.</h3>
+            <p>A smooth HRCam-only recovery model is modestly preferred to a refitted step (ΔAIC = 4.7). Its midpoint is a₅₀ = 228 AU, with a 140–430 AU interval; that midpoint describes the model rather than a directly observed boundary.</p>
           </article>
 
           <article class="finding-card big figure-card reveal">
-            <div class="card-number">04 · Resolved population</div>
+            <div class="card-number">04 · Cumulative recovery model</div>
             <figure class="result-figure">
-              <a href="https://ui.adsabs.harvard.edu/abs/2021AJ....162..192Z/abstract" target="_blank" rel="noopener"><img src="../images/soartess2.png" alt="Observed and expected binary-star separation distributions showing a strong deficit of close binaries among TESS planet hosts" width="1268" height="904" loading="lazy"></a>
-              <figcaption>SOAR and Gaia together probe the companion distribution across orders of magnitude in projected separation. The deficit at the smallest separations is the signature of close-binary suppression. Figure: Ziegler et al. (2021).</figcaption>
+              <img src="images/soar-tess-iii-recovery.webp" alt="Draft Paper III plots comparing observed SOAR companion counts with the field expectation and showing a smooth recovery in relative occurrence with binary semimajor axis" width="1840" height="800" loading="lazy">
+              <figcaption>Observed SOAR counts fall well below the unsuppressed field expectation at small separations. The smooth model recovers toward the field population over a broad range rather than at one hard cutoff. Figure: draft SOAR TESS Survey III.</figcaption>
             </figure>
           </article>
 
           <article class="finding-card reveal">
-            <div class="card-number">05 · M dwarfs</div>
+            <div class="card-number">05 · SOAR + Gaia</div>
+            <div class="impact-number">88</div>
+            <h3>wide companions test where the missing systems went.</h3>
+            <p>Adding 88 Gaia DR3 common-motion companions from 300–5,000 AU disfavors a simple model that conserves total multiplicity by shifting the field distribution outward toward 100 AU. Smooth suppression and recovery better matches the combined census.</p>
+          </article>
+
+          <article class="finding-card big reveal">
+            <div class="card-number">06 · Conditional planet yield</div>
+            <div class="impact-number gold">19.5%</div>
+            <h3>estimated yield lost in the directly measured q ≥ 0.4 domain</h3>
+            <p>The draft translates the smooth suppression curve into a conditional lost-yield estimate of 19.5% for a volume-limited population and 27.7% for a magnitude-limited population. Extrapolating to all mass ratios gives 26.3% and 33.7%. These are model-based translations—not end-to-end measurements of TESS occurrence.</p>
+          </article>
+
+          <article class="finding-card big reveal">
+            <div class="card-number">07 · Blended-light corrections</div>
+            <div class="impact-number compact-number">×1.070</div>
+            <h3>median primary-host planet-radius correction</h3>
+            <p>For 630 systems with at least one source inside 3″, the median radius correction is ×1.070, the 90th percentile is ×1.326, and the maximum is ×1.456. At fixed planet mass, the median and 90th-percentile corrections reduce inferred density by 18% and 57%.</p>
+          </article>
+
+          <article class="finding-card reveal">
+            <div class="card-number">08 · M-dwarf check</div>
             <div class="mdwarf-viz" aria-hidden="true"><span></span><i></i><b></b></div>
-            <h3>The pattern may extend to small stars.</h3>
-            <p>The M-dwarf subset showed tentative evidence for similar close-binary suppression. Its smaller sample made the result less significant, marking it as an important direction for larger surveys.</p>
+            <h3>The qualitative deficit extends to small stars.</h3>
+            <p>Among 89 M-dwarf hosts, SOAR sees 2 sources inside 50 AU where 16.7 are expected, for a relative frequency of 0.160. The sample supports the same qualitative pattern, but is not yet a calibrated common suppression amplitude across stellar masses.</p>
           </article>
         </div>
       </div>
@@ -247,8 +273,8 @@
     <section class="section alt" id="papers">
       <div class="wrap">
         <div class="section-head reveal">
-          <div><p class="kicker">The published series</p><h2>From the first 542 hosts to population physics.</h2></div>
-          <p>The first paper established the survey and reported the early companion census. The second nearly doubled the observed sample, cleaned the planet-host population of false positives, and measured the much stronger close-binary suppression.</p>
+          <div><p class="kicker">The survey series</p><h2>From the first 542 hosts to a 2,982-target census.</h2></div>
+          <p>Papers I and II established the survey and its first population result. The draft third paper consolidates every HRCam epoch, adds the post-Paper-II measurements, applies an empirical mass-ratio selection, and tests a continuous recovery model with Gaia’s wide-companion census.</p>
         </div>
 
         <div class="paper-timeline">
@@ -263,7 +289,7 @@
             </div>
           </article>
 
-          <article class="paper featured reveal">
+          <article class="paper reveal">
             <div class="paper-index"><span>II</span><b>2021</b></div>
             <div class="paper-copy">
               <p class="eyebrow">589 new TESS hosts · combined population analysis</p>
@@ -271,6 +297,17 @@
               <p>The second paper added 589 targets and 89 companion systems, then used the combined survey to measure nearly factor-of-seven suppression in close solar-type binaries, test the result for M dwarfs, and trace the wide-binary excess to false-positive contamination.</p>
               <p class="authors"><strong>Carl Ziegler</strong>, Andrei Tokovinin, Madelyn Latiolais, César Briceño, Nicholas M. Law, Andrew W. Mann.</p>
               <div class="paper-links"><a href="https://arxiv.org/abs/2103.12076" target="_blank" rel="noopener">arXiv ↗</a><a href="https://doi.org/10.3847/1538-3881/ac17f6" target="_blank" rel="noopener">Journal ↗</a><a href="https://ui.adsabs.harvard.edu/abs/2021AJ....162..192Z/abstract" target="_blank" rel="noopener">ADS ↗</a></div>
+            </div>
+          </article>
+
+          <article class="paper featured reveal">
+            <div class="paper-index"><span>III</span><b>2026</b></div>
+            <div class="paper-copy">
+              <p class="eyebrow">2,982 unique TIC targets · 431 post-Paper-II measurements</p>
+              <h3>SOAR TESS Survey. III: The Cumulative Companion Census and Close-Binary Demographics of TESS Objects of Interest</h3>
+              <p>The cumulative draft reports 729 latest-epoch component detections around 688 hosts, quantifies the close-source deficit in a 1,199-primary controlled sample, favors a gradual recovery over a hard cutoff, combines SOAR with Gaia at wide separations, and updates both transit-dilution and conditional lost-yield estimates.</p>
+              <p class="authors"><strong>Carl Ziegler</strong>, Andrei Tokovinin, César Briceño, Nicholas M. Law, Andrew W. Mann.</p>
+              <div class="paper-links"><a href="#results">Explore the draft results ↑</a><span class="draft-badge">Draft · submitted to AJ</span></div>
             </div>
           </article>
         </div>
@@ -306,6 +343,6 @@
     </div>
   </footer>
 
-  <script src="assets/soar-tess.js?v=20260809-2"></script>
+  <script src="assets/soar-tess.js?v=20260809-3"></script>
 </body>
 </html>

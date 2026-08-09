@@ -248,10 +248,16 @@
 
   function updateSuppression() {
     if (!binarySeparation) return;
-    const distance = Number(binarySeparation.value);
-    const suppressed = distance <= 58;
-    const occurrence = suppressed ? 15 : 100;
-    const scaledX = 18 + ((distance - 5) / 295) * 48;
+    const sliderPosition = Number(binarySeparation.value);
+    const minLog = Math.log10(5);
+    const maxLog = Math.log10(3000);
+    const distance = Math.round(Math.pow(10, minLog + (sliderPosition / 1000) * (maxLog - minLog)));
+    const s0 = 0.129;
+    const a50 = 228;
+    const widthDex = 0.518;
+    const logistic = 1 / (1 + Math.exp(-(Math.log10(distance) - Math.log10(a50)) / widthDex));
+    const occurrence = Math.round((s0 + (1 - s0) * logistic) * 100);
+    const scaledX = 18 + (sliderPosition / 1000) * 48;
 
     if (binaryDistance) binaryDistance.textContent = `${distance} AU`;
     if (hostMeter) hostMeter.style.setProperty('--meter', `${occurrence}%`);
@@ -260,13 +266,17 @@
       orbitSystem.style.setProperty('--binary-x', `${scaledX.toFixed(1)}%`);
       orbitSystem.style.setProperty('--orbit-width', `${(scaledX * 2).toFixed(1)}%`);
     }
-    binarySeparation.setAttribute('aria-valuetext', `${distance} astronomical units; ${suppressed ? 'inside' : 'outside'} the 58 astronomical unit suppression cutoff`);
+    binarySeparation.setAttribute('aria-valuetext', `${distance} astronomical units; the smooth draft model is approximately ${occurrence} percent of the field companion frequency`);
 
     if (!modelCallout) return;
-    if (suppressed) {
-      modelCallout.innerHTML = '<b>Strongly suppressed.</b> Inside the fitted 58 AU cutoff, the model contains only 15% as many planet-hosting binaries as the field population—about 6.7 times fewer.';
+    if (distance <= 50) {
+      modelCallout.innerHTML = `<b>Deep deficit.</b> At ${distance} AU, the smooth model is about ${occurrence}% of the field frequency. In the fixed projected-separation count, SOAR sees 24 sources inside 50 AU where 87.2 are expected.`;
+    } else if (distance <= 100) {
+      modelCallout.innerHTML = `<b>Still strongly suppressed.</b> At ${distance} AU, the smooth model is about ${occurrence}% of the field frequency. Inside 100 AU, the fixed count is 48 observed sources versus 142.8 expected.`;
+    } else if (distance <= 500) {
+      modelCallout.innerHTML = `<b>Gradual recovery.</b> At ${distance} AU, the smooth model reaches about ${occurrence}% of the field frequency. Its model-dependent halfway scale is 228 AU, not a hard boundary.`;
     } else {
-      modelCallout.innerHTML = '<b>Field-like in the step model.</b> Outside the fitted 58 AU cutoff, the simple model returns to the field-binary occurrence rate. The observed transition is an ensemble result, not a hard boundary for an individual system.';
+      modelCallout.innerHTML = `<b>Approaching the field population.</b> At ${distance.toLocaleString()} AU, the smooth model reaches about ${occurrence}% of the field frequency. Gaia's wide-companion census constrains this part of the recovery.`;
     }
   }
 
