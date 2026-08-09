@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="The SOAR TESS Survey: diffraction-limited speckle imaging of TESS planet-candidate hosts, revealing hidden stellar companions and the strong suppression of planets in close binaries.">
+  <meta name="theme-color" content="#090d17">
+  <link rel="canonical" href="https://carlziegler.space/soar-tess/">
+  <link rel="icon" href="../images/telescope.png" type="image/png">
+  <link rel="stylesheet" href="assets/soar-tess.css?v=20260809-1">
+  <title>SOAR TESS Survey</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <nav class="site-nav" aria-label="SOAR TESS Survey navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="./"><span class="brand-speckle" aria-hidden="true"></span><span>SOAR <b>TESS</b></span></a>
+      <div class="nav-links">
+        <a href="#survey">Survey</a>
+        <a href="#speckle">Speckle lab</a>
+        <a href="#results">Findings</a>
+        <a href="#papers">Papers</a>
+        <a href="#team">Collaboration</a>
+        <a class="back" href="../#research">← Back to research</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-sky" aria-hidden="true"></div>
+    <div class="hero-stars" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy reveal visible">
+        <p class="kicker">Cerro Pachón, Chile · 2018–present</p>
+        <h1>TESS saw the transit.<br><em>SOAR found the other stars.</em></h1>
+        <p class="hero-lede">The SOAR TESS Survey uses diffraction-limited speckle imaging to uncover stellar companions hidden inside TESS light curves—protecting planet measurements from blended light and revealing where planetary systems survive, or disappear, in binary stars.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#speckle">Try the speckle lab ↓</a>
+          <a class="button" href="#results">Explore the main results</a>
+        </div>
+      </div>
+      <aside class="hero-note reveal visible" aria-label="Survey completeness summary">
+        <span class="eyebrow">Papers I + II</span>
+        <strong>95%</strong>
+        <p>of bright, non-false-positive TESS planet candidates accessible from the south had high-resolution imaging in the first two survey papers.</p>
+        <a href="https://arxiv.org/abs/2103.12076" target="_blank" rel="noopener">SOAR TESS Survey II ↗</a>
+      </aside>
+    </div>
+    <div class="wrap hero-credit">SOAR beneath the southern sky: CTIO/NOIRLab/NSF/AURA/T. Slovinský. <a href="https://noirlab.edu/public/images/iotw2411a/" target="_blank" rel="noopener">Source ↗</a></div>
+  </header>
+
+  <main id="main">
+    <section class="wrap stats reveal" aria-label="Survey at a glance">
+      <div class="stat"><strong>1,131</strong><span>TESS Objects of Interest imaged across Papers I and II</span></div>
+      <div class="stat"><strong>206</strong><span>target systems with companions within 3″ reported across the two papers</span></div>
+      <div class="stat"><strong>~0.04″</strong><span>diffraction-limited resolution delivered by the 4.1-m telescope</span></div>
+      <div class="stat"><strong>300</strong><span>targets that HRCam can observe in a productive night</span></div>
+    </section>
+
+    <section class="section" id="survey">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><p class="kicker">The survey idea</p><h2>Twenty-one arcsecond pixels meet a four-meter telescope.</h2></div>
+          <p>TESS watches nearly the whole sky with 21″ pixels, ideal for discovering transits around bright nearby stars but large enough to blend many sources together. SOAR’s High-Resolution Camera, HRCam, resolves companions tens to hundreds of times closer than a single TESS pixel can distinguish.</p>
+        </div>
+
+        <div class="instrument-story reveal">
+          <figure class="instrument-photo">
+            <img src="images/soar-night.webp" alt="The SOAR Telescope dome open beneath the Milky Way on Cerro Pachón in Chile" width="1600" height="1200" loading="lazy">
+            <figcaption>The 4.1-m SOAR Telescope on Cerro Pachón, Chile. <a href="https://noirlab.edu/public/images/iotw2411a/" target="_blank" rel="noopener">Image: CTIO/NOIRLab/NSF/AURA/T. Slovinský ↗</a></figcaption>
+          </figure>
+          <div class="instrument-copy">
+            <span class="eyebrow">Why speckle imaging?</span>
+            <h3>Freeze the atmosphere, then recover the diffraction limit.</h3>
+            <p>Each target is recorded in hundreds of very short exposures. Atmospheric turbulence rearranges the speckles from frame to frame, but the binary-star signal persists. Combining the frames in Fourier space recovers separations, position angles, and brightness contrasts far below ordinary seeing.</p>
+            <div class="mini-specs">
+              <div><b>800</b><span>short exposures in two data cubes for a typical survey observation</span></div>
+              <div><b>11 s</b><span>approximate acquisition time for the science frames</span></div>
+              <div><b>I band</b><span>visible-light observations centered near 824 nm, close to the TESS passband</span></div>
+            </div>
+            <a class="text-link" href="https://noirlab.edu/science/programs/ctio/instruments/visitor-instruments/HRCam" target="_blank" rel="noopener">Explore HRCam at SOAR ↗</a>
+          </div>
+        </div>
+
+        <div class="acf-story reveal">
+          <div class="acf-copy">
+            <p class="kicker">What a detection looks like</p>
+            <h3>A companion leaves two symmetric fingerprints.</h3>
+            <p>In a speckle autocorrelation function, the target star produces the bright central peak. A companion creates a pair of mirrored peaks at the measured separation and position angle. This symmetry is a mathematical feature of the method—the companion itself appears only once on the sky.</p>
+            <a class="text-link" href="https://noirlab.edu/science/programs/ctio/telescopes/soar-telescope/news/tess-follow-soar" target="_blank" rel="noopener">The first TESS follow-up night at SOAR ↗</a>
+          </div>
+          <figure class="acf-figure">
+            <img src="images/hrcam-mosaic.png" alt="Mosaic of HRCam speckle autocorrelation functions showing symmetric peaks from newly detected stellar companions to TESS planet-candidate hosts" width="710" height="470" loading="lazy">
+            <figcaption>Autocorrelation functions from newly detected TESS binaries; each square spans 2.8″. Image: A. Tokovinin / SOAR / NOIRLab.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="speckle">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><p class="kicker">Interactive · speckle autocorrelation</p><h2>Move a hidden companion through the data.</h2></div>
+          <p>Change the separation, position angle, and contrast. The simulated autocorrelation responds with the central target peak and two mirrored companion peaks, as in the real HRCam mosaic above. The texture and sensitivity are illustrative; the geometry and magnitude-to-flux conversion are quantitative.</p>
+        </div>
+
+        <div class="speckle-lab reveal">
+          <div class="speckle-stage">
+            <canvas id="acf-canvas" width="760" height="620" role="img" aria-label="Interactive illustrative speckle autocorrelation function with a central target peak and two mirrored companion peaks"></canvas>
+            <div class="canvas-label"><span>Illustrative ACF</span><span>2.8″ × 2.8″</span></div>
+            <div class="scale-bar" aria-hidden="true"><i></i><span>0.5″</span></div>
+          </div>
+          <div class="speckle-controls">
+            <span class="eyebrow">Binary parameters</span>
+            <div class="control-group">
+              <label for="acf-separation">Angular separation <b id="acf-separation-value">0.45″</b></label>
+              <input id="acf-separation" type="range" min="0.08" max="1.25" value="0.45" step="0.01">
+            </div>
+            <div class="control-group">
+              <label for="acf-angle">Position angle <b id="acf-angle-value">55°</b></label>
+              <input id="acf-angle" type="range" min="0" max="179" value="55" step="1">
+            </div>
+            <div class="control-group">
+              <label for="acf-contrast">Brightness contrast <b id="acf-contrast-value">Δm 2.0</b></label>
+              <input id="acf-contrast" type="range" min="0" max="5" value="2" step="0.1">
+            </div>
+            <div class="lab-results">
+              <div><strong id="acf-projected">90 AU</strong><span>projected separation at 200 pc</span></div>
+              <div><strong id="acf-flux">15.8%</strong><span>companion-to-primary flux ratio</span></div>
+              <div class="accent-result"><strong id="acf-state">Clear pair</strong><span>illustrative ACF visibility</span></div>
+            </div>
+            <button class="button compact" id="acf-refresh" type="button">Regenerate speckle texture</button>
+            <p class="microcopy">Real detections are tested against the measured 5σ contrast curve for each observation and modeled in the power spectrum; this visual is an explanatory simulation, not a detection classifier.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><p class="kicker">The population result</p><h2>Close binary stars remove planetary systems from the census.</h2></div>
+          <p>After known and likely false positives were removed, the combined sample showed far fewer planet-hosting close binaries than expected from field-star statistics. The best-fit step model retained only 15% of binaries below a semimajor-axis cutoff of 58 AU.</p>
+        </div>
+
+        <div class="suppression-lab reveal">
+          <div class="suppression-visual">
+            <div class="orbit-system" id="orbit-system" aria-hidden="true">
+              <span class="system-star primary-star"></span>
+              <span class="orbit-ring"></span>
+              <span class="system-star companion-star"></span>
+              <span class="planet-orbit"></span>
+              <span class="planet"></span>
+            </div>
+            <div class="suppression-meter" role="img" aria-label="Relative occurrence of planet-hosting binaries compared with field binaries">
+              <div class="meter-row"><span>Field binaries</span><i><b></b></i><strong>100%</strong></div>
+              <div class="meter-row observed"><span>Planet hosts</span><i><b id="host-meter"></b></i><strong id="host-percent">15%</strong></div>
+            </div>
+          </div>
+          <div class="suppression-controls">
+            <span class="eyebrow">Paper II best-fit step model</span>
+            <div class="readout"><strong id="binary-distance">35 AU</strong><span>binary semimajor axis</span></div>
+            <label for="binary-separation"><span>5 AU</span><span>300 AU</span></label>
+            <input id="binary-separation" type="range" min="5" max="300" value="35" step="1">
+            <div class="model-callout" id="model-callout"><b>Strongly suppressed.</b> Inside the fitted 58 AU cutoff, the model contains only 15% as many planet-hosting binaries as the field population—about 6.7 times fewer.</div>
+            <p class="microcopy">This interactive evaluates the published two-parameter step model. Real binary suppression is unlikely to change instantaneously at one separation; the simple form summarizes the ensemble.</p>
+          </div>
+        </div>
+
+        <div class="finding-grid">
+          <article class="finding-card big reveal">
+            <div class="card-number">01 · Paper II</div>
+            <div class="impact-number">~6.7×</div>
+            <h3>fewer close solar-type binaries among planet hosts</h3>
+            <p>The best-fit model has a binary suppression factor of 0.15 inside 58 AU. In plain language, only about one in seven of the close binaries expected from the field population remains among the transiting planet hosts.</p>
+            <a class="text-link" href="https://arxiv.org/abs/2103.12076" target="_blank" rel="noopener">Source · Survey II ↗</a>
+          </article>
+
+          <article class="finding-card reveal">
+            <div class="card-number">02 · Occurrence rates</div>
+            <div class="impact-number gold">2×</div>
+            <h3>the potential bias in magnitude-limited surveys</h3>
+            <p>Because unresolved binaries are overrepresented in magnitude-limited samples, ignoring the suppressed planet population can make occurrence rates appear about twice too high.</p>
+          </article>
+
+          <article class="finding-card reveal">
+            <div class="card-number">03 · False positives</div>
+            <div class="cleaning-viz" aria-hidden="true"><span>candidate list</span><i></i><b>cleaned sample</b></div>
+            <h3>Cleaning changed the wide-binary story.</h3>
+            <p>Once false-positive systems were removed, the apparent surplus of widely separated companions to giant-planet candidates disappeared. The result is a reminder that population inference depends on careful target vetting.</p>
+          </article>
+
+          <article class="finding-card big figure-card reveal">
+            <div class="card-number">04 · Resolved population</div>
+            <figure class="result-figure">
+              <a href="https://ui.adsabs.harvard.edu/abs/2021AJ....162..192Z/abstract" target="_blank" rel="noopener"><img src="../images/soartess2.png" alt="Observed and expected binary-star separation distributions showing a strong deficit of close binaries among TESS planet hosts" width="1268" height="904" loading="lazy"></a>
+              <figcaption>SOAR and Gaia together probe the companion distribution across orders of magnitude in projected separation. The deficit at the smallest separations is the signature of close-binary suppression. Figure: Ziegler et al. (2021).</figcaption>
+            </figure>
+          </article>
+
+          <article class="finding-card reveal">
+            <div class="card-number">05 · M dwarfs</div>
+            <div class="mdwarf-viz" aria-hidden="true"><span></span><i></i><b></b></div>
+            <h3>The pattern may extend to small stars.</h3>
+            <p>The M-dwarf subset showed tentative evidence for similar close-binary suppression. Its smaller sample made the result less significant, marking it as an important direction for larger surveys.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="papers">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><p class="kicker">The published series</p><h2>From the first 542 hosts to population physics.</h2></div>
+          <p>The first paper established the survey and reported the early companion census. The second nearly doubled the observed sample, cleaned the planet-host population of false positives, and measured the much stronger close-binary suppression.</p>
+        </div>
+
+        <div class="paper-timeline">
+          <article class="paper reveal">
+            <div class="paper-index"><span>I</span><b>2020</b></div>
+            <div class="paper-copy">
+              <p class="eyebrow">542 TESS hosts · 117 companion systems</p>
+              <h3>SOAR TESS Survey. I: Sculpting of TESS planetary systems by stellar companions</h3>
+              <p>The opening paper measured companions, supplied planet-radius corrections for blended systems, and found an initial deficit of close binaries together with an apparent wide-companion enhancement that motivated deeper scrutiny.</p>
+              <p class="authors"><strong>Carl Ziegler</strong>, Andrei Tokovinin, César Briceño, James Mang, Nicholas M. Law, Andrew W. Mann.</p>
+              <div class="paper-links"><a href="https://arxiv.org/abs/1908.10871" target="_blank" rel="noopener">arXiv ↗</a><a href="https://doi.org/10.3847/1538-3881/ab55e9" target="_blank" rel="noopener">Journal ↗</a><a href="https://ui.adsabs.harvard.edu/abs/2020AJ....159...19Z/abstract" target="_blank" rel="noopener">ADS ↗</a></div>
+            </div>
+          </article>
+
+          <article class="paper featured reveal">
+            <div class="paper-index"><span>II</span><b>2021</b></div>
+            <div class="paper-copy">
+              <p class="eyebrow">589 new TESS hosts · combined population analysis</p>
+              <h3>SOAR TESS Survey. II: The impact of stellar companions on planetary populations</h3>
+              <p>The second paper added 589 targets and 89 companion systems, then used the combined survey to measure nearly factor-of-seven suppression in close solar-type binaries, test the result for M dwarfs, and trace the wide-binary excess to false-positive contamination.</p>
+              <p class="authors"><strong>Carl Ziegler</strong>, Andrei Tokovinin, Madelyn Latiolais, César Briceño, Nicholas M. Law, Andrew W. Mann.</p>
+              <div class="paper-links"><a href="https://arxiv.org/abs/2103.12076" target="_blank" rel="noopener">arXiv ↗</a><a href="https://doi.org/10.3847/1538-3881/ac17f6" target="_blank" rel="noopener">Journal ↗</a><a href="https://ui.adsabs.harvard.edu/abs/2021AJ....162..192Z/abstract" target="_blank" rel="noopener">ADS ↗</a></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="team">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div><p class="kicker">The collaboration</p><h2>Speckle imaging, stellar astrophysics, and exoplanet demographics.</h2></div>
+          <p>The survey brings together expertise in high-angular-resolution observations, instrument performance, stellar multiplicity, planetary-system characterization, and statistical population analysis.</p>
+        </div>
+        <div class="team-grid reveal">
+          <article class="person"><span>CZ</span><h3>Carl Ziegler</h3><p>Survey leadership, companion analysis, and planetary-population interpretation.</p></article>
+          <article class="person"><span>AT</span><h3>Andrei Tokovinin</h3><p>HRCam instrumentation, speckle observations, and binary-star measurement.</p></article>
+          <article class="person"><span>CB</span><h3>César Briceño</h3><p>SOAR collaboration, stellar astrophysics, and southern-sky observing.</p></article>
+          <article class="person"><span>NL</span><h3>Nicholas M. Law</h3><p>High-angular-resolution exoplanet surveys and survey-scale analysis.</p></article>
+          <article class="person"><span>AM</span><h3>Andrew W. Mann</h3><p>Host-star characterization, exoplanet demographics, and population inference.</p></article>
+        </div>
+
+        <aside class="legacy-card reveal" aria-label="SOAR TESS Survey community data">
+          <div><p class="kicker">A community follow-up resource</p><h3>Measurements built to travel with each planet candidate.</h3><p>Resolved companions, contrast limits, and radius-correction factors support the wider TESS Follow-up Observing Program. The measurements help observers prioritize targets, identify blended eclipsing binaries, and interpret confirmed planets with the correct stellar light.</p></div>
+          <a class="button" href="https://exofop.ipac.caltech.edu/tess/" target="_blank" rel="noopener">Explore ExoFOP-TESS ↗</a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>SOAR TESS Survey · carlziegler.space</span>
+      <span><a href="../#research">Research</a> · <a href="#papers">Survey papers</a> · <a href="https://noirlab.edu/science/programs/ctio/telescopes/soar-telescope" target="_blank" rel="noopener">SOAR Telescope ↗</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/soar-tess.js?v=20260809-1"></script>
+</body>
+</html>
