@@ -61,21 +61,42 @@
     ctx.fill();
   }
 
-  function drawSeeingStar(ctx, x, y, fwhm, brightness, warm = false) {
-    const radius = fwhm * 1.25;
-    const peak = Math.min(1, .96 * Math.sqrt(brightness));
-    const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    gradient.addColorStop(0, warm ? `rgba(255,247,222,${peak})` : `rgba(245,251,255,${peak})`);
-    gradient.addColorStop(.08, warm ? `rgba(255,211,137,${peak * .78})` : `rgba(188,221,255,${peak * .78})`);
-    gradient.addColorStop(.32, warm ? `rgba(255,155,92,${peak * .3})` : `rgba(103,166,224,${peak * .3})`);
-    gradient.addColorStop(.62, warm ? `rgba(205,92,67,${peak * .08})` : `rgba(65,112,167,${peak * .08})`);
-    gradient.addColorStop(1, 'rgba(20,35,55,0)');
+  function drawSeeingBlend(ctx, x, y, fwhm, brightness, axisAngle, elongation, rand) {
+    const radius = fwhm * 1.85;
+    const peak = Math.min(.96, .78 + Math.log2(Math.max(1, brightness)) * .12);
     ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(axisAngle);
+    ctx.scale(1 + elongation, 1 - elongation * .18);
     ctx.globalCompositeOperation = 'screen';
+
+    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
+    gradient.addColorStop(0, `rgba(247,250,255,${peak})`);
+    gradient.addColorStop(.14, `rgba(204,225,244,${peak * .82})`);
+    gradient.addColorStop(.27, `rgba(141,181,216,${peak * .5})`);
+    gradient.addColorStop(.49, `rgba(78,125,174,${peak * .18})`);
+    gradient.addColorStop(.76, `rgba(52,92,137,${peak * .045})`);
+    gradient.addColorStop(1, 'rgba(31,58,91,0)');
     ctx.fillStyle = gradient;
     ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.arc(0, 0, radius, 0, Math.PI * 2);
     ctx.fill();
+
+    // Long-exposure seeing is not a clean Gaussian. These broad, blurred
+    // fluctuations give the combined image a low-contrast atmospheric halo
+    // without inventing a second resolved peak.
+    ctx.filter = 'blur(7px)';
+    for (let i = 0; i < 34; i += 1) {
+      const theta = rand() * Math.PI * 2;
+      const radial = Math.sqrt(rand()) * radius * .64;
+      const patchRadius = fwhm * (.035 + rand() * .075);
+      const alpha = .012 + rand() * .026;
+      ctx.fillStyle = `rgba(${150 + Math.round(rand() * 55)},${185 + Math.round(rand() * 45)},${218 + Math.round(rand() * 34)},${alpha})`;
+      ctx.beginPath();
+      ctx.arc(Math.cos(theta) * radial, Math.sin(theta) * radial, patchRadius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.filter = 'none';
     ctx.restore();
   }
 
@@ -152,9 +173,14 @@
       ctx.moveTo(cx, cy - 8); ctx.lineTo(cx, cy + 8);
       ctx.stroke();
     } else {
-      const seeingFwhm = (1.1 / 2.8) * Math.min(width, height);
-      drawSeeingStar(ctx, cx + dx, cy + dy, seeingFwhm, fluxRatio, true);
-      drawSeeingStar(ctx, cx, cy, seeingFwhm, 1, false);
+      const seeingArcsec = 1.4;
+      const seeingFwhm = (seeingArcsec / 2.8) * Math.min(width, height);
+      const totalFlux = 1 + fluxRatio;
+      const blendX = cx + dx * (fluxRatio / totalFlux);
+      const blendY = cy + dy * (fluxRatio / totalFlux);
+      const symmetry = (4 * fluxRatio) / Math.pow(1 + fluxRatio, 2);
+      const elongation = .018 + .15 * Math.min(1, Math.pow(sepArcsec / seeingArcsec, 2)) * symmetry;
+      drawSeeingBlend(ctx, blendX, blendY, seeingFwhm, totalFlux, Math.atan2(dy, dx), elongation, rand);
     }
 
     ctx.fillStyle = 'rgba(205,219,229,.48)';
@@ -174,16 +200,15 @@
     if (flux) flux.textContent = `${(fluxRatio * 100).toFixed(1)}%`;
     if (state) {
       if (imageMode === 'seeing') {
-        if (sepArcsec < .72 || deltaMag > 2.7) state.textContent = 'Blended';
-        else if (sepArcsec < 1.05) state.textContent = 'Elongated';
-        else state.textContent = 'Partly resolved';
+        if (sepArcsec <= 1.15 || deltaMag >= 1.5) state.textContent = 'Unresolved';
+        else state.textContent = 'Slightly elongated';
       } else if (sepArcsec < .13 || deltaMag > 4.2) state.textContent = 'Subtle pair';
       else if (sepArcsec < .2 || deltaMag > 3.2) state.textContent = 'Emerging pair';
       else state.textContent = 'Clear pair';
     }
 
     if (imageMode === 'seeing') {
-      canvas.setAttribute('aria-label', `Illustrative seeing-limited image with a companion at ${sepArcsec.toFixed(2)} arcseconds, position angle ${paDegrees.toFixed(0)} degrees, and brightness contrast ${deltaMag.toFixed(1)} magnitudes, blurred by 1.1 arcsecond seeing.`);
+      canvas.setAttribute('aria-label', `Illustrative long-exposure seeing-limited image in 1.4 arcsecond seeing. The target and its companion at ${sepArcsec.toFixed(2)} arcseconds are blended into one atmospheric point-spread function.`);
     } else {
       canvas.setAttribute('aria-label', `Illustrative speckle autocorrelation with mirrored companion peaks at ${sepArcsec.toFixed(2)} arcseconds, position angle ${paDegrees.toFixed(0)} degrees, and brightness contrast ${deltaMag.toFixed(1)} magnitudes.`);
     }
@@ -196,10 +221,10 @@
     viewAcf?.classList.toggle('active', !seeingActive);
     viewSeeing?.setAttribute('aria-pressed', String(seeingActive));
     viewAcf?.setAttribute('aria-pressed', String(!seeingActive));
-    if (canvasModeLabel) canvasModeLabel.textContent = seeingActive ? 'Seeing-limited image · ~1.1″ FWHM' : 'Illustrative ACF';
+    if (canvasModeLabel) canvasModeLabel.textContent = seeingActive ? 'Seeing-limited image · ~1.4″ FWHM' : 'Illustrative ACF';
     if (stateLabel) stateLabel.textContent = seeingActive ? 'seeing-limited appearance' : 'illustrative ACF visibility';
     if (viewDescription) viewDescription.textContent = seeingActive
-      ? 'Ordinary atmospheric seeing blends the stars into one broad point-spread function.'
+      ? 'A long exposure through typical atmospheric seeing smears both stars into one fuzzy point-spread function; even a 1″ pair is unresolved here.'
       : 'The autocorrelation reveals the companion as a symmetric pair of peaks.';
     drawAcf();
   }
