@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="The SOAR TESS Survey: diffraction-limited speckle imaging of TESS planet-candidate hosts, revealing hidden stellar companions and the strong suppression of planets in close binaries.">
+  <meta name="description" content="The cumulative SOAR TESS Survey: 2,982 targets, 729 resolved-source detections, transit-dilution corrections, and the measured recovery of companion frequency with binary separation.">
   <meta name="theme-color" content="#090d17">
   <link rel="canonical" href="https://carlziegler.space/soar-tess/">
   <link rel="icon" href="../images/telescope.png" type="image/png">
-  <link rel="stylesheet" href="assets/soar-tess.css?v=20260809-3">
+  <link rel="stylesheet" href="assets/soar-tess.css?v=20260810-5">
   <title>SOAR TESS Survey</title>
 </head>
 <body>
@@ -41,10 +41,10 @@
         </div>
       </div>
       <aside class="hero-note reveal visible" aria-label="Cumulative survey summary">
-        <span class="eyebrow">Cumulative draft · Survey III</span>
-        <strong>2,982</strong>
-        <p>unique TESS Input Catalog targets observed with HRCam in the cumulative companion census.</p>
-        <a href="#results">Explore the Paper III results ↓</a>
+        <span class="eyebrow">Survey III · Revision 39</span>
+        <strong>3.5×</strong>
+        <p>fewer nearby sources inside 50 AU than the sensitivity-convolved field-binary model predicts: 24 observed versus 84.6 expected.</p>
+        <a href="#results">Explore the cumulative result ↓</a>
       </aside>
     </div>
     <div class="wrap hero-credit">SOAR beneath the southern sky: CTIO/NOIRLab/NSF/AURA/T. Slovinský. <a href="https://noirlab.edu/public/images/iotw2411a/" target="_blank" rel="noopener">Source ↗</a></div>
@@ -136,7 +136,7 @@
               <div><strong>~56×</strong><span>less sky area</span></div>
             </div>
             <button class="button compact" id="tess-zoom" type="button" aria-pressed="false">Zoom into the 2.8″ SOAR field</button>
-            <p class="paper3-scale-note"><strong>Paper III draft:</strong> for 630 systems with a source inside 3″, the median primary-host planet-radius correction is ×1.070; the 90th-percentile correction is ×1.326.</p>
+            <p class="paper3-scale-note"><strong>Survey III, Revision 39:</strong> for 630 systems with a source inside 3″, the median primary-host planet-radius correction is ×1.070; the 90th-percentile correction is ×1.326.</p>
             <p class="microcopy">The grid subdivides the TESS pixel into 2.8″ comparison fields; those grid cells are not additional TESS detector pixels.</p>
           </div>
         </div>
@@ -181,8 +181,18 @@
     <section class="section" id="results">
       <div class="wrap">
         <div class="section-head reveal">
-          <div><p class="kicker">The cumulative population result</p><h2>Nearby stellar companions are missing from the TOI census.</h2></div>
-          <p>The Paper III draft expands the controlled analysis to 1,199 dwarf primaries and 162 candidate visual companions with empirical mass ratio q ≥ 0.4. It finds a deep close-source deficit relative to a sensitivity-convolved field-binary model, followed by a gradual recovery with separation.</p>
+          <div><p class="kicker">The Revision 39 population result</p><h2>The deficit is deepest nearby—and begins recovering near 100 AU.</h2></div>
+          <p>The controlled analysis compares 162 candidate visual companions around 1,199 dwarf primaries with an empirical q ≥ 0.4 field population passed through each target’s measured sensitivity. Fixed projected-separation counts establish the deficit; a forward model then locates the recovery in physical semimajor axis.</p>
+        </div>
+
+        <div class="recovery-overview reveal" aria-label="Observed companion frequency relative to the field model across separation">
+          <div class="recovery-grid">
+            <article class="recovery-stop deep"><span>Inside 50 AU</span><strong>29%</strong><p>24 observed / 84.6 expected</p></article>
+            <article class="recovery-stop deep-mid"><span>Inside 100 AU</span><strong>36%</strong><p>48 observed / 134.4 expected</p></article>
+            <article class="recovery-stop recovering"><span>100–300 AU</span><strong>74%</strong><p>44 observed / 60.2 expected</p></article>
+            <article class="recovery-stop wide"><span>Gaia · 300–5,000 AU</span><strong>88 / 72.9</strong><p>broadly field-compatible within normalization and selection uncertainties</p></article>
+          </div>
+          <p class="recovery-note">The first three values are SOAR projected-separation measurements. The smooth model below acts on true binary semimajor axis before orbital projection and target-specific HRCam selection.</p>
         </div>
 
         <div class="suppression-lab reveal">
@@ -196,72 +206,87 @@
             </div>
             <div class="suppression-meter" role="img" aria-label="Conditional relative frequency of companions around TESS Objects of Interest compared with field binaries">
               <div class="meter-row"><span>Field expectation</span><i><b></b></i><strong>100%</strong></div>
-              <div class="meter-row observed"><span>TOI hosts</span><i><b id="host-meter"></b></i><strong id="host-percent">32%</strong></div>
+              <div class="meter-row observed"><span>TOI hosts</span><i><b id="host-meter"></b></i><strong id="host-percent">34%</strong></div>
             </div>
           </div>
           <div class="suppression-controls">
-            <span class="eyebrow">Paper III smooth-recovery model</span>
+            <span class="eyebrow">Revision 39 · HRCam-only recovery</span>
             <div class="readout"><strong id="binary-distance">50 AU</strong><span>binary semimajor axis</span></div>
             <label for="binary-separation"><span>5 AU</span><span>3,000 AU</span></label>
             <input id="binary-separation" type="range" min="0" max="1000" value="360" step="1">
-            <div class="model-callout" id="model-callout"><b>Deep deficit.</b> At a 50 AU semimajor axis, the smooth model is about 32% of the field frequency. In the fixed projected-separation count, SOAR sees 24 sources inside 50 AU where 87.2 are expected.</div>
-            <p class="microcopy">The curve uses the draft posterior medians S₀ = 0.129, a₅₀ = 228 AU, and w = 0.518 dex. The 228 AU midpoint is model-dependent—not a hard observed boundary—and the physical planet-occurrence interpretation remains conditional on association, selection, completeness, and candidate reliability.</p>
+            <div class="model-callout" id="model-callout"><b>Deep deficit.</b> At a 50 AU semimajor axis, the smooth model is about 34% of the field frequency. In the fixed projected-separation count, SOAR sees 24 sources inside 50 AU where 84.6 are expected.</div>
+            <p class="microcopy">The HRCam-only curve uses the Revision 39 posterior medians S₀ = 0.128, a₅₀ = 106 AU, and w = 0.293 dex, fitted over 1–300 AU. The midpoint is model-dependent—not a hard boundary—and the physical planet-occurrence interpretation remains conditional on association, selection, completeness, and candidate reliability.</p>
           </div>
         </div>
 
         <div class="finding-grid">
           <article class="finding-card big reveal">
             <div class="card-number">01 · Inside 50 AU</div>
-            <div class="impact-number">3.6×</div>
+            <div class="impact-number">3.5×</div>
             <h3>fewer nearby sources than the field model predicts</h3>
-            <p>SOAR detects 24 sources inside 50 AU in the mass-ratio-matched sample; the target-by-target field model predicts 87.2. The inferred relative frequency is 0.283, with a 16–84% interval of 0.230–0.343.</p>
+            <p>SOAR detects 24 candidate visual companions inside 50 AU; the recalibrated, target-by-target field model predicts 84.6. The inferred relative frequency is S₅₀ = 0.292, with a 16–84% interval of 0.237–0.354.</p>
           </article>
 
           <article class="finding-card reveal">
             <div class="card-number">02 · Inside 100 AU</div>
-            <div class="impact-number gold">3.0×</div>
+            <div class="impact-number gold">2.8×</div>
             <h3>fewer sources remain across a wider aperture</h3>
-            <p>Inside 100 AU, 48 sources are observed where 142.8 are expected. The inferred relative frequency is 0.341, with a 16–84% interval of 0.295–0.392.</p>
+            <p>Inside 100 AU, 48 sources are observed where 134.4 are expected. The inferred relative frequency is S₁₀₀ = 0.362, with a 16–84% interval of 0.313–0.416.</p>
           </article>
 
           <article class="finding-card reveal">
-            <div class="card-number">03 · Continuous recovery</div>
-            <div class="impact-number gold compact-number">228 AU</div>
-            <h3>The transition is gradual, not a single cutoff.</h3>
-            <p>A smooth HRCam-only recovery model is modestly preferred to a refitted step (ΔAIC = 4.7). Its midpoint is a₅₀ = 228 AU, with a 140–430 AU interval; that midpoint describes the model rather than a directly observed boundary.</p>
+            <div class="card-number">03 · The recovery annulus</div>
+            <div class="impact-number gold">74%</div>
+            <h3>The population rises toward the field rate from 100–300 AU.</h3>
+            <p>In this independent projected-separation annulus, 44 sources are observed where the recalibrated field model predicts 60.2. The relative frequency is 0.741, with a 0.637–0.857 interval.</p>
           </article>
 
           <article class="finding-card big figure-card reveal">
-            <div class="card-number">04 · Cumulative recovery model</div>
+            <div class="card-number">04 · Physical recovery scale</div>
             <figure class="result-figure">
-              <img src="images/soar-tess-iii-recovery.webp" alt="Draft Paper III plots comparing observed SOAR companion counts with the field expectation and showing a smooth recovery in relative occurrence with binary semimajor axis" width="1840" height="800" loading="lazy">
-              <figcaption>Observed SOAR counts fall well below the unsuppressed field expectation at small separations. The smooth model recovers toward the field population over a broad range rather than at one hard cutoff. Figure: draft SOAR TESS Survey III.</figcaption>
+              <img src="images/soar-tess-iii-recovery.webp" alt="Revision 39 plots comparing observed SOAR source counts with the field expectation and showing a smooth recovery in planet-hosting rate with binary semimajor axis" width="1730" height="810" loading="lazy">
+              <figcaption>The forward model weights binaries in true semimajor axis before projecting them through each target’s HRCam sensitivity. The HRCam-only midpoint is a₅₀ = 106 AU (77–157 AU); a refitted sharp step has less support by ΔAIC = 3.4. Figure: SOAR TESS Survey III, Revision 39.</figcaption>
+            </figure>
+          </article>
+
+          <article class="finding-card big figure-card reveal">
+            <div class="card-number">05 · SOAR + Gaia</div>
+            <figure class="result-figure">
+              <img src="images/soar-tess-iii-soar-gaia.webp" alt="Revision 39 comparison of observed SOAR and Gaia companions with a smooth suppression-recovery model and a multiplicity-conserving 100 AU shifted binary distribution" width="1600" height="720" loading="lazy">
+              <figcaption>SOAR supplies 92 q ≥ 0.4 sources from 1–300 AU; Gaia supplies 88 common-motion companions from 300–5,000 AU. The wide population is broadly field-compatible, while the missing close systems do not reappear as the excess predicted by a simple outward shift. Figure: SOAR TESS Survey III, Revision 39.</figcaption>
             </figure>
           </article>
 
           <article class="finding-card reveal">
-            <div class="card-number">05 · SOAR + Gaia</div>
-            <div class="impact-number">88</div>
-            <h3>wide companions test where the missing systems went.</h3>
-            <p>Adding 88 Gaia DR3 common-motion companions from 300–5,000 AU disfavors a simple model that conserves total multiplicity by shifting the field distribution outward toward 100 AU. Smooth suppression and recovery better matches the combined census.</p>
+            <div class="card-number">06 · Redistribution test</div>
+            <div class="impact-number model-number">ΔAIC 73.9</div>
+            <h3>A simple shift toward 100 AU is strongly disfavored.</h3>
+            <p>The fully specified, multiplicity-conserving 100 AU shift performs far worse than smooth suppression and recovery. In the Gaia range, 88 companions are observed versus 72.9 expected—a broadly compatible wide population once field normalization and Gaia/TOI selection uncertainties are included.</p>
           </article>
 
           <article class="finding-card big reveal">
-            <div class="card-number">06 · Conditional planet yield</div>
-            <div class="impact-number gold">19.5%</div>
+            <div class="card-number">07 · Conditional planet yield</div>
+            <div class="impact-number gold">17.8%</div>
             <h3>estimated yield lost in the directly measured q ≥ 0.4 domain</h3>
-            <p>The draft translates the smooth suppression curve into a conditional lost-yield estimate of 19.5% for a volume-limited population and 27.7% for a magnitude-limited population. Extrapolating to all mass ratios gives 26.3% and 33.7%. These are model-based translations—not end-to-end measurements of TESS occurrence.</p>
+            <p>Conditionally interpreting the recovery law as relative planet occurrence gives a 17.8% lost yield for a volume-limited population and 25.5% for a magnitude-limited population. Extrapolating below the measured mass-ratio limit gives 24.3% and 31.3%. These are population translations—not end-to-end TESS injection–recovery measurements.</p>
           </article>
 
-          <article class="finding-card big reveal">
-            <div class="card-number">07 · Blended-light corrections</div>
+          <article class="finding-card reveal">
+            <div class="card-number">08 · Blended-light corrections</div>
             <div class="impact-number compact-number">×1.070</div>
             <h3>median primary-host planet-radius correction</h3>
             <p>For 630 systems with at least one source inside 3″, the median radius correction is ×1.070, the 90th percentile is ×1.326, and the maximum is ×1.456. At fixed planet mass, the median and 90th-percentile corrections reduce inferred density by 18% and 57%.</p>
           </article>
 
           <article class="finding-card reveal">
-            <div class="card-number">08 · M-dwarf check</div>
+            <div class="card-number">09 · Hidden hierarchies</div>
+            <div class="impact-number">7</div>
+            <h3>wide systems show radial-velocity evidence for unseen inner structure.</h3>
+            <p>Among jointly covered hosts with a SOAR component at 300–5,000 AU, nine trigger the <em>paired</em> Gaia RVS-noise threshold and seven of those are not RUWE flagged. Because the imaged wide star cannot cause short-timescale velocity noise, these are candidates for an additional inner subsystem.</p>
+          </article>
+
+          <article class="finding-card big reveal">
+            <div class="card-number">10 · M-dwarf check</div>
             <div class="mdwarf-viz" aria-hidden="true"><span></span><i></i><b></b></div>
             <h3>The qualitative deficit extends to small stars.</h3>
             <p>Among 89 M-dwarf hosts, SOAR sees 2 sources inside 50 AU where 16.7 are expected, for a relative frequency of 0.160. The sample supports the same qualitative pattern, but is not yet a calibrated common suppression amplitude across stellar masses.</p>
@@ -274,7 +299,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <div><p class="kicker">The survey series</p><h2>From the first 542 hosts to a 2,982-target census.</h2></div>
-          <p>Papers I and II established the survey and its first population result. The draft third paper consolidates every HRCam epoch, adds the post-Paper-II measurements, applies an empirical mass-ratio selection, and tests a continuous recovery model with Gaia’s wide-companion census.</p>
+          <p>Papers I and II established the survey and its first population result. Revision 39 of the third paper consolidates every HRCam epoch, calibrates the field comparison for resolved-target selection and wide-binary mass ratios, fits the recovery in physical semimajor axis, and uses Gaia to test whether the missing close systems were merely redistributed outward.</p>
         </div>
 
         <div class="paper-timeline">
@@ -305,9 +330,9 @@
             <div class="paper-copy">
               <p class="eyebrow">2,982 unique TIC targets · 431 post-Paper-II measurements</p>
               <h3>SOAR TESS Survey. III: The Cumulative Companion Census and Close-Binary Demographics of TESS Objects of Interest</h3>
-              <p>The cumulative draft reports 729 latest-epoch component detections around 688 hosts, quantifies the close-source deficit in a 1,199-primary controlled sample, favors a gradual recovery over a hard cutoff, combines SOAR with Gaia at wide separations, and updates both transit-dilution and conditional lost-yield estimates.</p>
+              <p>The cumulative draft reports 729 latest-epoch source detections around 688 hosts. Revision 39 measures S₅₀ = 0.292 and S₁₀₀ = 0.362, locates the HRCam-only recovery midpoint at 106 AU, finds the wide Gaia population broadly field-compatible, and strongly rejects a multiplicity-conserving shift of the field distribution toward 100 AU.</p>
               <p class="authors"><strong>Carl Ziegler</strong>, Andrei Tokovinin, César Briceño, Nicholas M. Law, Andrew W. Mann.</p>
-              <div class="paper-links"><a href="#results">Explore the draft results ↑</a><span class="draft-badge">Draft · submitted to AJ</span></div>
+              <div class="paper-links"><a href="#results">Explore the draft results ↑</a><span class="draft-badge">Revision 39 · submitted to AJ</span></div>
             </div>
           </article>
         </div>
@@ -343,6 +368,6 @@
     </div>
   </footer>
 
-  <script src="assets/soar-tess.js?v=20260809-4"></script>
+  <script src="assets/soar-tess.js?v=20260810-5"></script>
 </body>
 </html>

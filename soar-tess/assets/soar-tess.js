@@ -277,9 +277,9 @@
     const minLog = Math.log10(5);
     const maxLog = Math.log10(3000);
     const distance = Math.round(Math.pow(10, minLog + (sliderPosition / 1000) * (maxLog - minLog)));
-    const s0 = 0.129;
-    const a50 = 228;
-    const widthDex = 0.518;
+    const s0 = 0.128;
+    const a50 = 106;
+    const widthDex = 0.293;
     const logistic = 1 / (1 + Math.exp(-(Math.log10(distance) - Math.log10(a50)) / widthDex));
     const occurrence = Math.round((s0 + (1 - s0) * logistic) * 100);
     const scaledX = 18 + (sliderPosition / 1000) * 48;
@@ -295,13 +295,13 @@
 
     if (!modelCallout) return;
     if (distance <= 50) {
-      modelCallout.innerHTML = `<b>Deep deficit.</b> At ${distance} AU, the smooth model is about ${occurrence}% of the field frequency. In the fixed projected-separation count, SOAR sees 24 sources inside 50 AU where 87.2 are expected.`;
+      modelCallout.innerHTML = `<b>Deep deficit.</b> At ${distance} AU, the smooth model is about ${occurrence}% of the field frequency. In the fixed projected-separation count, SOAR sees 24 sources inside 50 AU where 84.6 are expected.`;
     } else if (distance <= 100) {
-      modelCallout.innerHTML = `<b>Still strongly suppressed.</b> At ${distance} AU, the smooth model is about ${occurrence}% of the field frequency. Inside 100 AU, the fixed count is 48 observed sources versus 142.8 expected.`;
+      modelCallout.innerHTML = `<b>Recovery is underway.</b> At ${distance} AU, the smooth model reaches about ${occurrence}% of the field frequency. Inside 100 AU, the fixed projected count is 48 observed sources versus 134.4 expected.`;
     } else if (distance <= 500) {
-      modelCallout.innerHTML = `<b>Gradual recovery.</b> At ${distance} AU, the smooth model reaches about ${occurrence}% of the field frequency. Its model-dependent halfway scale is 228 AU, not a hard boundary.`;
+      modelCallout.innerHTML = `<b>Rapid recovery zone.</b> At ${distance} AU, the smooth model reaches about ${occurrence}% of the field frequency. Its model-dependent halfway scale is 106 AU; in the independent 100–300 AU projected annulus, the measured frequency is 74% of the field expectation.`;
     } else {
-      modelCallout.innerHTML = `<b>Approaching the field population.</b> At ${distance.toLocaleString()} AU, the smooth model reaches about ${occurrence}% of the field frequency. Gaia's wide-companion census constrains this part of the recovery.`;
+      modelCallout.innerHTML = `<b>Outer extrapolation.</b> At ${distance.toLocaleString()} AU, the HRCam-only curve is about ${occurrence}% of the field frequency, but it was fitted only through 300 AU. Gaia independently supplies the wide-separation test.`;
     }
   }
 
