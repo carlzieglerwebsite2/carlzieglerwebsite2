@@ -295,13 +295,13 @@
 
     if (!modelCallout) return;
     if (distance <= 50) {
-      modelCallout.innerHTML = `<b>Deep deficit.</b> At ${distance} AU, the smooth model is about ${occurrence}% of the field frequency. In the fixed projected-separation count, SOAR sees 24 sources inside 50 AU where 84.6 are expected.`;
+      modelCallout.innerHTML = `<b>Close binaries are uncommon here.</b> At ${distance} AU, planet-candidate hosts have only about ${occurrence}% as many companions as comparable ordinary stars.`;
     } else if (distance <= 100) {
-      modelCallout.innerHTML = `<b>Recovery is underway.</b> At ${distance} AU, the smooth model reaches about ${occurrence}% of the field frequency. Inside 100 AU, the fixed projected count is 48 observed sources versus 134.4 expected.`;
+      modelCallout.innerHTML = `<b>The shortage is beginning to ease.</b> At ${distance} AU, planet-candidate hosts have about ${occurrence}% of the ordinary companion rate—but close binaries are still much less common.`;
     } else if (distance <= 500) {
-      modelCallout.innerHTML = `<b>Rapid recovery zone.</b> At ${distance} AU, the smooth model reaches about ${occurrence}% of the field frequency. Its model-dependent halfway scale is 106 AU; in the independent 100–300 AU projected annulus, the measured frequency is 74% of the field expectation.`;
+      modelCallout.innerHTML = `<b>Looking more typical.</b> At ${distance} AU, the model reaches about ${occurrence}% of the ordinary companion rate. The transition is gradual, with its halfway point near 106 AU.`;
     } else {
-      modelCallout.innerHTML = `<b>Outer extrapolation.</b> At ${distance.toLocaleString()} AU, the HRCam-only curve is about ${occurrence}% of the field frequency, but it was fitted only through 300 AU. Gaia independently supplies the wide-separation test.`;
+      modelCallout.innerHTML = `<b>Wide binaries look broadly normal.</b> This close-range model was fitted only through 300 AU. Gaia provides the independent check at ${distance.toLocaleString()} AU and beyond—and finds no large pileup of the missing close companions.`;
     }
   }
 
