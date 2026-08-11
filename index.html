@@ -570,15 +570,9 @@
       transform: translateY(-1px);
     }
 
-    .paper-link-inline {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: .79rem;
-    }
-
     .project-card-links {
       margin-top: auto;
-      padding-top: 26px;
+      padding-top: 24px;
     }
 
     .card-image {
@@ -596,6 +590,12 @@
       transition: transform .6s ease;
     }
 
+    .research-card:not(.wide) .card-image {
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+      flex: none;
+    }
+
     .research-card:hover .card-image img { transform: scale(1.025); }
 
     .card-image.contain img {
@@ -605,7 +605,7 @@
     }
 
     .card-body {
-      padding: 28px;
+      padding: clamp(28px, 3vw, 40px);
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -627,7 +627,7 @@
       letter-spacing: -.035em;
     }
 
-    .card-body p { color: var(--muted); }
+    .card-body p { margin-bottom: 0; color: var(--muted); }
 
     .text-link {
       display: inline-flex;
@@ -4909,13 +4909,13 @@
 <p>
                 Collaborators and I obtained high-resolution images of all 3,857 Kepler planet-candidate systems. The resulting data helped identify blended stars and false positives, revise hundreds of planet radii, and support the validation of more than 1,500 Kepler and K2 planets.
               </p>
-<a class="text-link paper-link-inline" href="https://ui.adsabs.harvard.edu/abs/2018AJ....155..161Z/abstract" rel="noopener" target="_blank">
-                Read a key survey paper
-                <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-</a>
 <div class="card-links project-card-links">
 <a class="text-link" href="roboao-kepler/">
                 Explore the Robo-AO Kepler Survey
+                <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+<a class="text-link" href="https://ui.adsabs.harvard.edu/abs/2018AJ....155..161Z/abstract" rel="noopener" target="_blank">
+                Key survey paper
                 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </a>
 </div>
@@ -4931,10 +4931,12 @@
 <p>
                 I designed and built the testbed for a low-cost natural-guide-star adaptive-optics system for the SOAR telescope. The project pairs a novel reflective wavefront-sensor design with robotic control software to expand access to high-resolution imaging.
               </p>
+<div class="card-links project-card-links">
 <a class="text-link" href="https://ui.adsabs.harvard.edu/abs/2016SPIE.9909E..3ZZ/abstract" rel="noopener" target="_blank">
                 Explore the optical design
                 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </a>
+</div>
 </div>
 </article>
 <article class="research-card wide reveal">
