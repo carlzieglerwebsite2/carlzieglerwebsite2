@@ -570,6 +570,17 @@
       transform: translateY(-1px);
     }
 
+    .paper-link-inline {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: .79rem;
+    }
+
+    .project-card-links {
+      margin-top: auto;
+      padding-top: 26px;
+    }
+
     .card-image {
       min-height: 255px;
       overflow: hidden;
@@ -2001,7 +2012,7 @@
       transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .8s ease;
     }
 
-    .about-photo.observatory-photo::after {
+    .about-photo.soar-feature-photo::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -2011,9 +2022,14 @@
         radial-gradient(circle at 68% 50%, transparent 24%, rgba(3,8,17,.17) 100%);
     }
 
-    .about-photo.observatory-photo:hover img {
+    .about-photo.soar-feature-photo:hover img {
       transform: scale(1.025);
       filter: saturate(1.08) contrast(1.03);
+    }
+
+    .about-photo.soar-feature-photo img {
+      filter: none;
+      image-rendering: auto;
     }
 
     .observatory-badge {
@@ -4766,7 +4782,7 @@
           </p>
 </div>
 <div class="split reveal">
-<figure class="about-photo observatory-photo">
+<figure class="about-photo soar-feature-photo">
 <a href="https://noirlab.edu/public/images/iotw2411a/" rel="noopener" target="_blank">
 <img alt="The SOAR Telescope dome open beneath the Milky Way on Cerro Pachón in Chile" height="1200" loading="lazy" src="soar-tess/images/soar-night.webp" width="1600"/>
 </a>
@@ -4893,14 +4909,16 @@
 <p>
                 Collaborators and I obtained high-resolution images of all 3,857 Kepler planet-candidate systems. The resulting data helped identify blended stars and false positives, revise hundreds of planet radii, and support the validation of more than 1,500 Kepler and K2 planets.
               </p>
-<a class="text-link" href="https://ui.adsabs.harvard.edu/abs/2018AJ....155..161Z/abstract" rel="noopener" target="_blank">
-                View a key survey paper
+<a class="text-link paper-link-inline" href="https://ui.adsabs.harvard.edu/abs/2018AJ....155..161Z/abstract" rel="noopener" target="_blank">
+                Read a key survey paper
                 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </a>
+<div class="card-links project-card-links">
 <a class="text-link" href="roboao-kepler/">
-                Explore the complete Robo-AO Kepler Survey
+                Explore the Robo-AO Kepler Survey
                 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </a>
+</div>
 </div>
 </article>
 <article class="research-card reveal">
@@ -4926,10 +4944,12 @@
 <p>
                 Many long-period planets appear only once in a short TESS observing window. Ground-based follow-up can recover later transits, refine their orbital periods, and preserve them for future atmospheric characterization. My work combines robotic observing, precision photometry, and coordinated follow-up to recover these temperate systems.
               </p>
+<div class="card-links project-card-links">
 <a class="text-link" href="onehitwonders/">
-                Visit the project
+                Explore the One-Hit Wonders Project
                 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </a>
+</div>
 </div>
 <div class="card-image project-photo"><img alt="Carl Ziegler beside a research telescope at sunset" height="1080" loading="lazy" src="images/IMG_0650.jpg" width="1440"/></div>
 </article>
