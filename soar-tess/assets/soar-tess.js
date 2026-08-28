@@ -277,9 +277,9 @@
     const minLog = Math.log10(5);
     const maxLog = Math.log10(3000);
     const distance = Math.round(Math.pow(10, minLog + (sliderPosition / 1000) * (maxLog - minLog)));
-    const s0 = 0.128;
-    const a50 = 106;
-    const widthDex = 0.293;
+    const s0 = 0.120;
+    const a50 = 74;
+    const widthDex = 0.194;
     const logistic = 1 / (1 + Math.exp(-(Math.log10(distance) - Math.log10(a50)) / widthDex));
     const occurrence = Math.round((s0 + (1 - s0) * logistic) * 100);
     const scaledX = 18 + (sliderPosition / 1000) * 48;
@@ -291,7 +291,7 @@
       orbitSystem.style.setProperty('--binary-x', `${scaledX.toFixed(1)}%`);
       orbitSystem.style.setProperty('--orbit-width', `${(scaledX * 2).toFixed(1)}%`);
     }
-    binarySeparation.setAttribute('aria-valuetext', `${distance} astronomical units; the smooth draft model is approximately ${occurrence} percent of the field companion frequency`);
+    binarySeparation.setAttribute('aria-valuetext', `${distance} astronomical units; the smooth SOAR TESS Survey III model is approximately ${occurrence} percent of the field companion frequency`);
 
     if (!modelCallout) return;
     if (distance <= 50) {
@@ -299,7 +299,7 @@
     } else if (distance <= 100) {
       modelCallout.innerHTML = `<b>The shortage is beginning to ease.</b> At ${distance} AU, planet-candidate hosts have about ${occurrence}% of the ordinary companion rate—but close binaries are still much less common.`;
     } else if (distance <= 500) {
-      modelCallout.innerHTML = `<b>Looking more typical.</b> At ${distance} AU, the model reaches about ${occurrence}% of the ordinary companion rate. The transition is gradual, with its halfway point near 106 AU.`;
+      modelCallout.innerHTML = `<b>Looking more typical.</b> At ${distance} AU, the model reaches about ${occurrence}% of the ordinary companion rate. The transition is gradual, with its halfway point at 74 AU.`;
     } else {
       modelCallout.innerHTML = `<b>Wide binaries look broadly normal.</b> This close-range model was fitted only through 300 AU. Gaia provides the independent check at ${distance.toLocaleString()} AU and beyond—and finds no large pileup of the missing close companions.`;
     }

@@ -270,7 +270,7 @@ input[type="range"] { width: 100%; accent-color: var(--gold); cursor: pointer; }
 .paper-links a:hover { border-color: var(--line-bright); background: rgba(255,198,109,.05); }
 .draft-badge { display: inline-flex; align-items: center; padding: 6px 10px; border: 1px solid rgba(115,226,209,.25); border-radius: 8px; color: var(--teal); background: rgba(115,226,209,.055); font-size: .72rem; font-weight: 760; }
 
-.team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 13px; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
 .person { min-height: 250px; padding: 24px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
 .person > span { width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid rgba(255,198,109,.28); border-radius: 50%; color: var(--gold); background: rgba(255,198,109,.06); font-size: .76rem; font-weight: 850; letter-spacing: .08em; }
 .person h3 { margin: 25px 0 8px; font-size: 1.05rem; line-height: 1.2; }

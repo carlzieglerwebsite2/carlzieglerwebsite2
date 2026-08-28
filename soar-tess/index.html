@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="The cumulative SOAR TESS Survey: 2,982 targets, 729 resolved-source detections, transit-dilution corrections, and the measured recovery of companion frequency with binary separation.">
+  <meta name="description" content="The cumulative SOAR TESS Survey: 2,982 targets, 731 resolved-source detections, transit-dilution corrections, and the measured recovery of companion frequency with binary separation.">
   <meta name="theme-color" content="#090d17">
   <link rel="canonical" href="https://carlziegler.space/soar-tess/">
   <link rel="icon" href="../images/telescope.png" type="image/png">
-  <link rel="stylesheet" href="assets/soar-tess.css?v=20260810-6">
+  <link rel="stylesheet" href="assets/soar-tess.css?v=20260828-1">
   <title>SOAR TESS Survey</title>
 </head>
 <body>
@@ -41,10 +41,10 @@
         </div>
       </div>
       <aside class="hero-note reveal visible" aria-label="Cumulative survey summary">
-        <span class="eyebrow">Upcoming paper · SOAR TESS Survey III</span>
+        <span class="eyebrow">New preprint · SOAR TESS Survey III</span>
         <strong>3.5×</strong>
         <p>fewer close stellar companions around TESS planet candidates than expected around typical stars.</p>
-        <a href="#results">Explore the tentative results ↓</a>
+        <a href="https://arxiv.org/abs/2608.26250" target="_blank" rel="noopener">Read the paper ↗</a>
       </aside>
     </div>
     <div class="wrap hero-credit">SOAR beneath the southern sky: CTIO/NOIRLab/NSF/AURA/T. Slovinský. <a href="https://noirlab.edu/public/images/iotw2411a/" target="_blank" rel="noopener">Source ↗</a></div>
@@ -53,9 +53,9 @@
   <main id="main">
     <section class="wrap stats reveal" aria-label="Survey at a glance">
       <div class="stat"><strong>2,982</strong><span>unique TIC targets observed in the cumulative HRCam survey</span></div>
-      <div class="stat"><strong>729</strong><span>latest-epoch component detections around 688 host stars</span></div>
+      <div class="stat"><strong>731</strong><span>latest-epoch source detections around 689 host stars</span></div>
       <div class="stat"><strong>~0.04″</strong><span>diffraction-limited resolution delivered by the 4.1-m telescope</span></div>
-      <div class="stat"><strong>630</strong><span>systems with a source inside 3″ and a primary-host dilution correction</span></div>
+      <div class="stat"><strong>631</strong><span>systems with a source inside 3″ and a primary-host dilution correction</span></div>
     </section>
 
     <section class="section" id="survey">
@@ -136,7 +136,7 @@
               <div><strong>~56×</strong><span>less sky area</span></div>
             </div>
             <button class="button compact" id="tess-zoom" type="button" aria-pressed="false">Zoom into the 2.8″ SOAR field</button>
-            <p class="paper3-scale-note"><strong>Tentative SOAR TESS III result:</strong> for 630 systems with a source inside 3″, the median primary-host planet-radius correction is ×1.070; the 90th-percentile correction is ×1.326.</p>
+            <p class="paper3-scale-note"><strong>SOAR TESS III result:</strong> for 631 systems with a source inside 3″, the median primary-host planet-radius correction is ×1.070; the 90th-percentile correction is ×1.326.</p>
             <p class="microcopy">The grid subdivides the TESS pixel into 2.8″ comparison fields; those grid cells are not additional TESS detector pixels.</p>
           </div>
         </div>
@@ -181,18 +181,18 @@
     <section class="section" id="results">
       <div class="wrap">
         <div class="section-head reveal">
-          <div><p class="kicker">Tentative results from SOAR TESS III</p><h2>Planets are simply found much less often in close binary systems.</h2></div>
+          <div><p class="kicker">Results from the SOAR TESS III preprint</p><h2>Planets are simply found much less often in close binary systems.</h2></div>
           <p>The clearest result is straightforward: stars with TESS planet candidates have far fewer close stellar companions than ordinary stars. By a few hundred AU, their companion population begins to look much more typical.</p>
         </div>
 
         <div class="recovery-overview reveal" aria-label="Observed companion frequency relative to the field model across separation">
           <div class="recovery-grid">
             <article class="recovery-stop deep"><span>Very close pairs · inside 50 AU</span><strong>29%</strong><p>only about three in ten of the companions expected around typical stars</p></article>
-            <article class="recovery-stop deep-mid"><span>Close pairs · inside 100 AU</span><strong>36%</strong><p>still only about one-third of the ordinary stellar rate</p></article>
-            <article class="recovery-stop recovering"><span>Farther apart · 100–300 AU</span><strong>74%</strong><p>the companion population is beginning to look more typical</p></article>
+            <article class="recovery-stop deep-mid"><span>Close pairs · inside 100 AU</span><strong>39%</strong><p>still only about two-fifths of the ordinary stellar rate</p></article>
+            <article class="recovery-stop recovering"><span>Farther apart · 100–300 AU</span><strong>85%</strong><p>the companion population is approaching the ordinary stellar rate</p></article>
             <article class="recovery-stop wide"><span>Wide pairs · 300–5,000 AU</span><strong>Typical</strong><p>no evidence that the missing close companions simply piled up farther out</p></article>
           </div>
-          <p class="recovery-note">Percentages compare the observed companion population with what the survey would have detected around an equivalent sample of ordinary field stars. These results are tentative until SOAR TESS Survey III completes peer review.</p>
+          <p class="recovery-note">Percentages compare the observed companion population with what the survey would have detected around an equivalent sample of ordinary field stars. These results are reported in the SOAR TESS Survey III arXiv preprint, submitted to <em>The Astronomical Journal</em> and currently under peer review.</p>
         </div>
 
         <div class="suppression-lab reveal">
@@ -210,12 +210,12 @@
             </div>
           </div>
           <div class="suppression-controls">
-            <span class="eyebrow">Upcoming SOAR TESS III result</span>
+            <span class="eyebrow">SOAR TESS III smooth-recovery model</span>
             <div class="readout"><strong id="binary-distance">50 AU</strong><span>binary semimajor axis</span></div>
             <label for="binary-separation"><span>5 AU</span><span>3,000 AU</span></label>
             <input id="binary-separation" type="range" min="0" max="1000" value="360" step="1">
             <div class="model-callout" id="model-callout"><b>Close binaries are uncommon here.</b> At 50 AU, planet-candidate hosts have only about one-third as many companions as comparable ordinary stars.</div>
-            <p class="microcopy">The tentative smooth model has an inner level S₀ = 0.128 and reaches halfway back to the ordinary stellar rate near 106 AU. This is a gradual, model-dependent transition—not a sharp boundary where planets suddenly become common.</p>
+            <p class="microcopy">The smooth model has an inner level S₀ = 0.120 and reaches halfway back to the ordinary stellar rate at 74 AU (57–101 AU). This is a gradual, model-dependent transition—not a sharp boundary where planets suddenly become common.</p>
           </div>
         </div>
 
@@ -229,31 +229,31 @@
 
           <article class="finding-card reveal">
             <div class="card-number">02 · Inside 100 AU</div>
-            <div class="impact-number gold">2.8×</div>
+            <div class="impact-number gold">2.6×</div>
             <h3>The shortage remains strong out to roughly the size of the Solar System.</h3>
-            <p>Inside 100 AU, the survey found 48 companions instead of the roughly 134 expected. Close stellar companionship appears to make detectable planetary systems much less common.</p>
+            <p>Inside 100 AU, the survey found 48 companions instead of the 124.4 expected. Close stellar companionship appears to make detectable planetary systems much less common.</p>
           </article>
 
           <article class="finding-card reveal">
             <div class="card-number">03 · Farther apart</div>
-            <div class="impact-number gold">74%</div>
+            <div class="impact-number gold">85%</div>
             <h3>Farther apart, planet-hosting binaries start to look more ordinary.</h3>
-            <p>Between 100 and 300 AU, the survey found about three-quarters of the normal companion rate. The effect fades gradually as the two stars move farther apart.</p>
+            <p>Between 100 and 300 AU, the survey found 44 companions where 52.5 were expected, about 85% of the ordinary stellar rate. The effect fades gradually as the two stars move farther apart.</p>
           </article>
 
           <article class="finding-card big figure-card reveal">
             <div class="card-number">04 · A gradual return</div>
             <figure class="result-figure">
-              <img src="images/soar-tess-iii-recovery.webp" alt="Tentative SOAR TESS III plots showing the shortage of close stellar companions and their gradual return toward the normal stellar rate at wider separations" width="1730" height="810" loading="lazy">
-              <figcaption><strong>The change is gradual.</strong> The left panel compares what SOAR saw with what it should have seen around typical stars. The right panel shows the companion rate recovering with distance, reaching its halfway point near 106 AU. Figure: upcoming SOAR TESS Survey III draft.</figcaption>
+              <img src="images/soar-tess-iii-recovery.webp" alt="SOAR TESS III plots showing the shortage of close stellar companions and their gradual return toward the normal stellar rate at wider separations" width="1800" height="830" loading="lazy">
+              <figcaption><strong>The change is gradual.</strong> The left panel compares what SOAR saw with what it should have seen around typical stars. The right panel shows the companion rate recovering with distance, reaching its model-dependent halfway point at 74 AU. Figure 5 from the SOAR TESS Survey III preprint.</figcaption>
             </figure>
           </article>
 
           <article class="finding-card big figure-card reveal">
             <div class="card-number">05 · The wider picture</div>
             <figure class="result-figure">
-              <img src="images/soar-tess-iii-soar-gaia.webp" alt="Tentative SOAR TESS III comparison showing that the missing close companions are not unusually common at wider separations" width="1600" height="720" loading="lazy">
-              <figcaption><strong>The missing close companions do not pile up farther away.</strong> SOAR measures the close systems and Gaia extends the search to thousands of AU. Together they show a broadly normal wide-binary population rather than an unusual excess. Figure: upcoming SOAR TESS Survey III draft.</figcaption>
+              <img src="images/soar-tess-iii-soar-gaia.webp" alt="SOAR TESS III comparison showing that the missing close companions are not redistributed to wider separations" width="1800" height="780" loading="lazy">
+              <figcaption><strong>The missing close companions do not pile up farther away.</strong> SOAR measures the close systems and Gaia extends the search to thousands of AU. A multiplicity-conserving outward shift fits poorly. Figure 6 from the SOAR TESS Survey III preprint.</figcaption>
             </figure>
           </article>
 
@@ -266,9 +266,9 @@
 
           <article class="finding-card big reveal">
             <div class="card-number">07 · What this could mean</div>
-            <div class="impact-number gold">17.8%</div>
+            <div class="impact-number gold">17–23%</div>
             <h3>fewer planetary systems may form or survive because of close companions.</h3>
-            <p>Within the companion range measured directly, the model suggests close binaries remove about 18% of potential planet-hosting environments in a volume-limited population. This is a tentative population estimate, not a direct count of missing TESS planets.</p>
+            <p>Under the paper’s limiting primary-host assumption, the model implies a 17.0% reduction in volume-limited planet yield over q ≥ 0.4, or 23.3% when extrapolated to all mass ratios. These are illustrative system-yield reductions, not per-star occurrence rates.</p>
           </article>
 
           <article class="finding-card reveal">
@@ -299,7 +299,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <div><p class="kicker">The survey series</p><h2>From the first 542 hosts to a 2,982-target census.</h2></div>
-          <p>Papers I and II established the survey and its first population result. The upcoming third paper combines every HRCam epoch into one census, measures how the close-binary shortage fades with separation, and uses Gaia to test whether the missing close systems were simply redistributed outward.</p>
+          <p>Papers I and II established the survey and its first population result. The third paper combines every HRCam epoch into one census, measures how the close-binary shortage fades with separation, and uses Gaia to test whether the missing close systems were simply redistributed outward.</p>
         </div>
 
         <div class="paper-timeline">
@@ -328,11 +328,11 @@
           <article class="paper featured reveal">
             <div class="paper-index"><span>III</span><b>2026</b></div>
             <div class="paper-copy">
-              <p class="eyebrow">2,982 unique TIC targets · 431 post-Paper-II measurements</p>
-              <h3>SOAR TESS Survey. III: The Cumulative Companion Census and Close-Binary Demographics of TESS Objects of Interest</h3>
-              <p>The upcoming draft reports 729 latest-epoch source detections around 688 hosts. Its tentative results show that TESS planet candidates are rarely found in close binaries, that the companion population begins returning toward normal near 100 AU, and that the missing close systems do not simply reappear at wider separations.</p>
-              <p class="authors"><strong>Carl Ziegler</strong>, Andrei Tokovinin, César Briceño, Nicholas M. Law, Andrew W. Mann.</p>
-              <div class="paper-links"><a href="#results">Explore the tentative results ↑</a><span class="draft-badge">Upcoming draft · tentative results</span></div>
+              <p class="eyebrow">2,982 unique TIC targets · 433 post-Paper-II measurements</p>
+              <h3>SOAR TESS Survey III: Mapping the Stellar Companion Deficit around TESS Planet Candidates</h3>
+              <p>The preprint reports 731 latest-epoch source detections around 689 hosts. It shows that TESS planet candidates are rarely found in close binaries, that the companion population recovers toward the field rate with separation, and that the missing close systems do not simply reappear at wider separations.</p>
+              <p class="authors"><strong>Carl Ziegler</strong>, Andrei Tokovinin, César Briceño, Nicholas M. Law, Andrew W. Mann, Seth Batson.</p>
+              <div class="paper-links"><a href="https://arxiv.org/abs/2608.26250" target="_blank" rel="noopener">Read on arXiv ↗</a><a href="#results">Explore the results ↑</a><span class="draft-badge">Preprint · submitted to AJ</span></div>
             </div>
           </article>
         </div>
@@ -351,6 +351,7 @@
           <article class="person"><span>CB</span><h3>César Briceño</h3><p>SOAR collaboration, stellar astrophysics, and southern-sky observing.</p></article>
           <article class="person"><span>NL</span><h3>Nicholas M. Law</h3><p>High-angular-resolution exoplanet surveys and survey-scale analysis.</p></article>
           <article class="person"><span>AM</span><h3>Andrew W. Mann</h3><p>Host-star characterization, exoplanet demographics, and population inference.</p></article>
+          <article class="person"><span>SB</span><h3>Seth Batson</h3><p>Student research contributions to the cumulative survey analysis and paper.</p></article>
         </div>
 
         <aside class="legacy-card reveal" aria-label="SOAR TESS Survey community data">
@@ -368,6 +369,6 @@
     </div>
   </footer>
 
-  <script src="assets/soar-tess.js?v=20260810-6"></script>
+  <script src="assets/soar-tess.js?v=20260828-1"></script>
 </body>
 </html>
