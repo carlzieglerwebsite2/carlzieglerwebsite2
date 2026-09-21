@@ -5,10 +5,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="#07111f" name="theme-color"/>
-<meta content="Carl Ziegler is an exoplanet astronomer, Associate Professor of Astronomy, Director of the SFA Observatory, educator, creator of Gravitas, and researcher interested in AI-enabled scientific discovery and learning." name="description"/>
+<meta content="Carl Ziegler is an exoplanet astronomer, Associate Professor of Astronomy, Director of the SFA Observatory, educator, and creator of Gravitas, an open-source astronomy laboratory with a companion paper and versioned Zenodo release." name="description"/>
 <meta content="Carl Ziegler" name="author"/>
 <meta content="Carl Ziegler | Exoplanet Astronomer" property="og:title"/>
-<meta content="Researching exoplanets, stellar multiplicity, high-resolution imaging, astronomical instrumentation, and science education." property="og:description"/>
+<meta content="Exoplanet research, high-resolution imaging, astronomy education, and Gravitas—an open-source browser-based astrophysics laboratory documented in arXiv:2609.19327." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://carlziegler.space/" property="og:url"/>
 <meta content="https://carlziegler.space/images/carl-ziegler-headshot.webp" property="og:image"/>
@@ -1560,6 +1560,24 @@
     .gravitas-panel .gravitas-reset {
       top: 25px;
       right: 25px;
+    }
+
+    .gravitas-citation {
+      margin: 23px 0 0;
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.62;
+    }
+
+    .gravitas-citation cite {
+      color: var(--text);
+      font-style: italic;
+    }
+
+    .gravitas-citation a {
+      color: var(--accent);
+      font-weight: 720;
+      text-underline-offset: 3px;
     }
 
     @keyframes gravitas-star-drift {
@@ -4926,7 +4944,30 @@
     "sameAs": [
       "https://scholar.google.com/citations?hl=en&user=T_8uWaMAAAAJ",
       "https://facultyshowcase.sfasu.edu/en/persons/carl-ziegler/",
-      "http://gravitas-sim.online/"
+      "https://gravitas-sim.online/"
+    ]
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "@id": "https://gravitas-sim.online/#software",
+    "name": "Gravitas: an interactive astrophysics sandbox for teaching",
+    "description": "A browser-based N-body gravity sandbox and astronomy teaching tool with guided investigations, instructor materials, public physics validation, and offline support.",
+    "url": "https://gravitas-sim.online/",
+    "codeRepository": "https://github.com/gravitas-sim/gravitas-sim.github.io",
+    "version": "1.0.0",
+    "license": "https://opensource.org/license/mit/",
+    "creator": {
+      "@type": "Person",
+      "name": "Carl Andrew Ziegler",
+      "url": "https://carlziegler.space/"
+    },
+    "identifier": "https://doi.org/10.5281/zenodo.22800610",
+    "citation": [
+      "https://arxiv.org/abs/2609.19327",
+      "https://doi.org/10.5281/zenodo.22800610"
     ]
   }
   </script>
@@ -4984,7 +5025,7 @@
               Explore my research
               <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg>
 </a>
-<a class="button hero-gravitas" href="http://gravitas-sim.online/" rel="noopener" target="_blank">Launch Gravitas</a>
+<a class="button hero-gravitas" href="https://gravitas-sim.online/" rel="noopener" target="_blank">Launch Gravitas</a>
 </div>
 <div aria-label="Curriculum vitae" class="hero-cv-row">
 <span class="hero-cv-label">Curriculum vitae</span>
@@ -5603,10 +5644,11 @@
 <li>Spacetime visualization</li>
 <li>Scientific sonification</li>
 </ul>
+<p class="gravitas-citation">The companion paper, <cite>Gravitas: A Browser-Based Astrophysics Laboratory for Prediction, Measurement, and Discovery</cite>, is available as <a href="https://arxiv.org/abs/2609.19327" rel="noopener" target="_blank">arXiv:2609.19327</a>; the version 1.0.0 software release is archived in Zenodo with a permanent <a href="https://doi.org/10.5281/zenodo.22800610" rel="noopener" target="_blank">code DOI</a>. A manuscript describing the project is planned for submission to <a href="https://jose.theoj.org" rel="noopener" target="_blank">JOSE</a> when its submission window reopens.</p>
 <div class="button-row">
-<a class="button primary" href="http://gravitas-sim.online/" rel="noopener" target="_blank">Launch Gravitas</a>
+<a class="button primary" href="https://gravitas-sim.online/" rel="noopener" target="_blank">Launch Gravitas</a>
 <a class="button" href="https://github.com/gravitas-sim/gravitas-sim.github.io" rel="noopener" target="_blank">View source</a>
-<a class="button" href="https://github.com/gravitas-sim/gravitas-sim.github.io/blob/main/Gravitas_User_Manual.pdf" rel="noopener" target="_blank">User manual</a>
+<a class="button" href="https://arxiv.org/abs/2609.19327" rel="noopener" target="_blank">Read the paper</a>
 </div>
 </div>
 </div>
@@ -5904,7 +5946,9 @@
 <div class="footer-links">
 <a href="CV_condensed.pdf" rel="noopener" target="_blank">Condensed CV</a>
 <a href="carlziegler_CV.pdf" rel="noopener" target="_blank">Full Academic CV</a>
-<a href="http://gravitas-sim.online/" rel="noopener" target="_blank">Gravitas</a>
+<a href="https://gravitas-sim.online/" rel="noopener" target="_blank">Gravitas</a>
+<a href="https://arxiv.org/abs/2609.19327" rel="noopener" target="_blank">Gravitas paper</a>
+<a href="https://doi.org/10.5281/zenodo.22800610" rel="noopener" target="_blank">Code DOI</a>
 <a href="https://github.com/gravitas-sim/gravitas-sim.github.io" rel="noopener" target="_blank">GitHub</a>
 <a href="#top">Back to top ↑</a>
 </div>
