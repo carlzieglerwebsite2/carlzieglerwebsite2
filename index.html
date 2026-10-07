@@ -4915,8 +4915,88 @@
       .transit-visual .planet-rear { display: none; }
       .reveal { opacity: 1; transform: none; }
     }
+
+    /* ---------- Refinements (October 2026) ----------
+       Heading scale, paragraph rhythm, contact layout, and new components.
+       Kept in one block so it is easy to review or remove. */
+
+    .split-copy > h2 { margin-bottom: 20px; }
+    .contact-copy > h2 { margin-bottom: 18px; }
+    .split-copy > p:not(:last-child),
+    .contact-copy > p:not(:last-child) { margin-bottom: 1em; }
+
+    .section-header h2,
+    .split-copy h2,
+    .contact-copy h2,
+    .ai-evidence-header h3,
+    .lab-controls h3,
+    .speckle-copy h3,
+    .interactive-lab-topline h3,
+    .card-body h3 { text-wrap: balance; }
+
+    @media (min-width: 981px) {
+      .section-header {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(40px, 6vw, 80px);
+      }
+      .section-header h2 {
+        font-size: clamp(2.4rem, 3.6vw, 3.3rem);
+        line-height: 1.04;
+        letter-spacing: -.045em;
+      }
+      .split-copy h2,
+      .contact-copy h2 {
+        font-size: clamp(2rem, 2.8vw, 2.6rem);
+        line-height: 1.08;
+        letter-spacing: -.04em;
+      }
+      .ai-evidence-header { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+      .ai-evidence-header h3 { font-size: clamp(1.45rem, 2.1vw, 1.9rem); }
+      .speckle-topline { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    }
+
+    /* Stack the contact card until there is room for two real columns. */
+    @media (max-width: 1180px) {
+      .contact-card { grid-template-columns: 1fr; }
+    }
+
+    /* Robo-AO survey mosaic on the research card */
+    .card-image.survey-mosaic { position: relative; background: #000; }
+    .survey-mosaic .observatory-badge { top: auto; bottom: 16px; left: 16px; }
+    /* Photo badges always sit on dark imagery, so keep their text light in both themes. */
+    .observatory-badge strong { color: #6ed8ff; }
+    .observatory-badge span { color: #dceaf5; }
+
+    /* Student outcomes panel (reuses the course-improvement card styles) */
+    .outcomes-panel .innovation-list li { font-size: .92rem; }
+
+    /* Publications */
+    .publication-student { color: var(--accent-3); font-weight: 650; }
+    .publication-note {
+      max-width: 76ch;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+    .publication-note a {
+      color: var(--accent);
+      font-weight: 650;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 980px) {
+      .outcomes-panel .innovation-list { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .split-copy h2,
+      .contact-copy h2 { font-size: clamp(1.75rem, 8vw, 2.3rem); line-height: 1.08; }
+      .split-copy .button-row { grid-template-columns: 1fr 1fr; }
+      .split-copy .button-row .button:last-child:nth-child(odd) { grid-column: 1 / -1; }
+      .survey-mosaic .observatory-badge { bottom: 12px; left: 12px; padding: 9px 12px; }
+    }
   </style><link href="assets/css/parallax-stars.css" rel="stylesheet"/>
-<link href="assets/css/exoplanet-explorer.css?v=20260807-3" rel="stylesheet"/>
+<link href="assets/css/exoplanet-explorer.css?v=20261007-1" rel="stylesheet"/>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -5046,8 +5126,8 @@
 <div class="container metric-grid reveal">
 <div class="metric"><strong>180+</strong><span>refereed research papers and collaborations</span></div>
 <div class="metric"><strong>5,400+</strong><span>career citations across astronomy and exoplanet research</span></div>
-<div class="metric"><strong>4,800+</strong><span>Kepler and TESS host stars surveyed at high resolution</span></div>
-<div class="metric"><strong>20+</strong><span>undergraduate researchers mentored in data-driven projects</span></div>
+<div class="metric"><strong>6,800+</strong><span>Kepler and TESS planet-host systems imaged at high resolution</span></div>
+<div class="metric"><strong>28</strong><span>undergraduate researchers mentored at SFA since 2020</span></div>
 </div>
 </section>
 <section class="section alt" id="about">
@@ -5072,7 +5152,7 @@
 <div class="split-copy">
 <h2>Research that connects telescopes, data, and people.</h2>
 <p>
-              I grew up in Hannibal, Missouri, earned degrees in physics and mathematics at William Jewell College and Southern Illinois University, and completed my Ph.D. in Physics and Astronomy at the University of North Carolina at Chapel Hill. I later served as a Dunlap Postdoctoral Fellow at the University of Toronto before joining SFA in 2020.
+              I grew up in Hannibal, Missouri, earned degrees in physics and mathematics at William Jewell College and Southern Illinois University, and completed my Ph.D. in Physics at the University of North Carolina at Chapel Hill. I later served as a Dunlap Postdoctoral Fellow at the University of Toronto before joining SFA in 2020.
             </p>
 <p>
               At SFA, I lead the observatory, teach courses from introductory astronomy through astrophysics, mentor student researchers, develop public outreach programs, and build tools that let learners investigate physical systems directly.
@@ -5164,7 +5244,7 @@
 <p class="card-kicker">Flagship survey</p>
 <h3>SOAR TESS Survey</h3>
 <p>
-                Speckle imaging with the 4.1-meter SOAR telescope resolves stellar neighbors hidden in TESS light curves, corrects planet radii for blended light, and reveals how close binaries reshape the detected planet population. Follow-up will continue with Robo-AO 2, extending the survey to dual-band visible and near-infrared imaging.
+                Speckle imaging with the 4.1-meter SOAR telescope resolves stellar neighbors hidden in TESS light curves, corrects planet radii for blended light, and reveals how close binaries reshape the detected planet population. The work continues through a NASA TESS Cycle 9 program, selected for funding in 2026, with me as Co-Investigator and SFA subaward lead: dual-band Robo-AO-2 imaging of TESS planet hosts from 2027 to 2029.
               </p>
 <div class="survey-metrics" role="list" aria-label="SOAR TESS Survey highlights">
 <div class="survey-metric" role="listitem"><strong>2,982</strong><span>unique targets in the cumulative survey</span></div>
@@ -5184,14 +5264,15 @@
 </div>
 </article>
 <article class="research-card reveal">
-<div class="card-image">
-<img alt="High-resolution astronomical imaging research" loading="lazy" src="images/research.jpg"/>
+<div class="card-image survey-mosaic">
+<img alt="Grid of Robo-AO adaptive-optics images of Kepler planet-candidate host stars, several showing close stellar companions" height="648" loading="lazy" src="images/roboao-kepler-mosaic.webp" width="1152"/>
+<div class="observatory-badge" aria-hidden="true"><strong>3,857 systems</strong><span>Robo-AO · Palomar 1.5-m</span></div>
 </div>
 <div class="card-body">
 <p class="card-kicker">Survey astronomy</p>
 <h3>Robo-AO Kepler Survey</h3>
 <p>
-                Collaborators and I obtained high-resolution images of all 3,857 Kepler planet-candidate systems. The resulting data helped identify blended stars and false positives, revise hundreds of planet radii, and support the validation of more than 1,500 Kepler and K2 planets.
+                As lead analyst, I worked with collaborators to image all 3,857 Kepler planet-candidate systems at high resolution. The resulting data helped identify blended stars and false positives, revise hundreds of planet radii, and support the validation of more than 1,500 Kepler and K2 planets.
               </p>
 <div class="card-links project-card-links">
 <a class="text-link" href="roboao-kepler/">
@@ -5207,7 +5288,7 @@
 </article>
 <article class="research-card reveal">
 <div class="card-image contain">
-<img alt="Robo-SOAR adaptive optics testbed" loading="lazy" src="images/robosoar_testbed_logo.jpg"/>
+<img alt="Robo-SOAR adaptive optics testbed" loading="lazy" src="images/robosoar_testbed_logo.webp" width="1072" height="655"/>
 </div>
 <div class="card-body">
 <p class="card-kicker">Instrumentation</p>
@@ -5237,7 +5318,7 @@
 </a>
 </div>
 </div>
-<div class="card-image project-photo"><img alt="Carl Ziegler beside a research telescope at sunset" height="1080" loading="lazy" src="images/IMG_0650.jpg" width="1440"/></div>
+<div class="card-image project-photo"><img alt="Carl Ziegler beside a research telescope at sunset" height="1080" loading="lazy" src="images/IMG_0650.webp" width="1440"/></div>
 </article>
 </div>
 </div>
@@ -5511,7 +5592,7 @@
 <h2>Watch the planetary census redraw itself.</h2>
 </div>
 <p>
-            Step from the pre-exoplanet landscape of 1991 through the current catalog and watch discovery techniques populate entirely different regions of parameter space. Hover over any world for its measured properties and discovery hardware, search for a favorite system, or turn on population features to see the structures that planet formation and evolution have carved into the data.
+            The plot opens on today's catalog. Press Play to rebuild it year by year from 1991 and watch discovery techniques populate entirely different regions of parameter space. Hover over any world for its measured properties and discovery hardware, search for a favorite system, or turn on population features to see the structures that planet formation and evolution have carved into the data.
           </p>
 </div>
 <p class="exo-intro-note reveal">One point represents one confirmed planet using the NASA Exoplanet Archive's default parameter set. This intentionally combines the radius and mass populations on <em>one</em> radius-like axis: a measured radius is always used when available; otherwise a measured mass is converted to an approximate radius-equivalent with the piecewise <a href="https://doi.org/10.3847/1538-4357/834/1/17" rel="noopener" target="_blank">Chen &amp; Kipping (2017) Forecaster relation</a>. Those open, inferred points are population guides, not radius measurements, and the relation has substantial intrinsic scatter.</p>
@@ -5522,12 +5603,12 @@
 <span class="exo-toolbar-label">Discovery year</span>
 <div class="exo-year-row">
 <button aria-label="Previous year" class="button exo-step-control" id="exo-year-prev" title="Previous year" type="button"><span aria-hidden="true" class="exo-step-arrow">←</span><span>Previous year</span></button>
-<output aria-live="polite" class="exo-year-badge" id="exo-year" for="exo-year-range">1991</output>
+<output aria-live="polite" class="exo-year-badge" id="exo-year" for="exo-year-range">2026</output>
 <button aria-label="Next year" class="button primary exo-step-control exo-step-next" id="exo-year-next" title="Next year" type="button"><span>Next year</span><span aria-hidden="true" class="exo-step-arrow">→</span></button>
 </div>
 <div class="exo-year-secondary">
 <button aria-label="Play discovery timeline" class="button compact exo-play-control" id="exo-year-play" title="Play timeline" type="button"><span aria-hidden="true">▶</span> Play</button>
-<input aria-label="Jump to discovery year" class="exo-year-range" id="exo-year-range" max="2026" min="1991" step="1" type="range" value="1991"/>
+<input aria-label="Jump to discovery year" class="exo-year-range" id="exo-year-range" max="2026" min="1991" step="1" type="range" value="2026"/>
 <span class="exo-jump-label">drag to jump</span>
 </div>
 <div class="exo-search-row">
@@ -5631,10 +5712,10 @@
 <p class="eyebrow">Featured project</p>
 <h2>Gravitas turns gravitational physics into an experiment.</h2>
 <p>
-            Gravitas is an open-source, browser-based astronomy sandbox that I designed for students and the public. Learners can build orbital systems, change physical parameters, inspect energy conservation, simulate compact-object mergers, generate transit light curves, visualize spacetime, and translate orbital motion and gravitational-wave signatures into sound.
+            Gravitas is an open-source, browser-based astrophysics laboratory I created for students and the public: 59 scenarios and 22 guided investigations that connect orbital dynamics to the signals astronomers actually observe. Learners build orbital systems, change physical parameters, check energy conservation, merge compact objects, generate transit light curves, and turn orbital motion and gravitational waves into sound.
           </p>
 <p>
-            The project is used in introductory astronomy instruction and supports inquiry-driven activities in which students predict, test, revise, and explain rather than simply watch an animation.
+            It grew from a 2025 undergraduate summer research project, was piloted in my introductory astronomy course, and is built for access, with Spanish localization, keyboard navigation, and offline use. Students predict, test, revise, and explain rather than simply watch an animation.
           </p>
 <ul class="check-grid">
 <li>Interactive orbital dynamics</li>
@@ -5644,7 +5725,7 @@
 <li>Spacetime visualization</li>
 <li>Scientific sonification</li>
 </ul>
-<p class="gravitas-citation">The companion paper, <cite>Gravitas: A Browser-Based Astrophysics Laboratory for Prediction, Measurement, and Discovery</cite>, is available as <a href="https://arxiv.org/abs/2609.19327" rel="noopener" target="_blank">arXiv:2609.19327</a>; the version 1.0.0 software release is archived in Zenodo with a permanent <a href="https://doi.org/10.5281/zenodo.22800610" rel="noopener" target="_blank">code DOI</a>. A manuscript describing the project is planned for submission to <a href="https://jose.theoj.org" rel="noopener" target="_blank">JOSE</a> when its submission window reopens.</p>
+<p class="gravitas-citation">The companion paper, <cite>Gravitas: A Browser-Based Astrophysics Laboratory for Prediction, Measurement, and Discovery</cite>, is available as <a href="https://arxiv.org/abs/2609.19327" rel="noopener" target="_blank">arXiv:2609.19327</a>; the version 1.0.0 release is archived on Zenodo with a permanent <a href="https://doi.org/10.5281/zenodo.22800610" rel="noopener" target="_blank">code DOI</a>.</p>
 <div class="button-row">
 <a class="button primary" href="https://gravitas-sim.online/" rel="noopener" target="_blank">Launch Gravitas</a>
 <a class="button" href="https://github.com/gravitas-sim/gravitas-sim.github.io" rel="noopener" target="_blank">View source</a>
@@ -5726,7 +5807,7 @@
 <div class="teaching-evidence reveal">
 <div class="evidence-summary">
 <strong>4.85<span style="font-size:.38em; letter-spacing:0;">/5</span></strong>
-<span>Average teaching evaluation in 2025, continuing an upward trend across my SFA appointment.</span>
+<span>Average teaching evaluation in 2025, my highest year at SFA. Mean across all 33 sections since fall 2020: 4.59/5.</span>
 </div>
 <div class="evaluation-panel">
 <h3>Documented teaching effectiveness</h3>
@@ -5767,9 +5848,18 @@
 <span class="course-level">Professional formation</span>
 <h3>Senior Practicum and Research Mentoring</h3>
 <p>
-              Coach students through CVs, personal statements, graduate-school preparation, research presentations, and interviews. More than 20 student researchers have contributed to photometry, Python analysis, telescope observations, educational software, posters, talks, and peer-reviewed work.
+              Coach students through CVs, personal statements, graduate-school preparation, research presentations, and interviews. Twenty-eight student researchers since 2020 have contributed to photometry, Python analysis, telescope observations, educational software, posters, talks, and peer-reviewed work.
             </p>
 </article>
+</div>
+<div class="innovation-panel outcomes-panel reveal">
+<h3>Student research and outcomes</h3>
+<p>Mentoring record at SFA since 2020.</p>
+<ul class="innovation-list">
+<li><strong>28 undergraduate researchers</strong>Projects in exoplanet photometry, stellar multiplicity, single-transit recovery, Python pipelines, and simulation, including funded summer projects that seeded Gravitas and reproduced a JWST transmission spectrum of WASP-39 b.</li>
+<li><strong>Student coauthors and theses</strong>Undergraduate coauthors on all three SOAR TESS Survey papers, student talks at regional APS/AAPT meetings, and a supervised M.S. thesis on automated TESS analysis (2023).</li>
+<li><strong>Where students go next</strong>REUs at the University of Hawaiʻi and the University of Chicago, graduate study at UT Austin and UT Dallas, two flight controllers supporting NASA mission operations, and an engineer at Samsung Austin Semiconductor.</li>
+</ul>
 </div>
 <div class="innovation-panel reveal">
 <h3>Continuous course improvement</h3>
@@ -5806,24 +5896,21 @@
               Observatory programs give visitors the chance to look through telescopes, ask working astronomers questions, and connect celestial events to the underlying physics. Students participate as guides and scientific communicators, extending their own learning while serving the community.
             </p>
 <ul class="outreach-list">
-<li>Regular public observing nights and campus telescope events</li>
-<li>An annular-eclipse program that brought more than 200 people to campus</li>
-<li>A total-solar-eclipse observing trip for SFA students</li>
-<li>Girl Scouts, STEM Academy, school-group, planetarium, and youth programs</li>
-<li>Hands-on demonstrations using safe solar observing and interactive simulations</li>
+<li>About 30 public observing nights since 2021, reaching an estimated 2,000 visitors</li>
+<li>Student telescope operators and guides trained to run public nights and lab sessions</li>
+<li>A 2023 annular-eclipse event for more than 200 attendees and a 2024 total-eclipse student trip</li>
+<li>Partnerships with regional schools, Scout troops, summer camps, and the Astronomical Society of East Texas</li>
+<li>Student research on the observatory's 1.04-m, 0.46-m, and 0.41-m telescopes: exoplanet transits, asteroids, and eclipsing binaries</li>
 </ul>
-<div class="button-row" style="margin-top:24px;">
-<a class="button compact" href="https://www.sfasu.edu/academics/colleges/sciences-math/physics-engineering-astronomy/facilities-research/observatory" rel="noopener" target="_blank">Explore the SFA Observatory</a>
-</div>
 </div>
 </div>
 <div class="outreach-gallery">
 <figure class="reveal">
-<img alt="A large campus crowd participating in an SFA eclipse-viewing event" height="788" loading="lazy" src="images/eclipse1.png" width="1400"/>
+<img alt="A large campus crowd participating in an SFA eclipse-viewing event" height="788" loading="lazy" src="images/eclipse1.webp" width="1400"/>
 <figcaption>Campus eclipse viewing brings students, families, faculty, and community members together around a shared astronomical event.</figcaption>
 </figure>
 <figure class="reveal">
-<img alt="Visitors viewing the eclipse through a safely filtered telescope on the SFA campus" height="776" loading="lazy" src="images/eclipse2.png" width="1400"/>
+<img alt="Visitors viewing the eclipse through a safely filtered telescope on the SFA campus" height="776" loading="lazy" src="images/eclipse2.webp" width="1400"/>
 <figcaption>Students and visitors use safely filtered telescopes while SFA astronomers explain what they are seeing.</figcaption>
 </figure>
 </div>
@@ -5843,17 +5930,17 @@
 <div class="publications reveal">
 <a class="publication" href="https://arxiv.org/abs/2608.26250" rel="noopener" target="_blank">
 <span class="publication-year">2026</span>
-<span><span class="publication-title">SOAR TESS Survey III: Mapping the Stellar Companion Deficit around TESS Planet Candidates</span><span class="publication-journal">arXiv preprint · submitted to The Astronomical Journal</span></span>
+<span><span class="publication-title">SOAR TESS Survey III: Mapping the Stellar Companion Deficit around TESS Planet Candidates</span><span class="publication-journal">arXiv preprint · submitted to The Astronomical Journal · <span class="publication-student">undergraduate coauthor</span></span></span>
 <span aria-hidden="true" class="publication-arrow">↗</span>
 </a>
 <a class="publication" href="https://ui.adsabs.harvard.edu/abs/2021AJ....162..192Z/abstract" rel="noopener" target="_blank">
 <span class="publication-year">2021</span>
-<span><span class="publication-title">SOAR TESS Survey II: The Impact of Stellar Companions on Planetary Populations</span><span class="publication-journal">The Astronomical Journal, 162, 192</span></span>
+<span><span class="publication-title">SOAR TESS Survey II: The Impact of Stellar Companions on Planetary Populations</span><span class="publication-journal">The Astronomical Journal, 162, 192 · <span class="publication-student">undergraduate coauthor</span></span></span>
 <span aria-hidden="true" class="publication-arrow">↗</span>
 </a>
 <a class="publication" href="https://ui.adsabs.harvard.edu/abs/2020AJ....159...19Z/abstract" rel="noopener" target="_blank">
 <span class="publication-year">2020</span>
-<span><span class="publication-title">SOAR TESS Survey I: Sculpting of TESS Planetary Systems by Stellar Companions</span><span class="publication-journal">The Astronomical Journal, 159, 19</span></span>
+<span><span class="publication-title">SOAR TESS Survey I: Sculpting of TESS Planetary Systems by Stellar Companions</span><span class="publication-journal">The Astronomical Journal, 159, 19 · <span class="publication-student">undergraduate coauthor</span></span></span>
 <span aria-hidden="true" class="publication-arrow">↗</span>
 </a>
 <a class="publication" href="https://ui.adsabs.harvard.edu/abs/2018AJ....156..259Z/abstract" rel="noopener" target="_blank">
@@ -5872,6 +5959,7 @@
 <span aria-hidden="true" class="publication-arrow">↗</span>
 </a>
 </div>
+<p class="publication-note reveal">SOAR imaging also supported high-profile TESS discoveries, including <a href="https://ui.adsabs.harvard.edu/abs/2020AJ....160..116G/abstract" rel="noopener" target="_blank">TOI-700 d</a>, the first habitable-zone Earth-size planet from TESS, and <a href="https://ui.adsabs.harvard.edu/abs/2020AJ....159..253K/abstract" rel="noopener" target="_blank">TOI-1338 b</a>, TESS's first transiting circumbinary planet.</p>
 <div class="publication-footer reveal">
 <a class="button compact" href="https://ui.adsabs.harvard.edu/search/q=author%3A%22Ziegler%2C%20Carl%22&amp;sort=date%20desc%2C%20bibcode%20desc&amp;p_=0" rel="noopener" target="_blank">All publications on ADS</a>
 <a class="button compact" href="https://scholar.google.com/citations?hl=en&amp;user=T_8uWaMAAAAJ" rel="noopener" target="_blank">Google Scholar</a>
@@ -5889,15 +5977,15 @@
 </div>
 <div class="crew-grid">
 <figure class="crew-card reveal">
-<img alt="Young child seated in a blue astronaut suit" height="2048" loading="lazy" src="images/astronaut_max.jpg" width="1536"/>
+<img alt="Young child seated in a blue astronaut suit" height="2048" loading="lazy" src="images/astronaut_max.webp" width="1536"/>
 <figcaption><strong>Mission specialist</strong>Always ready for launch, usually before the checklist is finished.</figcaption>
 </figure>
 <figure class="crew-card reveal">
-<img alt="Smiling young child outdoors in a blue astronaut suit beside a globe" height="1642" loading="lazy" src="images/caroline_astronaut.jpg" width="1356"/>
+<img alt="Smiling young child outdoors in a blue astronaut suit beside a globe" height="1642" loading="lazy" src="images/caroline_astronaut.webp" width="1356"/>
 <figcaption><strong>Planetary scientist</strong>Equipped for fieldwork, sample collection, and ambitious new worlds.</figcaption>
 </figure>
 <figure class="crew-card reveal">
-<img alt="Young child standing in a blue astronaut suit" height="1528" loading="lazy" src="images/samantha_astronaut.jpg" width="1134"/>
+<img alt="Young child standing in a blue astronaut suit" height="1528" loading="lazy" src="images/samantha_astronaut.webp" width="1134"/>
 <figcaption><strong>Flight director</strong>Confidently managing the mission, the crew, and the candy payload.</figcaption>
 </figure>
 </div>
@@ -5907,7 +5995,7 @@
 <div class="container">
 <div class="contact-layout">
 <figure class="contact-portrait reveal">
-<img alt="Carl Ziegler at the SFA Observatory" height="1072" loading="lazy" src="images/IMG_0627.jpg" width="804"/>
+<img alt="Carl Ziegler at the SFA Observatory" height="1072" loading="lazy" src="images/IMG_0627.webp" width="804"/>
 <figcaption>At the SFA Observatory, where research, instrumentation, teaching, and public observing share the same sky.</figcaption>
 </figure>
 <div class="contact-card reveal">
@@ -6776,6 +6864,6 @@
       document.getElementById('year').textContent = new Date().getFullYear();
     })();
   </script>
-<script defer src="assets/js/exoplanet-explorer.js?v=20260807-3"></script>
+<script defer src="assets/js/exoplanet-explorer.js?v=20261007-1"></script>
 </body>
 </html>

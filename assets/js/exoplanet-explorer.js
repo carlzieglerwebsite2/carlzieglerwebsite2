@@ -227,15 +227,21 @@
     els.loading.style.color = '';
   }
 
+  function updatePlayLabel() {
+    if (!els.play || state.playing) return;
+    const fromStart = state.payload && state.year >= state.endYear;
+    els.play.innerHTML = fromStart
+      ? `<span aria-hidden="true">▶</span> Play from ${escapeHTML(state.startYear)}`
+      : '<span aria-hidden="true">▶</span> Play';
+    els.play.setAttribute('aria-label', fromStart ? `Play discovery timeline from ${state.startYear}` : 'Play discovery timeline');
+    els.play.title = fromStart ? `Replay the timeline from ${state.startYear}` : 'Play timeline';
+  }
+
   function stopPlayback() {
     state.playing = false;
     window.clearInterval(state.playTimer);
     state.playTimer = null;
-    if (els.play) {
-      els.play.innerHTML = '<span aria-hidden="true">▶</span> Play';
-      els.play.setAttribute('aria-label', 'Play discovery timeline');
-      els.play.title = 'Play timeline';
-    }
+    updatePlayLabel();
   }
 
   function startPlayback() {
@@ -264,6 +270,7 @@
     if (els.previous) els.previous.disabled = state.year <= state.startYear;
     if (els.next) els.next.disabled = state.year >= state.endYear;
     if (stop) stopPlayback();
+    updatePlayLabel();
     updateCounters();
     updateMilestone();
     draw();
@@ -274,9 +281,11 @@
     const matches = MILESTONES.filter(item => item.year === state.year);
     if (!matches.length) {
       els.milestone.classList.remove('visible');
-      els.milestone.innerHTML = '';
+      els.milestone.classList.add('idle');
+      els.milestone.innerHTML = `<span><strong>★ Milestones</strong> Press Play to rebuild the census from ${escapeHTML(state.startYear)}, or step through the years. Starred years highlight landmark discoveries.</span>`;
       return;
     }
+    els.milestone.classList.remove('idle');
     const item = matches[0];
     els.milestone.innerHTML = `<strong>★ ${escapeHTML(state.year)} milestone · ${escapeHTML(item.name)}</strong> ${escapeHTML(item.detail)} <a href="${item.source}" target="_blank" rel="noopener">Discovery paper ↗</a>`;
     els.milestone.classList.add('visible');
@@ -664,7 +673,7 @@
     state.planets = payload.planets || [];
     state.startYear = payload.startYear || 1991;
     state.endYear = payload.endYear || new Date().getUTCFullYear();
-    state.year = state.startYear;
+    state.year = state.endYear;
 
     state.planets.forEach(planet => {
       if (!planet.method) planet.method = 'Other';
@@ -676,10 +685,11 @@
 
     els.yearRange.min = state.startYear;
     els.yearRange.max = state.endYear;
-    els.yearRange.value = state.startYear;
-    els.year.textContent = state.startYear;
-    if (els.previous) els.previous.disabled = true;
-    if (els.next) els.next.disabled = state.startYear >= state.endYear;
+    els.yearRange.value = state.year;
+    els.year.textContent = state.year;
+    if (els.previous) els.previous.disabled = state.year <= state.startYear;
+    if (els.next) els.next.disabled = state.year >= state.endYear;
+    updatePlayLabel();
 
     const generated = payload.generatedUTC ? new Date(payload.generatedUTC) : null;
     const dateLabel = generated && !Number.isNaN(generated.getTime())

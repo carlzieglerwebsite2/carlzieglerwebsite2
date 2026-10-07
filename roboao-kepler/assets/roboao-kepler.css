@@ -115,9 +115,13 @@ img { max-width: 100%; display: block; }
 .instrument-copy h3, .census-card h3, .finding-card h3 { margin: 0 0 14px; font-size: clamp(1.55rem, 2.6vw, 2.35rem); line-height: 1.08; letter-spacing: -.04em; }
 .instrument-copy > p { color: var(--muted); }
 .mini-specs { display: grid; gap: 10px; margin: 28px 0; }
-.mini-specs > div { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; padding-top: 12px; border-top: 1px solid var(--line); }
-.mini-specs b { color: var(--laser); font-size: 1.25rem; }
+.mini-specs > div { display: grid; grid-template-columns: minmax(64px, max-content) 1fr; gap: 14px; align-items: start; padding-top: 12px; border-top: 1px solid var(--line); }
+.mini-specs b { white-space: nowrap; color: var(--laser); font-size: 1.25rem; }
 .mini-specs span { color: var(--muted); font-size: .8rem; }
+@supports (grid-template-columns: subgrid) {
+  .mini-specs { grid-template-columns: max-content 1fr; column-gap: 14px; }
+  .mini-specs > div { grid-column: 1 / -1; grid-template-columns: subgrid; }
+}
 .text-link { color: var(--cyan); font-size: .84rem; font-weight: 760; text-decoration: none; }
 .text-link:hover { text-decoration: underline; }
 

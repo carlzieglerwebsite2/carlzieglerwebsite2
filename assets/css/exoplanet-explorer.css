@@ -272,6 +272,18 @@ html[data-theme="light"] .exo-step-next {
   pointer-events: auto;
 }
 
+.exo-milestone-banner.idle {
+  opacity: 1;
+  visibility: visible;
+  color: var(--muted);
+  font-size: .92rem;
+  border-color: var(--line);
+  border-style: dashed;
+}
+
+.exo-milestone-banner.idle strong { color: var(--text); }
+html[data-theme="light"] .exo-milestone-banner.idle strong { color: var(--text); }
+
 .exo-milestone-banner strong {
   display: inline-block;
   margin-right: 8px;
